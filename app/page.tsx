@@ -186,16 +186,16 @@ export default function VotingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 relative overflow-hidden">
       {/* Decorative Floral Elements */}
-      <div className="fixed top-0 left-0 w-64 h-64 opacity-[0.15] pointer-events-none">
+      <div className="fixed top-0 left-0 w-64 h-64 opacity-[0.7] pointer-events-none">
         <img src="/floral-corner.png" alt="" className="w-full h-full object-contain" />
       </div>
-      <div className="fixed top-0 right-0 w-64 h-64 opacity-[0.15] pointer-events-none transform scale-x-[-1]">
+      <div className="fixed top-0 right-0 w-64 h-64 opacity-[0.7] pointer-events-none transform scale-x-[-1]">
         <img src="/floral-corner.png" alt="" className="w-full h-full object-contain" />
       </div>
-      <div className="fixed bottom-0 left-0 w-80 h-80 opacity-[0.12] pointer-events-none transform scale-y-[-1]">
+      <div className="fixed bottom-0 left-0 w-80 h-80 opacity-[0.3] pointer-events-none transform scale-y-[-1]">
         <img src="/floral-corner.png" alt="" className="w-full h-full object-contain" />
       </div>
-      <div className="fixed bottom-0 right-0 w-80 h-80 opacity-[0.12] pointer-events-none transform scale-[-1]">
+      <div className="fixed bottom-0 right-0 w-80 h-80 opacity-[0.3] pointer-events-none transform scale-[-1]">
         <img src="/floral-corner.png" alt="" className="w-full h-full object-contain" />
       </div>
       
