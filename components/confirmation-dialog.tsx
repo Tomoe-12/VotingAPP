@@ -22,6 +22,8 @@ interface ConfirmationDialogProps {
   description: string
   confirmText: string
   destructive?: boolean
+  confirmButtonText?: string
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
 }
 
 export function ConfirmationDialog({
@@ -32,6 +34,8 @@ export function ConfirmationDialog({
   description,
   confirmText,
   destructive = true,
+  confirmButtonText,
+  variant,
 }: ConfirmationDialogProps) {
   const [inputValue, setInputValue] = useState('')
   const isMatch = inputValue === confirmText
@@ -71,7 +75,7 @@ export function ConfirmationDialog({
             Type the following to confirm:
           </Label>
           <div className="p-3 rounded-lg bg-muted/50 border border-border/50">
-            <code className="text-sm font-mono text-destructive font-medium">{confirmText}</code>
+            <code className={`text-sm font-mono font-medium ${destructive ? 'text-destructive' : 'text-foreground'}`}>{confirmText}</code>
           </div>
           <Input
             id="confirm-text"
@@ -105,12 +109,12 @@ export function ConfirmationDialog({
             Cancel
           </Button>
           <Button
-            variant={destructive ? 'destructive' : 'default'}
+            variant={variant || (destructive ? 'destructive' : 'default')}
             onClick={handleConfirm}
             disabled={!isMatch}
             className={!isMatch ? 'opacity-50 cursor-not-allowed' : ''}
           >
-            {destructive ? 'Delete' : 'Confirm'}
+            {confirmButtonText || (destructive ? 'Delete' : 'Confirm')}
           </Button>
         </DialogFooter>
       </DialogContent>

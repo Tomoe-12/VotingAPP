@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useLanguage } from '@/lib/language-context'
 import { Switch } from '@/components/ui/switch'
-import { Crown } from 'lucide-react'
+import { Crown, Home, Info, User } from 'lucide-react'
 import Link from 'next/link'
 
 export function FloatingNav() {
@@ -12,7 +12,7 @@ export function FloatingNav() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['king-section', 'queen-section']
+      const sections = ['king-section', 'queen-section', 'about-section']
       const scrollPosition = window.scrollY + 200
 
       // Check if we're at the top (home)
@@ -52,52 +52,57 @@ export function FloatingNav() {
   }
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-      <div className="bg-muted/60 backdrop-blur-xl border border-border/50 rounded-full shadow-xl px-3 py-2 flex items-center gap-2">
+    <div className="fixed md:top-6 bottom-4 md:bottom-auto left-1/2 -translate-x-1/2 z-50 w-full md:w-auto px-4 md:px-0">
+      <div className="bg-card/95 backdrop-blur-xl border border-border shadow-2xl rounded-full px-3 py-2.5 md:py-2.5 py-3 flex items-center gap-1.5 md:gap-2 justify-between md:justify-start max-w-md md:max-w-none mx-auto">
         {/* Navigation Links */}
         <button
           onClick={() => scrollToSection('home')}
-          className={`px-5 py-2 rounded-full text-base font-medium transition-all ${
+          className={`px-3 md:px-5 py-2 rounded-full text-sm md:text-base font-medium transition-all flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-0 ${
             activeSection === 'home' 
-              ? 'bg-card text-foreground shadow-sm' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
               : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          Home
+          <Home className="w-4 h-4" />
+          <span className="text-[10px] md:hidden">Home</span>
+          <span className="hidden md:inline ml-2">Home</span>
         </button>
         <button 
           onClick={() => scrollToSection('king-section')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          className={`px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-all flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-0 ${
             activeSection === 'king-section' 
-              ? 'bg-card text-foreground shadow-sm' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
               : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          King
+          <Crown className="w-4 h-4" />
+          <span className="text-[10px] md:hidden">King</span>
+          <span className="hidden md:inline ml-2">King</span>
         </button>
         <button 
           onClick={() => scrollToSection('queen-section')}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          className={`px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-all flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-0 ${
             activeSection === 'queen-section' 
-              ? 'bg-card text-foreground shadow-sm' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
               : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          Queen
+          <User className="w-4 h-4" />
+          <span className="text-[10px] md:hidden">Queen</span>
+          <span className="hidden md:inline ml-2">Queen</span>
         </button>
-        
-        {/* Divider */}
-        <div className="w-px h-6 bg-border mx-2" />
-        
-        {/* Language Switch */}
-        <div className="flex items-center gap-2 px-2">
-          <span className="text-sm text-muted-foreground">🇬🇧</span>
-          <Switch
-            checked={language === 'my'}
-            onCheckedChange={(checked) => setLanguage(checked ? 'my' : 'en')}
-          />
-          <span className="text-sm text-muted-foreground">🇲🇲</span>
-        </div>
+        <button 
+          onClick={() => scrollToSection('about-section')}
+          className={`px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-all flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-0 ${
+            activeSection === 'about-section' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Info className="w-4 h-4" />
+          <span className="text-[10px] md:hidden">About</span>
+          <span className="hidden md:inline ml-2">About</span>
+        </button>
       </div>
     </div>
   )
