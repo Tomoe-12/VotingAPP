@@ -95,7 +95,7 @@ export function ImageUpload({ label, value, onChange, id }: ImageUploadProps) {
               variant="ghost"
               size="icon"
               onClick={handleRemove}
-              className="flex-shrink-0"
+              className="shrink-0"
             >
               <X className="w-4 h-4" />
             </Button>

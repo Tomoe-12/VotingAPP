@@ -26,8 +26,8 @@ export function CandidateImageCarousel({ images, name, numberBadge }: CandidateI
 
   if (validImages.length === 0) {
     return (
-      <div className="aspect-[4/5] bg-muted flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-card/60" />
+      <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-b from-transparent to-card/60" />
         {numberBadge}
         <div className="text-muted-foreground text-sm">No image available</div>
       </div>
@@ -35,14 +35,14 @@ export function CandidateImageCarousel({ images, name, numberBadge }: CandidateI
   }
 
   return (
-    <div className="aspect-[4/5] bg-muted relative overflow-hidden group/carousel">
+    <div className="aspect-4/5 bg-muted relative overflow-hidden group/carousel">
       {/* Current Image */}
       <img
         src={validImages[currentIndex] || "/placeholder.svg"}
         alt={`${name} - Image ${currentIndex + 1}`}
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-card/60" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent to-card/60" />
       
       {/* Number Badge */}
       {numberBadge}

@@ -534,12 +534,12 @@ export default function AdminPage() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-4">
                   {/* Candidate Number */}
-                  <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-medium text-sm text-primary flex-shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-medium text-sm text-primary shrink-0">
                     {index + 1}
                   </div>
                   
                   {/* Candidate Image */}
-                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0 overflow-hidden">
                     {candidate.image ? (
                       <img 
                         src={candidate.image || "/placeholder.svg"} 
@@ -567,7 +567,7 @@ export default function AdminPage() {
                     onClick={() => handleRemoveClick(candidate.id, candidate.name)}
                     variant="ghost"
                     size="icon"
-                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 shrink-0"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -593,12 +593,12 @@ export default function AdminPage() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-4">
                   {/* Candidate Number */}
-                  <div className="w-7 h-7 rounded-full bg-secondary/10 border border-secondary/30 flex items-center justify-center font-medium text-sm text-secondary flex-shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-secondary/10 border border-secondary/30 flex items-center justify-center font-medium text-sm text-secondary shrink-0">
                     {index + 1}
                   </div>
                   
                   {/* Candidate Image */}
-                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0 overflow-hidden">
                     {candidate.image ? (
                       <img 
                         src={candidate.image || "/placeholder.svg"} 
@@ -626,7 +626,7 @@ export default function AdminPage() {
                     onClick={() => handleRemoveClick(candidate.id, candidate.name)}
                     variant="ghost"
                     size="icon"
-                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 shrink-0"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
