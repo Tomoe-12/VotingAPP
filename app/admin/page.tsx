@@ -1,5 +1,8 @@
 'use client'
 
+import React from "react"
+import { Trophy } from 'lucide-react' // Import Trophy component
+
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -11,25 +14,25 @@ import { Crown, Trash2, Plus, ArrowLeft, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import { MultiImageUpload } from '@/components/multi-image-upload'
 import { ConfirmationDialog } from '@/components/confirmation-dialog'
-
-interface Candidate {
-  id: string
-  name: string
-  category: 'king' | 'queen'
-  image: string
-  image2?: string
-  image3?: string
-  votes: number
-  age?: number
-  height?: string
-  major?: string
-  year?: string
-  hobbies?: string
-  hometown?: string
-}
+import {
+  addCandidate,
+  clearVotes,
+  removeCandidate,
+  resetCandidateVotes,
+  setVotingStatus as setVotingStatusInDb,
+  subscribeCandidates,
+  subscribeVotingStatus,
+  type CandidateRecord,
+  type VotingStatus,
+} from '@/lib/voting-data'
 
 export default function AdminPage() {
-  const [candidates, setCandidates] = useState<Candidate[]>([])
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState(false)
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const [authError, setAuthError] = useState('')
+  const [candidates, setCandidates] = useState<CandidateRecord[]>([])
   const [newName, setNewName] = useState('')
   const [newImages, setNewImages] = useState<string[]>([])
   const [newAge, setNewAge] = useState('')
@@ -41,37 +44,83 @@ export default function AdminPage() {
   const [newCategory, setNewCategory] = useState<'king' | 'queen'>('king')
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showRemoveDialog, setShowRemoveDialog] = useState(false)
+  const [showStartVotingDialog, setShowStartVotingDialog] = useState(false)
+  const [showEndVotingDialog, setShowEndVotingDialog] = useState(false)
+  const [showResetStatusDialog, setShowResetStatusDialog] = useState(false)
   const [candidateToRemove, setCandidateToRemove] = useState<{ id: string; name: string } | null>(null)
+  const [votingStatus, setVotingStatus] = useState<VotingStatus>('not-started')
+
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsAuthenticating(true)
+    setPasswordError(false)
+    setAuthError('')
+
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+
+      if (response.ok) {
+        setIsAuthenticated(true)
+        setPasswordError(false)
+        return
+      }
+
+      setPasswordError(true)
+      setAuthError('Incorrect password. Please try again.')
+      setPassword('')
+    } catch (error) {
+      console.error('Admin login failed', error)
+      setPasswordError(true)
+      setAuthError('Unable to verify password. Please try again.')
+    } finally {
+      setIsAuthenticating(false)
+    }
+  }
+
+  const handleStartVoting = async () => {
+    await setVotingStatusInDb('active')
+    setShowStartVotingDialog(false)
+  }
+
+  const handleEndVoting = async () => {
+    await setVotingStatusInDb('ended')
+    setShowEndVotingDialog(false)
+  }
+
+  const handleResetVotingStatus = async () => {
+    await setVotingStatusInDb('not-started')
+    setShowResetStatusDialog(false)
+  }
 
   useEffect(() => {
-    const storedCandidates = localStorage.getItem('candidates')
-    if (storedCandidates) {
-      setCandidates(JSON.parse(storedCandidates))
+    const unsubscribeCandidates = subscribeCandidates(setCandidates)
+    const unsubscribeVotingStatus = subscribeVotingStatus(setVotingStatus)
+
+    return () => {
+      unsubscribeCandidates()
+      unsubscribeVotingStatus()
     }
   }, [])
 
-  const addCandidate = () => {
+  const createCandidate = async () => {
     if (!newName.trim()) return
 
-    const newCandidate: Candidate = {
-      id: Date.now().toString(),
+    await addCandidate({
       name: newName.trim(),
       category: newCategory,
-      image: newImages[0] || '/placeholder.jpg',
-      image2: newImages[1] || undefined,
-      image3: newImages[2] || undefined,
-      votes: 0,
+      images: newImages.length > 0 ? newImages : ['/placeholder.jpg'],
       age: newAge ? parseInt(newAge) : undefined,
       height: newHeight.trim() || undefined,
       major: newMajor.trim() || undefined,
       year: newYear.trim() || undefined,
       hobbies: newHobbies.trim() || undefined,
-      hometown: newHometown.trim() || undefined
-    }
+      hometown: newHometown.trim() || undefined,
+    })
 
-    const updatedCandidates = [...candidates, newCandidate]
-    setCandidates(updatedCandidates)
-    localStorage.setItem('candidates', JSON.stringify(updatedCandidates))
     setNewName('')
     setNewImages([])
     setNewAge('')
@@ -87,275 +136,509 @@ export default function AdminPage() {
     setShowRemoveDialog(true)
   }
 
-  const confirmRemoveCandidate = () => {
+  const confirmRemoveCandidate = async () => {
     if (!candidateToRemove) return
-    const updatedCandidates = candidates.filter(c => c.id !== candidateToRemove.id)
-    setCandidates(updatedCandidates)
-    localStorage.setItem('candidates', JSON.stringify(updatedCandidates))
+    await removeCandidate(candidateToRemove.id)
     setCandidateToRemove(null)
   }
 
-  const confirmResetVotes = () => {
-    const resetCandidates = candidates.map(c => ({ ...c, votes: 0 }))
-    setCandidates(resetCandidates)
-    localStorage.setItem('candidates', JSON.stringify(resetCandidates))
-    localStorage.removeItem('votedKing')
-    localStorage.removeItem('votedQueen')
+  const confirmResetVotes = async () => {
+    await resetCandidateVotes()
+    await clearVotes()
   }
 
   const kingCandidates = candidates.filter(c => c.category === 'king')
   const queenCandidates = candidates.filter(c => c.category === 'queen')
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12 md:py-20 max-w-5xl">
-        {/* Header */}
-        <div className="mb-12">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="mb-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-          </Link>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">Admin Panel</h1>
-            <Button onClick={() => setShowResetDialog(true)} variant="destructive" size="sm">
-              <RotateCcw className="w-4 h-4 mr-2" />
-              Reset Votes
-            </Button>
-          </div>
+  // Show password screen if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
+        {/* Decorative elements */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
         </div>
 
-        {/* Add Candidate Form */}
-        <Card className="mb-12 border-border">
-          <CardHeader>
-            <CardTitle className="font-serif">Add Candidate</CardTitle>
-            <CardDescription>Add a new candidate to the election</CardDescription>
+        <Card className="w-full max-w-md relative z-10 border-border">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                <Crown className="w-8 h-8 text-primary" />
+              </div>
+            </div>
+            <CardTitle className="text-2xl font-serif">Admin Access</CardTitle>
+            <CardDescription>Enter password to access the admin panel</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name" className="text-sm font-medium mb-2 block">Name *</Label>
-                  <Input
-                    id="name"
-                    placeholder="Full name"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="category" className="text-sm font-medium mb-2 block">Category *</Label>
-                  <Select value={newCategory} onValueChange={(value: 'king' | 'queen') => setNewCategory(value)}>
-                    <SelectTrigger id="category" className="border-border">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="king">King</SelectItem>
-                      <SelectItem value="queen">Queen</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="age" className="text-sm font-medium mb-2 block">Age</Label>
-                  <Input
-                    id="age"
-                    type="number"
-                    placeholder="18"
-                    value={newAge}
-                    onChange={(e) => setNewAge(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="height" className="text-sm font-medium mb-2 block">Height</Label>
-                  <Input
-                    id="height"
-                    placeholder={'5\'6"'}
-                    value={newHeight}
-                    onChange={(e) => setNewHeight(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="hometown" className="text-sm font-medium mb-2 block">Hometown</Label>
-                  <Input
-                    id="hometown"
-                    placeholder="e.g., Mumbai"
-                    value={newHometown}
-                    onChange={(e) => setNewHometown(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="major" className="text-sm font-medium mb-2 block">Major/Department</Label>
-                  <Input
-                    id="major"
-                    placeholder="e.g., Computer Science"
-                    value={newMajor}
-                    onChange={(e) => setNewMajor(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="year" className="text-sm font-medium mb-2 block">Year</Label>
-                  <Input
-                    id="year"
-                    placeholder="e.g., Year 1"
-                    value={newYear}
-                    onChange={(e) => setNewYear(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <Label htmlFor="hobbies" className="text-sm font-medium mb-2 block">Hobbies</Label>
-                  <Input
-                    id="hobbies"
-                    placeholder="e.g., Basketball, Reading, Music"
-                    value={newHobbies}
-                    onChange={(e) => setNewHobbies(e.target.value)}
-                    className="border-border"
-                  />
-                </div>
-              </div>
-              
-              {/* Image Upload Section */}
-              <div className="border-t pt-4 mt-4">
-                <MultiImageUpload
-                  label="Candidate Images"
-                  images={newImages}
-                  onChange={setNewImages}
-                  maxImages={3}
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter admin password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    setPasswordError(false)
+                  }}
+                  className={passwordError ? 'border-destructive' : ''}
                 />
+                {passwordError && (
+                  <p className="text-sm text-destructive mt-2">Incorrect password. Please try again.</p>
+                )}
               </div>
-              
-              <div className="flex justify-end">
-                <Button onClick={addCandidate} size="default">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Candidate
+              <Button type="submit" className="w-full" disabled={isAuthenticating}>
+                {isAuthenticating ? 'Checking...' : 'Access Admin Panel'}
+              </Button>
+              {authError && (
+                <p className="text-sm text-destructive">{authError}</p>
+              )}
+              <Link href="/">
+                <Button type="button" variant="outline" className="w-full bg-transparent">
+                  Back to Home
                 </Button>
+              </Link>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 p-4 md:p-8">
+      {/* Decorative elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2 flex items-center gap-2">
+              <Crown className="w-8 h-8 text-primary" />
+              Admin Panel
+            </h1>
+            <p className="text-muted-foreground">Manage candidates and election results</p>
+          </div>
+          <Link href="/">
+            <Button variant="outline" size="sm">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+
+        {/* Voting Control Panel */}
+        <Card className="mb-8 border-border">
+          <CardHeader>
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div>
+                <CardTitle className="font-serif flex items-center gap-2">
+                  Voting Controls
+                </CardTitle>
+                <CardDescription>Manage the voting process and results</CardDescription>
               </div>
+              <div className="flex flex-col items-start md:items-end gap-2">
+                <p className="text-xs text-muted-foreground">Current Status</p>
+                <Badge 
+                  variant={votingStatus === 'active' ? 'default' : 'secondary'}
+                  className="text-sm md:text-base px-3 md:px-4 py-1 md:py-1.5"
+                >
+                  {votingStatus === 'not-started' && '⏸ Not Started'}
+                  {votingStatus === 'active' && '▶ Voting Active'}
+                  {votingStatus === 'ended' && '⏹ Voting Ended'}
+                </Badge>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2">
+              <Button 
+                onClick={() => setShowStartVotingDialog(true)}
+                disabled={votingStatus === 'active'}
+                variant={votingStatus === 'not-started' ? 'default' : 'outline'}
+                size="sm"
+                className="w-full sm:w-auto"
+              >
+                Start Voting
+              </Button>
+              <Button 
+                onClick={() => setShowEndVotingDialog(true)}
+                disabled={votingStatus === 'ended'}
+                variant={votingStatus === 'active' ? 'destructive' : 'outline'}
+                size="sm"
+                className="w-full sm:w-auto"
+              >
+                End Voting
+              </Button>
+              <div className="hidden sm:block w-px h-6 bg-border mx-1" />
+              <Button 
+                onClick={() => setShowResetStatusDialog(true)}
+                variant="outline"
+                size="sm"
+                className="w-full sm:w-auto"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Reset Status
+              </Button>
+              <Button 
+                onClick={() => setShowResetDialog(true)}
+                variant="destructive"
+                size="sm"
+                className="w-full sm:w-auto"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Reset All Votes
+              </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* King Candidates */}
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-2xl font-serif font-bold text-foreground">King Candidates</h2>
-            <Badge variant="outline">{kingCandidates.length}</Badge>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {kingCandidates.map((candidate, index) => (
-              <Card key={candidate.id} className="border-border">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-4">
-                    {/* Candidate Number */}
-                    <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-medium text-sm text-primary flex-shrink-0">
-                      {index + 1}
-                    </div>
-                    
-                    {/* Candidate Image */}
-                    <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      {candidate.image ? (
-                        <img 
-                          src={candidate.image || "/placeholder.svg"} 
-                          alt={candidate.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <Crown className="w-8 h-8 text-muted-foreground/30" />
-                      )}
-                    </div>
-                    
-                    {/* Candidate Info */}
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-base font-semibold truncate">{candidate.name}</h3>
-                      {(candidate.major || candidate.year) && (
-                        <p className="text-xs text-muted-foreground/80 truncate">
-                          {candidate.major}{candidate.major && candidate.year ? ', ' : ''}{candidate.year}
-                        </p>
-                      )}
-                      <p className="text-sm text-muted-foreground">{candidate.votes} votes</p>
-                    </div>
-                    
-                    {/* Delete Button */}
-                    <Button
-                      onClick={() => handleRemoveClick(candidate.id, candidate.name)}
-                      variant="ghost"
-                      size="icon"
-                      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-            {kingCandidates.length === 0 && (
-              <p className="text-muted-foreground col-span-2 py-4">No candidates added yet</p>
-            )}
-          </div>
-        </div>
+        {/* Voting Results Panel */}
+        <Card className="mb-8 border-border">
+          <CardHeader>
+            <CardTitle className="font-serif flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-primary" />
+              Voting Results
+            </CardTitle>
+            <CardDescription>Current voting statistics and leader board</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* King Results */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Crown className="w-5 h-5 text-primary" />
+                  King Candidates
+                </h3>
+                <div className="space-y-3">
+                  {candidates
+                    .filter(c => c.category === 'king')
+                    .sort((a, b) => b.votes - a.votes)
+                    .map((candidate, index) => {
+                      const totalKingVotes = candidates.filter(c => c.category === 'king').reduce((sum, c) => sum + c.votes, 0)
+                      const percentage = totalKingVotes > 0 ? (candidate.votes / totalKingVotes * 100).toFixed(1) : '0.0'
+                      return (
+                        <div key={candidate.id} className="bg-muted/50 rounded-lg p-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <span className={`text-lg font-bold ${index === 0 ? 'text-primary' : 'text-muted-foreground'}`}>
+                                #{index + 1}
+                              </span>
+                              <span className="font-medium">{candidate.name}</span>
+                            </div>
+                            <span className="text-sm font-semibold">{candidate.votes} votes</span>
+                          </div>
+                          <div className="w-full bg-background rounded-full h-2 overflow-hidden">
+                            <div 
+                              className="bg-primary h-full transition-all duration-500"
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">{percentage}%</div>
+                        </div>
+                      )
+                    })}
+                  {candidates.filter(c => c.category === 'king').length === 0 && (
+                    <p className="text-muted-foreground text-sm">No king candidates yet</p>
+                  )}
+                </div>
+              </div>
 
-        {/* Queen Candidates */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-2xl font-serif font-bold text-foreground">Queen Candidates</h2>
-            <Badge variant="outline">{queenCandidates.length}</Badge>
+              {/* Queen Results */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Crown className="w-5 h-5 text-secondary" />
+                  Queen Candidates
+                </h3>
+                <div className="space-y-3">
+                  {candidates
+                    .filter(c => c.category === 'queen')
+                    .sort((a, b) => b.votes - a.votes)
+                    .map((candidate, index) => {
+                      const totalQueenVotes = candidates.filter(c => c.category === 'queen').reduce((sum, c) => sum + c.votes, 0)
+                      const percentage = totalQueenVotes > 0 ? (candidate.votes / totalQueenVotes * 100).toFixed(1) : '0.0'
+                      return (
+                        <div key={candidate.id} className="bg-muted/50 rounded-lg p-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <span className={`text-lg font-bold ${index === 0 ? 'text-secondary' : 'text-muted-foreground'}`}>
+                                #{index + 1}
+                              </span>
+                              <span className="font-medium">{candidate.name}</span>
+                            </div>
+                            <span className="text-sm font-semibold">{candidate.votes} votes</span>
+                          </div>
+                          <div className="w-full bg-background rounded-full h-2 overflow-hidden">
+                            <div 
+                              className="bg-secondary h-full transition-all duration-500"
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">{percentage}%</div>
+                        </div>
+                      )
+                    })}
+                  {candidates.filter(c => c.category === 'queen').length === 0 && (
+                    <p className="text-muted-foreground text-sm">No queen candidates yet</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Total Stats */}
+            <div className="mt-6 pt-6 border-t border-border grid grid-cols-3 gap-4">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-primary">{candidates.filter(c => c.category === 'king').reduce((sum, c) => sum + c.votes, 0)}</p>
+                <p className="text-sm text-muted-foreground">King Votes</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-secondary">{candidates.filter(c => c.category === 'queen').reduce((sum, c) => sum + c.votes, 0)}</p>
+                <p className="text-sm text-muted-foreground">Queen Votes</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-foreground">{candidates.reduce((sum, c) => sum + c.votes, 0)}</p>
+                <p className="text-sm text-muted-foreground">Total Votes</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Add Candidate Form */}
+      <Card className="mb-12 border-border">
+        <CardHeader>
+          <CardTitle className="font-serif">Add Candidate</CardTitle>
+          <CardDescription>Add a new candidate to the election</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="name" className="text-sm font-medium mb-2 block">Name *</Label>
+                <Input
+                  id="name"
+                  placeholder="Full name"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div>
+                <Label htmlFor="category" className="text-sm font-medium mb-2 block">Category *</Label>
+                <Select value={newCategory} onValueChange={(value: 'king' | 'queen') => setNewCategory(value)}>
+                  <SelectTrigger id="category" className="border-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="king">King</SelectItem>
+                    <SelectItem value="queen">Queen</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="age" className="text-sm font-medium mb-2 block">Age</Label>
+                <Input
+                  id="age"
+                  type="number"
+                  placeholder="18"
+                  value={newAge}
+                  onChange={(e) => setNewAge(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div>
+                <Label htmlFor="height" className="text-sm font-medium mb-2 block">Height</Label>
+                <Input
+                  id="height"
+                  placeholder={'5\'6"'}
+                  value={newHeight}
+                  onChange={(e) => setNewHeight(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div>
+                <Label htmlFor="hometown" className="text-sm font-medium mb-2 block">Hometown</Label>
+                <Input
+                  id="hometown"
+                  placeholder="e.g., Mumbai"
+                  value={newHometown}
+                  onChange={(e) => setNewHometown(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div>
+                <Label htmlFor="major" className="text-sm font-medium mb-2 block">Major/Department</Label>
+                <Input
+                  id="major"
+                  placeholder="e.g., Computer Science"
+                  value={newMajor}
+                  onChange={(e) => setNewMajor(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div>
+                <Label htmlFor="year" className="text-sm font-medium mb-2 block">Year</Label>
+                <Input
+                  id="year"
+                  placeholder="e.g., Year 1"
+                  value={newYear}
+                  onChange={(e) => setNewYear(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <Label htmlFor="hobbies" className="text-sm font-medium mb-2 block">Hobbies</Label>
+                <Input
+                  id="hobbies"
+                  placeholder="e.g., Basketball, Reading, Music"
+                  value={newHobbies}
+                  onChange={(e) => setNewHobbies(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+            </div>
+            
+            {/* Image Upload Section */}
+            <div className="border-t pt-4 mt-4">
+              <MultiImageUpload
+                label="Candidate Images"
+                images={newImages}
+                onChange={setNewImages}
+                maxImages={3}
+                storagePathPrefix="candidates"
+              />
+            </div>
+            
+            <div className="flex justify-end">
+              <Button onClick={createCandidate} size="default">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Candidate
+              </Button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {queenCandidates.map((candidate, index) => (
-              <Card key={candidate.id} className="border-border">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-4">
-                    {/* Candidate Number */}
-                    <div className="w-7 h-7 rounded-full bg-secondary/10 border border-secondary/30 flex items-center justify-center font-medium text-sm text-secondary flex-shrink-0">
-                      {index + 1}
-                    </div>
-                    
-                    {/* Candidate Image */}
-                    <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      {candidate.image ? (
-                        <img 
-                          src={candidate.image || "/placeholder.svg"} 
-                          alt={candidate.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <Crown className="w-8 h-8 text-muted-foreground/30" />
-                      )}
-                    </div>
-                    
-                    {/* Candidate Info */}
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-base font-semibold truncate">{candidate.name}</h3>
-                      {(candidate.major || candidate.year) && (
-                        <p className="text-xs text-muted-foreground/80 truncate">
-                          {candidate.major}{candidate.major && candidate.year ? ', ' : ''}{candidate.year}
-                        </p>
-                      )}
-                      <p className="text-sm text-muted-foreground">{candidate.votes} votes</p>
-                    </div>
-                    
-                    {/* Delete Button */}
-                    <Button
-                      onClick={() => handleRemoveClick(candidate.id, candidate.name)}
-                      variant="ghost"
-                      size="icon"
-                      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+        </CardContent>
+      </Card>
+
+      {/* King Candidates */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <h2 className="text-2xl font-serif font-bold text-foreground">King Candidates</h2>
+          <Badge variant="outline">{kingCandidates.length}</Badge>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {kingCandidates.map((candidate, index) => (
+            <Card key={candidate.id} className="border-border">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  {/* Candidate Number */}
+                  <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-medium text-sm text-primary shrink-0">
+                    {index + 1}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-            {queenCandidates.length === 0 && (
-              <p className="text-muted-foreground col-span-2 py-4">No candidates added yet</p>
-            )}
-          </div>
+                  
+                  {/* Candidate Image */}
+                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0 overflow-hidden">
+                    {candidate.images?.[0] ? (
+                      <img 
+                        src={candidate.images[0] || "/placeholder.svg"} 
+                        alt={candidate.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Crown className="w-8 h-8 text-muted-foreground/30" />
+                    )}
+                  </div>
+                  
+                  {/* Candidate Info */}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-base font-semibold truncate">{candidate.name}</h3>
+                    {(candidate.major || candidate.year) && (
+                      <p className="text-xs text-muted-foreground/80 truncate">
+                        {candidate.major}{candidate.major && candidate.year ? ', ' : ''}{candidate.year}
+                      </p>
+                    )}
+                    <p className="text-sm text-muted-foreground">{candidate.votes} votes</p>
+                  </div>
+                  
+                  {/* Delete Button */}
+                  <Button
+                    onClick={() => handleRemoveClick(candidate.id, candidate.name)}
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 shrink-0"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+          {kingCandidates.length === 0 && (
+            <p className="text-muted-foreground col-span-2 py-4">No candidates added yet</p>
+          )}
+        </div>
+      </div>
+
+      {/* Queen Candidates */}
+      <div>
+        <div className="flex items-center gap-3 mb-6">
+          <h2 className="text-2xl font-serif font-bold text-foreground">Queen Candidates</h2>
+          <Badge variant="outline">{queenCandidates.length}</Badge>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {queenCandidates.map((candidate, index) => (
+            <Card key={candidate.id} className="border-border">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  {/* Candidate Number */}
+                  <div className="w-7 h-7 rounded-full bg-secondary/10 border border-secondary/30 flex items-center justify-center font-medium text-sm text-secondary shrink-0">
+                    {index + 1}
+                  </div>
+                  
+                  {/* Candidate Image */}
+                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0 overflow-hidden">
+                    {candidate.images?.[0] ? (
+                      <img 
+                        src={candidate.images[0] || "/placeholder.svg"} 
+                        alt={candidate.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Crown className="w-8 h-8 text-muted-foreground/30" />
+                    )}
+                  </div>
+                  
+                  {/* Candidate Info */}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-base font-semibold truncate">{candidate.name}</h3>
+                    {(candidate.major || candidate.year) && (
+                      <p className="text-xs text-muted-foreground/80 truncate">
+                        {candidate.major}{candidate.major && candidate.year ? ', ' : ''}{candidate.year}
+                      </p>
+                    )}
+                    <p className="text-sm text-muted-foreground">{candidate.votes} votes</p>
+                  </div>
+                  
+                  {/* Delete Button */}
+                  <Button
+                    onClick={() => handleRemoveClick(candidate.id, candidate.name)}
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 shrink-0"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+          {queenCandidates.length === 0 && (
+            <p className="text-muted-foreground col-span-2 py-4">No candidates added yet</p>
+          )}
         </div>
       </div>
 
@@ -376,6 +659,42 @@ export default function AdminPage() {
         title="Remove Candidate"
         description={`Are you sure you want to remove ${candidateToRemove?.name}? This action cannot be undone.`}
         confirmText={`I want to remove ${candidateToRemove?.name}`}
+      />
+
+      <ConfirmationDialog
+        open={showStartVotingDialog}
+        onOpenChange={setShowStartVotingDialog}
+        onConfirm={handleStartVoting}
+        title="Start Voting"
+        description="This will activate the voting process and allow users to cast their votes. Make sure all candidates are ready before proceeding."
+        confirmText="I want to start voting"
+        destructive={false}
+        confirmButtonText="Start Voting"
+        variant="default"
+      />
+
+      <ConfirmationDialog
+        open={showEndVotingDialog}
+        onOpenChange={setShowEndVotingDialog}
+        onConfirm={handleEndVoting}
+        title="End Voting"
+        description="This will close the voting process and prevent any further votes from being cast. This action marks the end of the election."
+        confirmText="I want to end voting"
+        destructive={true}
+        confirmButtonText="End Voting"
+        variant="destructive"
+      />
+
+      <ConfirmationDialog
+        open={showResetStatusDialog}
+        onOpenChange={setShowResetStatusDialog}
+        onConfirm={handleResetVotingStatus}
+        title="Reset Voting Status"
+        description="This will reset the voting status back to 'Not Started'. Vote counts will remain unchanged. Use this to reopen voting after it has ended."
+        confirmText="I want to reset status"
+        destructive={false}
+        confirmButtonText="Reset Status"
+        variant="outline"
       />
     </div>
   )

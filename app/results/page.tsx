@@ -6,23 +6,14 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Crown, Trophy, ArrowLeft, Users } from 'lucide-react'
 import Link from 'next/link'
-
-interface Candidate {
-  id: string
-  name: string
-  category: 'king' | 'queen'
-  image: string
-  votes: number
-}
+import { subscribeCandidates, type CandidateRecord } from '@/lib/voting-data'
 
 export default function ResultsPage() {
-  const [candidates, setCandidates] = useState<Candidate[]>([])
+  const [candidates, setCandidates] = useState<CandidateRecord[]>([])
 
   useEffect(() => {
-    const storedCandidates = localStorage.getItem('candidates')
-    if (storedCandidates) {
-      setCandidates(JSON.parse(storedCandidates))
-    }
+    const unsubscribeCandidates = subscribeCandidates(setCandidates)
+    return () => unsubscribeCandidates()
   }, [])
 
   const kingCandidates = candidates
@@ -86,7 +77,7 @@ export default function ResultsPage() {
               >
                 <CardContent className="p-5 md:p-6">
                   <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted flex-shrink-0">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted shrink-0">
                       {index === 0 ? (
                         <Trophy className="w-5 h-5 text-foreground" />
                       ) : (
@@ -96,7 +87,7 @@ export default function ResultsPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <h3 className="text-lg font-serif font-semibold text-foreground">{candidate.name}</h3>
-                        <div className="text-right flex-shrink-0">
+                        <div className="text-right shrink-0">
                           <div className="text-2xl font-bold text-foreground">{candidate.votes}</div>
                           <div className="text-xs text-muted-foreground">
                             {getPercentage(candidate.votes, totalVotesKing)}%
@@ -141,7 +132,7 @@ export default function ResultsPage() {
               >
                 <CardContent className="p-5 md:p-6">
                   <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted flex-shrink-0">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted shrink-0">
                       {index === 0 ? (
                         <Trophy className="w-5 h-5 text-foreground" />
                       ) : (
@@ -151,7 +142,7 @@ export default function ResultsPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <h3 className="text-lg font-serif font-semibold text-foreground">{candidate.name}</h3>
-                        <div className="text-right flex-shrink-0">
+                        <div className="text-right shrink-0">
                           <div className="text-2xl font-bold text-foreground">{candidate.votes}</div>
                           <div className="text-xs text-muted-foreground">
                             {getPercentage(candidate.votes, totalVotesQueen)}%
