@@ -14,28 +14,25 @@ import { Crown, Trash2, Plus, ArrowLeft, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import { MultiImageUpload } from '@/components/multi-image-upload'
 import { ConfirmationDialog } from '@/components/confirmation-dialog'
-
-interface Candidate {
-  id: string
-  name: string
-  category: 'king' | 'queen'
-  image: string
-  image2?: string
-  image3?: string
-  votes: number
-  age?: number
-  height?: string
-  major?: string
-  year?: string
-  hobbies?: string
-  hometown?: string
-}
+import {
+  addCandidate,
+  clearVotes,
+  removeCandidate,
+  resetCandidateVotes,
+  setVotingStatus as setVotingStatusInDb,
+  subscribeCandidates,
+  subscribeVotingStatus,
+  type CandidateRecord,
+  type VotingStatus,
+} from '@/lib/voting-data'
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
-  const [candidates, setCandidates] = useState<Candidate[]>([])
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const [authError, setAuthError] = useState('')
+  const [candidates, setCandidates] = useState<CandidateRecord[]>([])
   const [newName, setNewName] = useState('')
   const [newImages, setNewImages] = useState<string[]>([])
   const [newAge, setNewAge] = useState('')
@@ -51,73 +48,79 @@ export default function AdminPage() {
   const [showEndVotingDialog, setShowEndVotingDialog] = useState(false)
   const [showResetStatusDialog, setShowResetStatusDialog] = useState(false)
   const [candidateToRemove, setCandidateToRemove] = useState<{ id: string; name: string } | null>(null)
-  const [votingStatus, setVotingStatus] = useState<'not-started' | 'active' | 'ended'>('not-started')
+  const [votingStatus, setVotingStatus] = useState<VotingStatus>('not-started')
 
-  const ADMIN_PASSWORD = 'admin123' // Change this to your desired password
-
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true)
-      setPasswordError(false)
-    } else {
+    setIsAuthenticating(true)
+    setPasswordError(false)
+    setAuthError('')
+
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+
+      if (response.ok) {
+        setIsAuthenticated(true)
+        setPasswordError(false)
+        return
+      }
+
       setPasswordError(true)
+      setAuthError('Incorrect password. Please try again.')
       setPassword('')
+    } catch (error) {
+      console.error('Admin login failed', error)
+      setPasswordError(true)
+      setAuthError('Unable to verify password. Please try again.')
+    } finally {
+      setIsAuthenticating(false)
     }
   }
 
-  const handleStartVoting = () => {
-    setVotingStatus('active')
-    localStorage.setItem('votingStatus', 'active')
+  const handleStartVoting = async () => {
+    await setVotingStatusInDb('active')
     setShowStartVotingDialog(false)
   }
 
-  const handleEndVoting = () => {
-    setVotingStatus('ended')
-    localStorage.setItem('votingStatus', 'ended')
+  const handleEndVoting = async () => {
+    await setVotingStatusInDb('ended')
     setShowEndVotingDialog(false)
   }
 
-  const handleResetVotingStatus = () => {
-    setVotingStatus('not-started')
-    localStorage.setItem('votingStatus', 'not-started')
+  const handleResetVotingStatus = async () => {
+    await setVotingStatusInDb('not-started')
     setShowResetStatusDialog(false)
   }
 
   useEffect(() => {
-    const storedCandidates = localStorage.getItem('candidates')
-    if (storedCandidates) {
-      setCandidates(JSON.parse(storedCandidates))
-    }
-    
-    const storedVotingStatus = localStorage.getItem('votingStatus')
-    if (storedVotingStatus) {
-      setVotingStatus(storedVotingStatus as 'not-started' | 'active' | 'ended')
+    const unsubscribeCandidates = subscribeCandidates(setCandidates)
+    const unsubscribeVotingStatus = subscribeVotingStatus(setVotingStatus)
+
+    return () => {
+      unsubscribeCandidates()
+      unsubscribeVotingStatus()
     }
   }, [])
 
-  const addCandidate = () => {
+  const createCandidate = async () => {
     if (!newName.trim()) return
 
-    const newCandidate: Candidate = {
-      id: Date.now().toString(),
+    await addCandidate({
       name: newName.trim(),
       category: newCategory,
-      image: newImages[0] || '/placeholder.jpg',
-      image2: newImages[1] || undefined,
-      image3: newImages[2] || undefined,
-      votes: 0,
+      images: newImages.length > 0 ? newImages : ['/placeholder.jpg'],
       age: newAge ? parseInt(newAge) : undefined,
       height: newHeight.trim() || undefined,
       major: newMajor.trim() || undefined,
       year: newYear.trim() || undefined,
       hobbies: newHobbies.trim() || undefined,
-      hometown: newHometown.trim() || undefined
-    }
+      hometown: newHometown.trim() || undefined,
+    })
 
-    const updatedCandidates = [...candidates, newCandidate]
-    setCandidates(updatedCandidates)
-    localStorage.setItem('candidates', JSON.stringify(updatedCandidates))
     setNewName('')
     setNewImages([])
     setNewAge('')
@@ -133,20 +136,15 @@ export default function AdminPage() {
     setShowRemoveDialog(true)
   }
 
-  const confirmRemoveCandidate = () => {
+  const confirmRemoveCandidate = async () => {
     if (!candidateToRemove) return
-    const updatedCandidates = candidates.filter(c => c.id !== candidateToRemove.id)
-    setCandidates(updatedCandidates)
-    localStorage.setItem('candidates', JSON.stringify(updatedCandidates))
+    await removeCandidate(candidateToRemove.id)
     setCandidateToRemove(null)
   }
 
-  const confirmResetVotes = () => {
-    const resetCandidates = candidates.map(c => ({ ...c, votes: 0 }))
-    setCandidates(resetCandidates)
-    localStorage.setItem('candidates', JSON.stringify(resetCandidates))
-    localStorage.removeItem('votedKing')
-    localStorage.removeItem('votedQueen')
+  const confirmResetVotes = async () => {
+    await resetCandidateVotes()
+    await clearVotes()
   }
 
   const kingCandidates = candidates.filter(c => c.category === 'king')
@@ -191,9 +189,12 @@ export default function AdminPage() {
                   <p className="text-sm text-destructive mt-2">Incorrect password. Please try again.</p>
                 )}
               </div>
-              <Button type="submit" className="w-full">
-                Access Admin Panel
+              <Button type="submit" className="w-full" disabled={isAuthenticating}>
+                {isAuthenticating ? 'Checking...' : 'Access Admin Panel'}
               </Button>
+              {authError && (
+                <p className="text-sm text-destructive">{authError}</p>
+              )}
               <Link href="/">
                 <Button type="button" variant="outline" className="w-full bg-transparent">
                   Back to Home
@@ -509,11 +510,12 @@ export default function AdminPage() {
                 images={newImages}
                 onChange={setNewImages}
                 maxImages={3}
+                storagePathPrefix="candidates"
               />
             </div>
             
             <div className="flex justify-end">
-              <Button onClick={addCandidate} size="default">
+              <Button onClick={createCandidate} size="default">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Candidate
               </Button>
@@ -540,9 +542,9 @@ export default function AdminPage() {
                   
                   {/* Candidate Image */}
                   <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0 overflow-hidden">
-                    {candidate.image ? (
+                    {candidate.images?.[0] ? (
                       <img 
-                        src={candidate.image || "/placeholder.svg"} 
+                        src={candidate.images[0] || "/placeholder.svg"} 
                         alt={candidate.name}
                         className="w-full h-full object-cover"
                       />
@@ -599,9 +601,9 @@ export default function AdminPage() {
                   
                   {/* Candidate Image */}
                   <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0 overflow-hidden">
-                    {candidate.image ? (
+                    {candidate.images?.[0] ? (
                       <img 
-                        src={candidate.image || "/placeholder.svg"} 
+                        src={candidate.images[0] || "/placeholder.svg"} 
                         alt={candidate.name}
                         className="w-full h-full object-cover"
                       />

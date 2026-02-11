@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -22,190 +23,111 @@ import {
 } from "lucide-react";
 import { CandidateImageCarousel } from "@/components/candidate-image-carousel";
 import { useLanguage } from "@/lib/language-context";
-import { Switch } from "@/components/ui/switch";
 import { FloatingNav } from "@/components/floating-nav";
+import {
+  subscribeCandidates,
+  subscribeVotingStatus,
+  type CandidateRecord,
+  type VotingStatus,
+} from "@/lib/voting-data";
+import { castVote, getTokenStatus } from "@/lib/vote-api";
 
-interface Candidate {
-  id: string;
-  name: string;
-  category: "king" | "queen";
-  image: string;
-  image2?: string;
-  image3?: string;
-  votes: number;
-  age?: number;
-  height?: string;
-  major?: string;
-  year?: string;
-  hobbies?: string;
-  hometown?: string;
-}
+type Candidate = CandidateRecord;
 
-const defaultCandidates: Candidate[] = [
-  {
-    id: "1",
-    name: "Rahul Sharma",
-    category: "king",
-    image: "/images/boy1.jpg",
-    image2: "/images/boy2.jpg",
-    votes: 0,
-    age: 18,
-    height: "5'10\"",
-    major: "Computer Science",
-    year: "Year 1",
-    hobbies: "Basketball, Coding",
-    hometown: "Mumbai",
-  },
-  {
-    id: "2",
-    name: "Arjun Patel",
-    category: "king",
-    image: "/images/boy2.jpg",
-    image2: "/images/boy1.jpg",
-    votes: 0,
-    age: 19,
-    height: "6'0\"",
-    major: "Business",
-    year: "Year 1",
-    hobbies: "Photography, Travel",
-    hometown: "Delhi",
-  },
-  {
-    id: "3",
-    name: "Vikram Singh",
-    category: "king",
-    image: "/images/boy1.jpg",
-    votes: 0,
-    age: 18,
-    height: "5'11\"",
-    major: "Engineering",
-    year: "Year 1",
-    hobbies: "Football, Music",
-    hometown: "Bangalore",
-  },
-  {
-    id: "4",
-    name: "Priya Mehta",
-    category: "queen",
-    image: "/images/girl1.jpg",
-    image2: "/images/girl2.jpg",
-    votes: 0,
-    age: 18,
-    height: "5'5\"",
-    major: "Medicine",
-    year: "Year 1",
-    hobbies: "Dancing, Reading",
-    hometown: "Pune",
-  },
-  {
-    id: "5",
-    name: "Ananya Kumar",
-    category: "queen",
-    image: "/images/girl2.jpg",
-    image2: "/images/girl1.jpg",
-    votes: 0,
-    age: 19,
-    height: "5'6\"",
-    major: "Arts",
-    year: "Year 1",
-    hobbies: "Painting, Singing",
-    hometown: "Chennai",
-  },
-  {
-    id: "6",
-    name: "Sneha Reddy",
-    category: "queen",
-    image: "/images/girl1.jpg",
-    votes: 0,
-    age: 18,
-    height: "5'4\"",
-    major: "Law",
-    year: "Year 1",
-    hobbies: "Debate, Writing",
-    hometown: "Hyderabad",
-  },
-];
-
-export default function VotingPage() {
+function VotingPageContent() {
   const { t, language, setLanguage } = useLanguage();
+  const searchParams = useSearchParams();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [hasVotedKing, setHasVotedKing] = useState(false);
   const [hasVotedQueen, setHasVotedQueen] = useState(false);
   const [votedKingId, setVotedKingId] = useState<string | null>(null);
   const [votedQueenId, setVotedQueenId] = useState<string | null>(null);
-  const [votingStatus, setVotingStatus] = useState<
-    "not-started" | "active" | "ended"
-  >("not-started");
+  const [votingStatus, setVotingStatus] = useState<VotingStatus>("not-started");
+  const [voterToken, setVoterToken] = useState("");
+  const [voteError, setVoteError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Load candidates from localStorage or use defaults
-    const storedCandidates = localStorage.getItem("candidates");
-    if (storedCandidates) {
-      const loaded = JSON.parse(storedCandidates);
-      // Merge details from default candidates into loaded ones
-      const mergedCandidates = loaded.map((candidate: Candidate) => {
-        const defaultCandidate = defaultCandidates.find(
-          (dc) => dc.id === candidate.id,
-        );
-        return {
-          ...candidate,
-          age: candidate.age || defaultCandidate?.age,
-          height: candidate.height || defaultCandidate?.height,
-          major: candidate.major || defaultCandidate?.major,
-          year: candidate.year || defaultCandidate?.year,
-          hobbies: candidate.hobbies || defaultCandidate?.hobbies,
-          hometown: candidate.hometown || defaultCandidate?.hometown,
-        };
-      });
-      setCandidates(mergedCandidates);
-      localStorage.setItem("candidates", JSON.stringify(mergedCandidates));
-    } else {
-      setCandidates(defaultCandidates);
-      localStorage.setItem("candidates", JSON.stringify(defaultCandidates));
+    const token = searchParams?.get("id")?.trim() ?? "";
+    setVoterToken(token);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!voterToken) {
+      setHasVotedKing(false);
+      setHasVotedQueen(false);
+      setVotedKingId(null);
+      setVotedQueenId(null);
+      return;
     }
 
-    // Check if user has already voted
-    const votedKing = localStorage.getItem("votedKing");
-    const votedQueen = localStorage.getItem("votedQueen");
-    if (votedKing) {
-      setHasVotedKing(true);
-      setVotedKingId(votedKing);
-    }
-    if (votedQueen) {
-      setHasVotedQueen(true);
-      setVotedQueenId(votedQueen);
-    }
+    let isActive = true;
 
-    // Load voting status
-    const storedVotingStatus = localStorage.getItem("votingStatus");
-    if (storedVotingStatus) {
-      setVotingStatus(storedVotingStatus as "not-started" | "active" | "ended");
-    }
+    const loadStatus = async () => {
+      try {
+        const status = await getTokenStatus(voterToken);
+        if (!isActive || !status.ok) return;
+        setHasVotedKing(Boolean(status.usedKing));
+        setHasVotedQueen(Boolean(status.usedQueen));
+        setVotedKingId(status.lastKingCandidateId ?? null);
+        setVotedQueenId(status.lastQueenCandidateId ?? null);
+      } catch (error) {
+        console.error("Failed to load token status", error);
+      }
+    };
+
+    loadStatus();
+
+    return () => {
+      isActive = false;
+    };
+  }, [voterToken]);
+
+  useEffect(() => {
+    const unsubscribeCandidates = subscribeCandidates(setCandidates);
+    const unsubscribeVotingStatus = subscribeVotingStatus(setVotingStatus);
+
+    return () => {
+      unsubscribeCandidates();
+      unsubscribeVotingStatus();
+    };
   }, []);
 
-  const handleVote = (candidateId: string, category: "king" | "queen") => {
-    // Check voting status
-    if (votingStatus !== "active") {
-      return; // Don't allow voting if not active
+  const handleVote = async (candidateId: string, category: "king" | "queen") => {
+    if (votingStatus !== "active" || isSubmitting) {
+      return;
     }
 
-    const updatedCandidates = candidates.map((candidate) =>
-      candidate.id === candidateId
-        ? { ...candidate, votes: candidate.votes + 1 }
-        : candidate,
-    );
+    if (category === "king" && hasVotedKing) return;
+    if (category === "queen" && hasVotedQueen) return;
 
-    setCandidates(updatedCandidates);
-    localStorage.setItem("candidates", JSON.stringify(updatedCandidates));
+    if (!voterToken) {
+      setVoteError("Missing voter token. Please open the link from your QR code.");
+      return;
+    }
 
-    if (category === "king") {
-      setHasVotedKing(true);
-      setVotedKingId(candidateId);
-      localStorage.setItem("votedKing", candidateId);
-    } else {
-      setHasVotedQueen(true);
-      setVotedQueenId(candidateId);
-      localStorage.setItem("votedQueen", candidateId);
+    setIsSubmitting(true);
+    setVoteError("");
+
+    try {
+      const response = await castVote({ token: voterToken, candidateId, category });
+      if (response.ok) {
+        if (category === "king") {
+          setHasVotedKing(true);
+          setVotedKingId(candidateId);
+        } else {
+          setHasVotedQueen(true);
+          setVotedQueenId(candidateId);
+        }
+        return;
+      }
+
+      setVoteError(response.reason || "Unable to cast your vote. Please try again.");
+    } catch (error) {
+      console.error("Vote submission failed", error);
+      setVoteError("Unable to cast your vote. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -303,6 +225,33 @@ export default function VotingPage() {
           </div>
         </div>
 
+        {(hasVotedKing || hasVotedQueen) && (
+          <div className="mb-8 p-5 bg-accent border border-border rounded-lg flex items-center gap-3 text-accent-foreground">
+            <CheckCircle2 className="w-5 h-5 shrink-0" />
+            <span>{t("voteRecorded")}</span>
+          </div>
+        )}
+
+        {!voterToken && (
+          <div className="mb-8 p-5 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-3">
+            <div className="w-5 h-5 rounded-full bg-destructive/20 flex items-center justify-center shrink-0">
+              <div className="w-2 h-2 rounded-full bg-destructive" />
+            </div>
+            <span className="text-destructive font-medium">
+              Missing voter token. Please open the link from your QR code.
+            </span>
+          </div>
+        )}
+
+        {voteError && (
+          <div className="mb-8 p-5 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-3">
+            <div className="w-5 h-5 rounded-full bg-destructive/20 flex items-center justify-center shrink-0">
+              <div className="w-2 h-2 rounded-full bg-destructive" />
+            </div>
+            <span className="text-destructive font-medium">{voteError}</span>
+          </div>
+        )}
+
         {/* King Voting Section */}
         <div id="king-section" className="mb-20 md:mb-32 scroll-mt-24">
           <div className="mb-8 md:mb-12">
@@ -313,6 +262,13 @@ export default function VotingPage() {
               {t("selectCandidate")}
             </p>
           </div>
+
+          {hasVotedKing && votingStatus === "active" && (
+            <div className="mb-8 p-5 bg-accent border border-border rounded-lg flex items-center gap-3 text-accent-foreground">
+              <CheckCircle2 className="w-5 h-5 shrink-0" />
+              <span>{t("voteRecorded")}</span>
+            </div>
+          )}
 
           {votingStatus === "not-started" && (
             <div className="mb-8 p-5 bg-muted border border-border rounded-lg flex items-center gap-3">
@@ -337,12 +293,6 @@ export default function VotingPage() {
             </div>
           )}
 
-          {hasVotedKing && votingStatus === "active" && (
-            <div className="mb-8 p-5 bg-accent border border-border rounded-lg flex items-center gap-3 text-accent-foreground">
-              <CheckCircle2 className="w-5 h-5 shrink-0" />
-              <span>{t("voteRecorded")}</span>
-            </div>
-          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {kingCandidates.map((candidate, index) => (
@@ -356,11 +306,7 @@ export default function VotingPage() {
               >
                 <CardHeader className="p-0">
                   <CandidateImageCarousel
-                    images={[
-                      candidate.image,
-                      candidate.image2,
-                      candidate.image3,
-                    ]}
+                    images={candidate.images ?? []}
                     name={candidate.name}
                     numberBadge={
                       <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-primary/20 flex items-center justify-center font-semibold text-sm text-primary shadow-sm z-10">
@@ -418,7 +364,7 @@ export default function VotingPage() {
                   </CardDescription>
                   <Button
                     onClick={() => handleVote(candidate.id, "king")}
-                    disabled={hasVotedKing || votingStatus !== "active"}
+                    disabled={!voterToken || hasVotedKing || votingStatus !== "active" || isSubmitting}
                     className="w-full"
                     variant={
                       votedKingId === candidate.id ? "default" : "outline"
@@ -456,6 +402,13 @@ export default function VotingPage() {
             </p>
           </div>
 
+          {hasVotedQueen && votingStatus === "active" && (
+            <div className="mb-8 p-5 bg-accent border border-border rounded-lg flex items-center gap-3 text-accent-foreground">
+              <CheckCircle2 className="w-5 h-5 shrink-0" />
+              <span>{t("voteRecorded")}</span>
+            </div>
+          )}
+
           {votingStatus === "not-started" && (
             <div className="mb-8 p-5 bg-muted border border-border rounded-lg flex items-center gap-3">
               <div className="w-5 h-5 rounded-full bg-muted-foreground/20 flex items-center justify-center shrink-0">
@@ -479,12 +432,6 @@ export default function VotingPage() {
             </div>
           )}
 
-          {hasVotedQueen && votingStatus === "active" && (
-            <div className="mb-8 p-5 bg-accent border border-border rounded-lg flex items-center gap-3 text-accent-foreground">
-              <CheckCircle2 className="w-5 h-5 shrink-0" />
-              <span>{t("voteRecorded")}</span>
-            </div>
-          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {queenCandidates.map((candidate, index) => (
@@ -498,11 +445,7 @@ export default function VotingPage() {
               >
                 <CardHeader className="p-0">
                   <CandidateImageCarousel
-                    images={[
-                      candidate.image,
-                      candidate.image2,
-                      candidate.image3,
-                    ]}
+                    images={candidate.images ?? []}
                     name={candidate.name}
                     numberBadge={
                       <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-secondary/20 flex items-center justify-center font-semibold text-sm text-secondary shadow-sm z-10">
@@ -560,7 +503,7 @@ export default function VotingPage() {
                   </CardDescription>
                   <Button
                     onClick={() => handleVote(candidate.id, "queen")}
-                    disabled={hasVotedQueen || votingStatus !== "active"}
+                    disabled={!voterToken || hasVotedQueen || votingStatus !== "active" || isSubmitting}
                     className="w-full"
                     variant={
                       votedQueenId === candidate.id ? "default" : "outline"
@@ -668,5 +611,13 @@ export default function VotingPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function VotingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <VotingPageContent />
+    </Suspense>
   );
 }

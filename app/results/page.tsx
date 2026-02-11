@@ -6,23 +6,14 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Crown, Trophy, ArrowLeft, Users } from 'lucide-react'
 import Link from 'next/link'
-
-interface Candidate {
-  id: string
-  name: string
-  category: 'king' | 'queen'
-  image: string
-  votes: number
-}
+import { subscribeCandidates, type CandidateRecord } from '@/lib/voting-data'
 
 export default function ResultsPage() {
-  const [candidates, setCandidates] = useState<Candidate[]>([])
+  const [candidates, setCandidates] = useState<CandidateRecord[]>([])
 
   useEffect(() => {
-    const storedCandidates = localStorage.getItem('candidates')
-    if (storedCandidates) {
-      setCandidates(JSON.parse(storedCandidates))
-    }
+    const unsubscribeCandidates = subscribeCandidates(setCandidates)
+    return () => unsubscribeCandidates()
   }, [])
 
   const kingCandidates = candidates

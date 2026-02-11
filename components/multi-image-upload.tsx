@@ -7,18 +7,28 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Upload, X, Link as LinkIcon } from 'lucide-react'
+import { uploadImageFile } from '@/lib/storage'
 
 interface MultiImageUploadProps {
   label: string
   images: string[]
   onChange: (images: string[]) => void
   maxImages?: number
+  storagePathPrefix?: string
 }
 
-export function MultiImageUpload({ label, images, onChange, maxImages = 3 }: MultiImageUploadProps) {
+export function MultiImageUpload({
+  label,
+  images,
+  onChange,
+  maxImages = 3,
+  storagePathPrefix = 'candidates',
+}: MultiImageUploadProps) {
   const [dragActive, setDragActive] = useState(false)
   const [showUrlInput, setShowUrlInput] = useState(false)
   const [urlInput, setUrlInput] = useState('')
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleDrag = (e: React.DragEvent) => {
@@ -48,32 +58,30 @@ export function MultiImageUpload({ label, images, onChange, maxImages = 3 }: Mul
     }
   }
 
-  const handleFiles = (files: File[]) => {
+  const handleFiles = async (files: File[]) => {
     const imageFiles = files.filter(file => file.type.startsWith('image/'))
     const remainingSlots = maxImages - images.length
 
     if (remainingSlots <= 0) return
 
     const filesToProcess = imageFiles.slice(0, remainingSlots)
-    let processedCount = 0
+    setIsUploading(true)
+    setUploadError('')
 
-    filesToProcess.forEach(file => {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const result = e.target?.result as string
-        processedCount++
-        
-        onChange([...images, result])
-        
-        if (processedCount === filesToProcess.length) {
-          // Reset input
-          if (inputRef.current) {
-            inputRef.current.value = ''
-          }
-        }
+    try {
+      const uploadedUrls = await Promise.all(
+        filesToProcess.map((file) => uploadImageFile(file, storagePathPrefix)),
+      )
+      onChange([...images, ...uploadedUrls])
+    } catch (error) {
+      console.error('Image upload failed', error)
+      setUploadError('Image upload failed. Please try again.')
+    } finally {
+      setIsUploading(false)
+      if (inputRef.current) {
+        inputRef.current.value = ''
       }
-      reader.readAsDataURL(file)
-    })
+    }
   }
 
   const handleUrlUpload = () => {
@@ -158,10 +166,15 @@ export function MultiImageUpload({ label, images, onChange, maxImages = 3 }: Mul
               type="button"
               size="sm"
               onClick={() => inputRef.current?.click()}
+              disabled={isUploading}
             >
-              Choose Files
+              {isUploading ? 'Uploading...' : 'Choose Files'}
             </Button>
           </div>
+
+          {uploadError && (
+            <p className="text-sm text-destructive">{uploadError}</p>
+          )}
 
           {/* URL Upload Option */}
           {!showUrlInput ? (
