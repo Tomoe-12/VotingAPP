@@ -37,6 +37,7 @@ type Candidate = CandidateRecord;
 function VotingPageContent() {
   const { t, language, setLanguage } = useLanguage();
   const searchParams = useSearchParams();
+  const [isMounted, setIsMounted] = useState(false);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [hasVotedKing, setHasVotedKing] = useState(false);
   const [hasVotedQueen, setHasVotedQueen] = useState(false);
@@ -46,6 +47,19 @@ function VotingPageContent() {
   const [voterToken, setVoterToken] = useState("");
   const [voteError, setVoteError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <div
+        className="min-h-screen bg-linear-to-br from-background via-background to-muted/30"
+        suppressHydrationWarning
+      />
+    );
+  }
 
   useEffect(() => {
     const token = searchParams?.get("id")?.trim() ?? "";
@@ -138,7 +152,10 @@ function VotingPageContent() {
   const totalVotesQueen = queenCandidates.reduce((sum, c) => sum + c.votes, 0);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/30 relative overflow-hidden">
+    <div
+      className="min-h-screen bg-linear-to-br from-background via-background to-muted/30 relative overflow-hidden"
+      suppressHydrationWarning
+    >
       {/* Floating Navigation */}
       <FloatingNav />
 

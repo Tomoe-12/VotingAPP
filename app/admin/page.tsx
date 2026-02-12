@@ -14,6 +14,7 @@ import { Crown, Trash2, Plus, ArrowLeft, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import { MultiImageUpload } from '@/components/multi-image-upload'
 import { ConfirmationDialog } from '@/components/confirmation-dialog'
+import { uploadImageFile } from '@/lib/storage'
 import {
   addCandidate,
   clearVotes,
@@ -28,13 +29,15 @@ import {
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [adminToken, setAdminToken] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
   const [isAuthenticating, setIsAuthenticating] = useState(false)
   const [authError, setAuthError] = useState('')
   const [candidates, setCandidates] = useState<CandidateRecord[]>([])
   const [newName, setNewName] = useState('')
-  const [newImages, setNewImages] = useState<string[]>([])
+  const [newImageUrls, setNewImageUrls] = useState<string[]>([])
+  const [newImageFiles, setNewImageFiles] = useState<File[]>([])
   const [newAge, setNewAge] = useState('')
   const [newHeight, setNewHeight] = useState('')
   const [newMajor, setNewMajor] = useState('')
@@ -42,6 +45,8 @@ export default function AdminPage() {
   const [newHobbies, setNewHobbies] = useState('')
   const [newHometown, setNewHometown] = useState('')
   const [newCategory, setNewCategory] = useState<'king' | 'queen'>('king')
+  const [isCreatingCandidate, setIsCreatingCandidate] = useState(false)
+  const [createCandidateError, setCreateCandidateError] = useState('')
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showRemoveDialog, setShowRemoveDialog] = useState(false)
   const [showStartVotingDialog, setShowStartVotingDialog] = useState(false)
@@ -65,6 +70,8 @@ export default function AdminPage() {
 
       if (response.ok) {
         setIsAuthenticated(true)
+        setAdminToken(password)
+        setPassword('')
         setPasswordError(false)
         return
       }
@@ -106,29 +113,46 @@ export default function AdminPage() {
     }
   }, [])
 
+
   const createCandidate = async () => {
     if (!newName.trim()) return
 
-    await addCandidate({
-      name: newName.trim(),
-      category: newCategory,
-      images: newImages.length > 0 ? newImages : ['/placeholder.jpg'],
-      age: newAge ? parseInt(newAge) : undefined,
-      height: newHeight.trim() || undefined,
-      major: newMajor.trim() || undefined,
-      year: newYear.trim() || undefined,
-      hobbies: newHobbies.trim() || undefined,
-      hometown: newHometown.trim() || undefined,
-    })
+    setIsCreatingCandidate(true)
+    setCreateCandidateError('')
 
-    setNewName('')
-    setNewImages([])
-    setNewAge('')
-    setNewHeight('')
-    setNewMajor('')
-    setNewYear('')
-    setNewHobbies('')
-    setNewHometown('')
+    try {
+      const uploadedUrls = await Promise.all(
+        newImageFiles.map((file) => uploadImageFile(file, 'candidates', adminToken)),
+      )
+      const allImages = [...newImageUrls, ...uploadedUrls]
+
+      await addCandidate({
+        name: newName.trim(),
+        category: newCategory,
+        images: allImages.length > 0 ? allImages : ['/placeholder.jpg'],
+        age: newAge ? parseInt(newAge) : undefined,
+        height: newHeight.trim() || undefined,
+        major: newMajor.trim() || undefined,
+        year: newYear.trim() || undefined,
+        hobbies: newHobbies.trim() || undefined,
+        hometown: newHometown.trim() || undefined,
+      })
+
+      setNewName('')
+      setNewImageUrls([])
+      setNewImageFiles([])
+      setNewAge('')
+      setNewHeight('')
+      setNewMajor('')
+      setNewYear('')
+      setNewHobbies('')
+      setNewHometown('')
+    } catch (error) {
+      console.error('Failed to create candidate', error)
+      setCreateCandidateError('Unable to upload images. Please try again.')
+    } finally {
+      setIsCreatingCandidate(false)
+    }
   }
 
   const handleRemoveClick = (id: string, name: string) => {
@@ -195,11 +219,11 @@ export default function AdminPage() {
               {authError && (
                 <p className="text-sm text-destructive">{authError}</p>
               )}
-              <Link href="/">
+              {/* <Link href="/">
                 <Button type="button" variant="outline" className="w-full bg-transparent">
                   Back to Home
                 </Button>
-              </Link>
+              </Link> */}
             </form>
           </CardContent>
         </Card>
@@ -224,12 +248,12 @@ export default function AdminPage() {
             </h1>
             <p className="text-muted-foreground">Manage candidates and election results</p>
           </div>
-          <Link href="/">
+          {/* <Link href="/">
             <Button variant="outline" size="sm">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Home
             </Button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Voting Control Panel */}
@@ -507,17 +531,22 @@ export default function AdminPage() {
             <div className="border-t pt-4 mt-4">
               <MultiImageUpload
                 label="Candidate Images"
-                images={newImages}
-                onChange={setNewImages}
+                images={newImageUrls}
+                files={newImageFiles}
+                onImagesChange={setNewImageUrls}
+                onFilesChange={setNewImageFiles}
                 maxImages={3}
-                storagePathPrefix="candidates"
               />
             </div>
+
+            {createCandidateError && (
+              <p className="text-sm text-destructive">{createCandidateError}</p>
+            )}
             
             <div className="flex justify-end">
-              <Button onClick={createCandidate} size="default">
+              <Button onClick={createCandidate} size="default" disabled={isCreatingCandidate}>
                 <Plus className="w-4 h-4 mr-2" />
-                Add Candidate
+                {isCreatingCandidate ? 'Saving...' : 'Add Candidate'}
               </Button>
             </div>
           </div>
