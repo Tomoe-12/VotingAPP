@@ -2,34 +2,44 @@
 
 import React from "react"
 
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Upload, X, Link as LinkIcon } from 'lucide-react'
-import { uploadImageFile } from '@/lib/storage'
 
 interface MultiImageUploadProps {
   label: string
   images: string[]
-  onChange: (images: string[]) => void
+  files: File[]
+  onImagesChange: (images: string[]) => void
+  onFilesChange: (files: File[]) => void
   maxImages?: number
-  storagePathPrefix?: string
 }
 
 export function MultiImageUpload({
   label,
   images,
-  onChange,
+  files,
+  onImagesChange,
+  onFilesChange,
   maxImages = 3,
-  storagePathPrefix = 'candidates',
 }: MultiImageUploadProps) {
   const [dragActive, setDragActive] = useState(false)
   const [showUrlInput, setShowUrlInput] = useState(false)
   const [urlInput, setUrlInput] = useState('')
-  const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const [filePreviews, setFilePreviews] = useState<string[]>([])
+
+  useEffect(() => {
+    const nextPreviews = files.map((file) => URL.createObjectURL(file))
+    setFilePreviews(nextPreviews)
+
+    return () => {
+      nextPreviews.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [files])
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault()
@@ -58,58 +68,58 @@ export function MultiImageUpload({
     }
   }
 
-  const handleFiles = async (files: File[]) => {
-    const imageFiles = files.filter(file => file.type.startsWith('image/'))
-    const remainingSlots = maxImages - images.length
+  const handleFiles = (nextFiles: File[]) => {
+    const imageFiles = nextFiles.filter(file => file.type.startsWith('image/'))
+    const remainingSlots = maxImages - (images.length + files.length)
 
     if (remainingSlots <= 0) return
 
-    const filesToProcess = imageFiles.slice(0, remainingSlots)
-    setIsUploading(true)
-    setUploadError('')
+    if (imageFiles.length === 0) {
+      setUploadError('Please select image files only.')
+      return
+    }
 
-    try {
-      const uploadedUrls = await Promise.all(
-        filesToProcess.map((file) => uploadImageFile(file, storagePathPrefix)),
-      )
-      onChange([...images, ...uploadedUrls])
-    } catch (error) {
-      console.error('Image upload failed', error)
-      setUploadError('Image upload failed. Please try again.')
-    } finally {
-      setIsUploading(false)
-      if (inputRef.current) {
-        inputRef.current.value = ''
-      }
+    const filesToAdd = imageFiles.slice(0, remainingSlots)
+    setUploadError('')
+    onFilesChange([...files, ...filesToAdd])
+
+    if (inputRef.current) {
+      inputRef.current.value = ''
     }
   }
 
   const handleUrlUpload = () => {
-    if (urlInput.trim() && images.length < maxImages) {
-      onChange([...images, urlInput.trim()])
+    if (urlInput.trim() && images.length + files.length < maxImages) {
+      onImagesChange([...images, urlInput.trim()])
       setUrlInput('')
       setShowUrlInput(false)
     }
   }
 
-  const handleRemove = (index: number) => {
-    const newImages = images.filter((_, i) => i !== index)
-    onChange(newImages)
+  const handleRemoveFile = (index: number) => {
+    const nextFiles = files.filter((_, i) => i !== index)
+    onFilesChange(nextFiles)
   }
 
-  const canAddMore = images.length < maxImages
+  const handleRemoveUrl = (index: number) => {
+    const nextImages = images.filter((_, i) => i !== index)
+    onImagesChange(nextImages)
+  }
+
+  const totalImages = images.length + files.length
+  const canAddMore = totalImages < maxImages
 
   return (
     <div className="space-y-3">
       <Label className="text-sm font-medium">
-        {label} ({images.length}/{maxImages})
+        {label} ({totalImages}/{maxImages})
       </Label>
 
       {/* Preview Uploaded Images */}
-      {images.length > 0 && (
+      {(filePreviews.length > 0 || images.length > 0) && (
         <div className="grid grid-cols-3 gap-3">
-          {images.map((img, index) => (
-            <div key={index} className="relative border border-border rounded-lg p-2 bg-muted/30">
+          {filePreviews.map((img, index) => (
+            <div key={`file-${index}`} className="relative border border-border rounded-lg p-2 bg-muted/30">
               <img
                 src={img || "/placeholder.svg"}
                 alt={`Image ${index + 1}`}
@@ -121,7 +131,7 @@ export function MultiImageUpload({
                   type="button"
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleRemove(index)}
+                  onClick={() => handleRemoveFile(index)}
                   className="h-6 w-6"
                 >
                   <X className="w-3 h-3" />
@@ -129,6 +139,30 @@ export function MultiImageUpload({
               </div>
             </div>
           ))}
+          {images.map((img, index) => {
+            const displayIndex = filePreviews.length + index + 1
+            return (
+              <div key={`url-${index}`} className="relative border border-border rounded-lg p-2 bg-muted/30">
+                <img
+                  src={img || "/placeholder.svg"}
+                  alt={`Image ${displayIndex}`}
+                  className="w-full h-24 rounded object-cover mb-2"
+                />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Image {displayIndex}</span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleRemoveUrl(index)}
+                    className="h-6 w-6"
+                  >
+                    <X className="w-3 h-3" />
+                  </Button>
+                </div>
+              </div>
+            )
+          })}
         </div>
       )}
 
@@ -160,15 +194,14 @@ export function MultiImageUpload({
               Select image files to upload
             </p>
             <p className="text-xs text-muted-foreground mb-3">
-              or drag and drop them here (up to {maxImages - images.length} more)
+              or drag and drop them here (up to {maxImages - totalImages} more)
             </p>
             <Button
               type="button"
               size="sm"
               onClick={() => inputRef.current?.click()}
-              disabled={isUploading}
             >
-              {isUploading ? 'Uploading...' : 'Choose Files'}
+              Choose Files
             </Button>
           </div>
 

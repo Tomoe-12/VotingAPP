@@ -23,13 +23,31 @@ export interface TokenStatusResponse {
 }
 
 export async function castVote(payload: CastVoteRequest) {
-  const callable = httpsCallable(functions, "castVote");
-  const result = await callable(payload);
-  return result.data as CastVoteResponse;
+  try {
+    const callable = httpsCallable(functions, "castVote");
+    const result = await callable(payload);
+    return result.data as CastVoteResponse;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to cast your vote.";
+    const code = typeof (error as { code?: string })?.code === "string" ? (error as { code?: string }).code : undefined;
+    return {
+      ok: false,
+      reason: code ? `${message} (${code})` : message,
+    };
+  }
 }
 
 export async function getTokenStatus(token: string) {
-  const callable = httpsCallable(functions, "getTokenStatus");
-  const result = await callable({ token });
-  return result.data as TokenStatusResponse;
+  try {
+    const callable = httpsCallable(functions, "getTokenStatus");
+    const result = await callable({ token });
+    return result.data as TokenStatusResponse;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to load token status.";
+    const code = typeof (error as { code?: string })?.code === "string" ? (error as { code?: string }).code : undefined;
+    return {
+      ok: false,
+      reason: code ? `${message} (${code})` : message,
+    };
+  }
 }

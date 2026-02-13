@@ -37,6 +37,7 @@ type Candidate = CandidateRecord;
 function VotingPageContent() {
   const { t, language, setLanguage } = useLanguage();
   const searchParams = useSearchParams();
+  const [isMounted, setIsMounted] = useState(false);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [hasVotedKing, setHasVotedKing] = useState(false);
   const [hasVotedQueen, setHasVotedQueen] = useState(false);
@@ -46,6 +47,10 @@ function VotingPageContent() {
   const [voterToken, setVoterToken] = useState("");
   const [voteError, setVoteError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const token = searchParams?.get("id")?.trim() ?? "";
@@ -93,7 +98,10 @@ function VotingPageContent() {
     };
   }, []);
 
-  const handleVote = async (candidateId: string, category: "king" | "queen") => {
+  const handleVote = async (
+    candidateId: string,
+    category: "king" | "queen",
+  ) => {
     if (votingStatus !== "active" || isSubmitting) {
       return;
     }
@@ -102,7 +110,9 @@ function VotingPageContent() {
     if (category === "queen" && hasVotedQueen) return;
 
     if (!voterToken) {
-      setVoteError("Missing voter token. Please open the link from your QR code.");
+      setVoteError(
+        "Missing voter token. Please open the link from your QR code.",
+      );
       return;
     }
 
@@ -110,7 +120,11 @@ function VotingPageContent() {
     setVoteError("");
 
     try {
-      const response = await castVote({ token: voterToken, candidateId, category });
+      const response = await castVote({
+        token: voterToken,
+        candidateId,
+        category,
+      });
       if (response.ok) {
         if (category === "king") {
           setHasVotedKing(true);
@@ -122,7 +136,9 @@ function VotingPageContent() {
         return;
       }
 
-      setVoteError(response.reason || "Unable to cast your vote. Please try again.");
+      setVoteError(
+        response.reason || "Unable to cast your vote. Please try again.",
+      );
     } catch (error) {
       console.error("Vote submission failed", error);
       setVoteError("Unable to cast your vote. Please try again.");
@@ -137,8 +153,20 @@ function VotingPageContent() {
   const totalVotesKing = kingCandidates.reduce((sum, c) => sum + c.votes, 0);
   const totalVotesQueen = queenCandidates.reduce((sum, c) => sum + c.votes, 0);
 
+  if (!isMounted) {
+    return (
+      <div
+        className="min-h-screen bg-linear-to-br from-background via-background to-muted/30"
+        suppressHydrationWarning
+      />
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/30 relative overflow-hidden">
+    <div
+      className="min-h-screen bg-linear-to-br from-background via-background to-muted/30 relative overflow-hidden pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0"
+      suppressHydrationWarning
+    >
       {/* Floating Navigation */}
       <FloatingNav />
 
@@ -293,7 +321,6 @@ function VotingPageContent() {
             </div>
           )}
 
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {kingCandidates.map((candidate, index) => (
               <Card
@@ -364,7 +391,12 @@ function VotingPageContent() {
                   </CardDescription>
                   <Button
                     onClick={() => handleVote(candidate.id, "king")}
-                    disabled={!voterToken || hasVotedKing || votingStatus !== "active" || isSubmitting}
+                    disabled={
+                      !voterToken ||
+                      hasVotedKing ||
+                      votingStatus !== "active" ||
+                      isSubmitting
+                    }
                     className="w-full"
                     variant={
                       votedKingId === candidate.id ? "default" : "outline"
@@ -431,7 +463,6 @@ function VotingPageContent() {
               </span>
             </div>
           )}
-
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {queenCandidates.map((candidate, index) => (
@@ -503,7 +534,12 @@ function VotingPageContent() {
                   </CardDescription>
                   <Button
                     onClick={() => handleVote(candidate.id, "queen")}
-                    disabled={!voterToken || hasVotedQueen || votingStatus !== "active" || isSubmitting}
+                    disabled={
+                      !voterToken ||
+                      hasVotedQueen ||
+                      votingStatus !== "active" ||
+                      isSubmitting
+                    }
                     className="w-full"
                     variant={
                       votedQueenId === candidate.id ? "default" : "outline"
@@ -533,13 +569,13 @@ function VotingPageContent() {
         {/* About Us Section */}
         <div
           id="about-section"
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 mt-16"
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 mt-16 "
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - University Image */}
             <div>
               <Card className="overflow-hidden border-border">
-                <div className="aspect-[4/5] bg-muted flex items-center justify-center relative overflow-hidden">
+                <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
                   <img
                     src="/images/university-1.jpg"
                     alt="University Event"
@@ -588,7 +624,7 @@ function VotingPageContent() {
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-card/50 backdrop-blur-sm border-t border-border mt-16">
+      <footer className="relative z-10 bg-card/50 backdrop-blur-sm border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
