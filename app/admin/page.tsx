@@ -54,6 +54,18 @@ export default function AdminPage() {
   const [showResetStatusDialog, setShowResetStatusDialog] = useState(false)
   const [candidateToRemove, setCandidateToRemove] = useState<{ id: string; name: string } | null>(null)
   const [votingStatus, setVotingStatus] = useState<VotingStatus>('not-started')
+  const [aliasCanonical, setAliasCanonical] = useState('')
+  const [aliasToken, setAliasToken] = useState('')
+  const [aliasUrl, setAliasUrl] = useState('')
+  const [aliasError, setAliasError] = useState('')
+  const [isGeneratingAlias, setIsGeneratingAlias] = useState(false)
+  const [origin, setOrigin] = useState('')
+  const [tokenPrefix, setTokenPrefix] = useState('PAOH')
+  const [tokenStart, setTokenStart] = useState('1')
+  const [tokenEnd, setTokenEnd] = useState('1000')
+  const [isSeedingTokens, setIsSeedingTokens] = useState(false)
+  const [seedResult, setSeedResult] = useState('')
+  const [seedError, setSeedError] = useState('')
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -112,6 +124,98 @@ export default function AdminPage() {
       unsubscribeVotingStatus()
     }
   }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin)
+    }
+  }, [])
+
+  const handleGenerateAlias = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!aliasCanonical.trim()) return
+    if (!adminToken) {
+      setAliasError('Admin session not found. Please re-authenticate.')
+      return
+    }
+
+    setIsGeneratingAlias(true)
+    setAliasError('')
+    setAliasToken('')
+    setAliasUrl('')
+
+    try {
+      const response = await fetch('/api/admin/token-alias', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminToken, canonicalToken: aliasCanonical.trim() }),
+      })
+
+      const payload = (await response.json()) as {
+        ok?: boolean
+        aliasToken?: string
+        reason?: string
+      }
+
+      if (!response.ok || !payload.ok || !payload.aliasToken) {
+        setAliasError(payload.reason || 'Unable to generate alias token.')
+        return
+      }
+
+      setAliasToken(payload.aliasToken)
+      setAliasUrl(`${origin || ''}/?id=${payload.aliasToken}`)
+    } catch (error) {
+      console.error('Failed to generate alias token', error)
+      setAliasError('Unable to generate alias token. Please try again.')
+    } finally {
+      setIsGeneratingAlias(false)
+    }
+  }
+
+  const handleSeedTokens = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!adminToken) {
+      setSeedError('Admin session not found. Please re-authenticate.')
+      return
+    }
+
+    const start = Number.parseInt(tokenStart, 10)
+    const end = Number.parseInt(tokenEnd, 10)
+    if (!tokenPrefix.trim() || Number.isNaN(start) || Number.isNaN(end)) {
+      setSeedError('Please enter a valid prefix and numeric range.')
+      return
+    }
+
+    setIsSeedingTokens(true)
+    setSeedError('')
+    setSeedResult('')
+
+    try {
+      const response = await fetch('/api/admin/token-seed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: adminToken,
+          prefix: tokenPrefix.trim(),
+          start,
+          end,
+        }),
+      })
+
+      const payload = (await response.json()) as { ok?: boolean; created?: number; reason?: string }
+      if (!response.ok || !payload.ok) {
+        setSeedError(payload.reason || 'Unable to create voter tokens.')
+        return
+      }
+
+      setSeedResult(`Created ${payload.created ?? 0} voter tokens.`)
+    } catch (error) {
+      console.error('Failed to seed voter tokens', error)
+      setSeedError('Unable to create voter tokens. Please try again.')
+    } finally {
+      setIsSeedingTokens(false)
+    }
+  }
 
 
   const createCandidate = async () => {
@@ -319,6 +423,121 @@ export default function AdminPage() {
                 Reset All Votes
               </Button>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Voter Link Generator */}
+        <Card className="mb-8 border-border">
+          <CardHeader>
+            <CardTitle className="font-serif flex items-center gap-2">
+              Voter Link Generator
+            </CardTitle>
+            <CardDescription>
+              Generate an opaque link that maps to a canonical voter ID (e.g. PAOH0001)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleGenerateAlias} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="canonical-token">Canonical voter ID</Label>
+                <Input
+                  id="canonical-token"
+                  placeholder="PAOH0001"
+                  value={aliasCanonical}
+                  onChange={(e) => setAliasCanonical(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button
+                  type="submit"
+                  disabled={isGeneratingAlias || !aliasCanonical.trim()}
+                  className="w-full sm:w-auto"
+                >
+                  {isGeneratingAlias ? 'Generating...' : 'Generate Link'}
+                </Button>
+                {aliasToken && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => {
+                      navigator.clipboard.writeText(aliasUrl || aliasToken)
+                    }}
+                  >
+                    Copy Link
+                  </Button>
+                )}
+              </div>
+              {aliasToken && (
+                <div className="text-sm">
+                  <p className="text-muted-foreground">Alias token: <span className="font-medium text-foreground">{aliasToken}</span></p>
+                  {aliasUrl && (
+                    <p className="text-muted-foreground">Link: <span className="font-medium text-foreground break-all">{aliasUrl}</span></p>
+                  )}
+                </div>
+              )}
+              {aliasError && (
+                <p className="text-sm text-destructive">{aliasError}</p>
+              )}
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Voter Token Seeder */}
+        <Card className="mb-8 border-border">
+          <CardHeader>
+            <CardTitle className="font-serif flex items-center gap-2">
+              Voter Token Seeder
+            </CardTitle>
+            <CardDescription>
+              Create canonical voter tokens like PAOH0001 in Firestore
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSeedTokens} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="space-y-2">
+                  <Label htmlFor="token-prefix">Prefix</Label>
+                  <Input
+                    id="token-prefix"
+                    placeholder="PAOH"
+                    value={tokenPrefix}
+                    onChange={(e) => setTokenPrefix(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="token-start">Start</Label>
+                  <Input
+                    id="token-start"
+                    placeholder="1"
+                    value={tokenStart}
+                    onChange={(e) => setTokenStart(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="token-end">End</Label>
+                  <Input
+                    id="token-end"
+                    placeholder="1000"
+                    value={tokenEnd}
+                    onChange={(e) => setTokenEnd(e.target.value)}
+                  />
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full sm:w-auto"
+                disabled={isSeedingTokens}
+              >
+                {isSeedingTokens ? 'Creating...' : 'Create Voter Tokens'}
+              </Button>
+              {seedResult && (
+                <p className="text-sm text-foreground">{seedResult}</p>
+              )}
+              {seedError && (
+                <p className="text-sm text-destructive">{seedError}</p>
+              )}
+            </form>
           </CardContent>
         </Card>
 
