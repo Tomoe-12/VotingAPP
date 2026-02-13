@@ -1,0 +1,1027 @@
+[debug] [2026-02-13T16:00:18.455Z] ----------------------------------------------------------------------
+[debug] [2026-02-13T16:00:18.457Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js functions:secrets:set ADMIN_CLIENT_EMAIL
+[debug] [2026-02-13T16:00:18.457Z] CLI Version:   15.6.0
+[debug] [2026-02-13T16:00:18.457Z] Platform:      win32
+[debug] [2026-02-13T16:00:18.457Z] Node Version:  v22.21.1
+[debug] [2026-02-13T16:00:18.457Z] Time:          Fri Feb 13 2026 22:30:18 GMT+0630 (Myanmar Time)
+[debug] [2026-02-13T16:00:18.457Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-02-13T16:00:18.459Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-02-13T16:00:18.660Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:00:18.660Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:00:18.661Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:00:18.661Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:00:18.661Z] [iam] checking project coastal-cell-484613-n6 for permissions ["firebase.projects.get","secretmanager.secrets.create","secretmanager.secrets.get","secretmanager.secrets.update","secretmanager.versions.add"]
+[debug] [2026-02-13T16:00:18.661Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:18.661Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:18.662Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions [none]
+[debug] [2026-02-13T16:00:18.662Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions  x-goog-user-project=coastal-cell-484613-n6
+[debug] [2026-02-13T16:00:18.662Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["firebase.projects.get","secretmanager.secrets.create","secretmanager.secrets.get","secretmanager.secrets.update","secretmanager.versions.add"]}
+[debug] [2026-02-13T16:00:19.835Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions 200
+[debug] [2026-02-13T16:00:19.835Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["firebase.projects.get","secretmanager.secrets.create","secretmanager.secrets.get","secretmanager.secrets.update","secretmanager.versions.add"]}
+[debug] [2026-02-13T16:00:19.836Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:19.836Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:19.836Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:00:20.134Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:00:20.134Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 {"projectNumber":"475204551275","projectId":"coastal-cell-484613-n6","lifecycleState":"ACTIVE","name":"Voting","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-01-17T13:38:20.255713Z"}
+[debug] [2026-02-13T16:00:20.134Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:20.135Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:20.135Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL [none]
+[debug] [2026-02-13T16:00:20.549Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL 404
+[debug] [2026-02-13T16:00:20.549Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL {"error":{"code":404,"message":"Secret [projects/475204551275/secrets/ADMIN_CLIENT_EMAIL] not found.","status":"NOT_FOUND"}}
+[debug] [2026-02-13T16:00:20.549Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:20.549Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:20.549Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets secretId=ADMIN_CLIENT_EMAIL
+[debug] [2026-02-13T16:00:20.549Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets {"name":"ADMIN_CLIENT_EMAIL","replication":{"automatic":{}},"labels":{"firebase-managed":"functions"}}
+[debug] [2026-02-13T16:00:22.770Z] ----------------------------------------------------------------------
+[debug] [2026-02-13T16:00:22.772Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js functions:secrets:set ADMIN_PRIVATE_KEY
+[debug] [2026-02-13T16:00:22.772Z] CLI Version:   15.6.0
+[debug] [2026-02-13T16:00:22.772Z] Platform:      win32
+[debug] [2026-02-13T16:00:22.772Z] Node Version:  v22.21.1
+[debug] [2026-02-13T16:00:22.772Z] Time:          Fri Feb 13 2026 22:30:22 GMT+0630 (Myanmar Time)
+[debug] [2026-02-13T16:00:22.772Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-02-13T16:00:22.774Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-02-13T16:00:22.978Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:00:22.978Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:00:22.979Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:00:22.979Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:00:22.979Z] [iam] checking project coastal-cell-484613-n6 for permissions ["firebase.projects.get","secretmanager.secrets.create","secretmanager.secrets.get","secretmanager.secrets.update","secretmanager.versions.add"]
+[debug] [2026-02-13T16:00:22.980Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:22.980Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:22.980Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions [none]
+[debug] [2026-02-13T16:00:22.980Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions  x-goog-user-project=coastal-cell-484613-n6
+[debug] [2026-02-13T16:00:22.980Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["firebase.projects.get","secretmanager.secrets.create","secretmanager.secrets.get","secretmanager.secrets.update","secretmanager.versions.add"]}
+[debug] [2026-02-13T16:00:24.139Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions 200
+[debug] [2026-02-13T16:00:24.139Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["firebase.projects.get","secretmanager.secrets.create","secretmanager.secrets.get","secretmanager.secrets.update","secretmanager.versions.add"]}
+[debug] [2026-02-13T16:00:24.139Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:24.139Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:24.139Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:00:24.416Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:00:24.416Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 {"projectNumber":"475204551275","projectId":"coastal-cell-484613-n6","lifecycleState":"ACTIVE","name":"Voting","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-01-17T13:38:20.255713Z"}
+[debug] [2026-02-13T16:00:24.417Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:24.417Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:24.417Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY [none]
+[debug] [2026-02-13T16:00:24.779Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY 404
+[debug] [2026-02-13T16:00:24.779Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY {"error":{"code":404,"message":"Secret [projects/475204551275/secrets/ADMIN_PRIVATE_KEY] not found.","status":"NOT_FOUND"}}
+[debug] [2026-02-13T16:00:24.780Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:24.780Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:00:24.780Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets secretId=ADMIN_PRIVATE_KEY
+[debug] [2026-02-13T16:00:24.780Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets {"name":"ADMIN_PRIVATE_KEY","replication":{"automatic":{}},"labels":{"firebase-managed":"functions"}}
+[debug] [2026-02-13T16:00:27.603Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets 200
+[debug] [2026-02-13T16:00:27.603Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets {"name":"projects/475204551275/secrets/ADMIN_PRIVATE_KEY","replication":{"automatic":{}},"createTime":"2026-02-13T16:00:23.882950Z","labels":{"firebase-managed":"functions"},"etag":"\"164ab6b41bf785\""}
+[debug] [2026-02-13T16:00:45.040Z] *** [apiv2] error from fetch(https://firebase-public.firebaseio.com/cli.json, {"headers":{},"method":"GET"}): FetchError: request to https://firebase-public.firebaseio.com/cli.json failed, reason: 
+[warn] !  Unable to fetch the CLI MOTD and remote config. This is not a fatal error, but may indicate an issue with your network connection. 
+[debug] [2026-02-13T16:00:45.041Z] Failed to fetch MOTD FirebaseError: Failed to make request to https://firebase-public.firebaseio.com/cli.json
+[debug] [2026-02-13T16:06:14.410Z] ----------------------------------------------------------------------
+[debug] [2026-02-13T16:06:14.411Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-02-13T16:06:14.412Z] CLI Version:   15.6.0
+[debug] [2026-02-13T16:06:14.412Z] Platform:      win32
+[debug] [2026-02-13T16:06:14.412Z] Node Version:  v22.21.1
+[debug] [2026-02-13T16:06:14.412Z] Time:          Fri Feb 13 2026 22:36:14 GMT+0630 (Myanmar Time)
+[debug] [2026-02-13T16:06:14.412Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-02-13T16:06:14.414Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-02-13T16:06:16.950Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:06:16.950Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:06:16.950Z] [iam] checking project coastal-cell-484613-n6 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2026-02-13T16:06:16.951Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:16.951Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:16.951Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions [none]
+[debug] [2026-02-13T16:06:16.951Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions  x-goog-user-project=coastal-cell-484613-n6
+[debug] [2026-02-13T16:06:16.951Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-02-13T16:06:18.206Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions 200
+[debug] [2026-02-13T16:06:18.206Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-02-13T16:06:18.207Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:18.207Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:18.207Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-02-13T16:06:18.207Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-02-13T16:06:19.741Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2026-02-13T16:06:19.741Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-02-13T16:06:19.742Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:19.742Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:19.742Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:06:20.357Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:06:20.357Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6 {"projectId":"coastal-cell-484613-n6","projectNumber":"475204551275","displayName":"Voting","name":"projects/coastal-cell-484613-n6","resources":{"hostingSite":"coastal-cell-484613-n6"},"state":"ACTIVE","etag":"1_dd4a8cd4-d1d2-417d-b2b1-c7d0232382a3"}
+[debug] [2026-02-13T16:06:23.176Z] defaultcredentials: writing to file C:\Users\Khun Thi Han\AppData\Roaming\firebase\li8993han_gmail_com_application_default_credentials.json
+[debug] [2026-02-13T16:06:23.177Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:23.177Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:23.178Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites pageToken=&pageSize=10
+[debug] [2026-02-13T16:06:24.973Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites 200
+[debug] [2026-02-13T16:06:24.973Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites {"sites":[{"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-02-13T16:06:24.973Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:24.974Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:24.974Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites 
+[debug] [2026-02-13T16:06:25.568Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites 200
+[debug] [2026-02-13T16:06:25.568Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites {"sites":[{"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-02-13T16:06:25.568Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:25.569Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:25.569Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/webApps/-/config [none]
+[debug] [2026-02-13T16:06:27.232Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/webApps/-/config 200
+[debug] [2026-02-13T16:06:27.232Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/webApps/-/config {"projectId":"coastal-cell-484613-n6","appId":"1:475204551275:web:b6b2197e3024e5066d672e","storageBucket":"coastal-cell-484613-n6.firebasestorage.app","apiKey":"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU","authDomain":"coastal-cell-484613-n6.firebaseapp.com","messagingSenderId":"475204551275","measurementId":"G-6471Q499EW","projectNumber":"475204551275","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-02-13T16:06:33.277Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:33.277Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:06:33.277Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:06:34.856Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:06:34.856Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 {"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 15.0.8
+
+[info]    - Environments: .env
+
+
+[info]    Creating an optimized production build ...
+
+[debug] [2026-02-13T16:06:39.010Z] *** [apiv2] error from fetch(https://firebase-public.firebaseio.com/cli.json, {"headers":{},"method":"GET"}): FetchError: request to https://firebase-public.firebaseio.com/cli.json failed, reason: 
+[warn] !  Unable to fetch the CLI MOTD and remote config. This is not a fatal error, but may indicate an issue with your network connection. 
+[debug] [2026-02-13T16:06:39.011Z] Failed to fetch MOTD FirebaseError: Failed to make request to https://firebase-public.firebaseio.com/cli.json
+[info]  ✓ Compiled successfully
+
+[info]    Skipping validation of types
+
+[info]    Linting ...
+
+[info]    Collecting page data ...
+
+[info]    Generating static pages (0/9) ...
+
+[info]    Generating static pages (2/9) 
+
+[info]    Generating static pages (4/9) 
+
+[info]    Generating static pages (6/9) 
+
+[info]  ✓ Generating static pages (9/9)
+
+[info]    Finalizing page optimization ...
+
+[info]    Collecting build traces ...
+
+[info] 
+
+[info] Route (app)                              Size     First Load JS
+┌ ○ /                                    9.08 kB         230 kB
+├ ○ /_not-found                          896 B           101 kB
+├ ○ /admin                               37.5 kB         259 kB
+├ ƒ /api/admin/login                     145 B           100 kB
+├ ƒ /api/admin/token-alias               145 B           100 kB
+├ ƒ /api/admin/token-seed                145 B           100 kB
+└ ƒ /api/admin/upload                    145 B           100 kB
++ First Load JS shared by all            100 kB
+  ├ chunks/4bd1b696-90517f6ffeb19ce2.js  52.5 kB
+  ├ chunks/517-6d5ac529a9363098.js       45.7 kB
+  └ other shared chunks (total)          1.91 kB
+
+
+
+[info] ○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • non-static component /api/admin/token-alias/route
+[info]  • non-static component /api/admin/login/route
+[info]  • non-static component /api/admin/upload/route
+[info]  • non-static component /api/admin/token-seed/route
+[info] 
+[debug] [2026-02-13T16:07:08.733Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:08.734Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:08.734Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:07:10.431Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:07:10.431Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 {"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-02-13T16:07:16.543Z] [web frameworks] effective firebase.json:  {
+  "hosting": [
+    {
+      "source": ".",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**",
+        "functions/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-central1",
+        "secrets": [
+          "ADMIN_PASSWORD",
+          "ADMIN_PROJECT_ID",
+          "ADMIN_CLIENT_EMAIL",
+          "ADMIN_PRIVATE_KEY",
+          "ADMIN_STORAGE_BUCKET"
+        ]
+      },
+      "site": "coastal-cell-484613-n6",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": {
+            "functionId": "ssrcoastalcell484613n6",
+            "region": "us-central1",
+            "pinTag": true
+          }
+        }
+      ],
+      "redirects": [],
+      "headers": [
+        {
+          "source": "/api/:path*",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        },
+        {
+          "source": "/:path*",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800"
+            }
+          ]
+        },
+        {
+          "source": "/_not-found",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "4294967294"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/_not-found/layout,_N_T_/_not-found/page,_N_T_/_not-found"
+            }
+          ]
+        },
+        {
+          "source": "/admin",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "4294967294"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/admin/layout,_N_T_/admin/page,_N_T_/admin"
+            }
+          ]
+        },
+        {
+          "source": "**/*.[jt]s",
+          "headers": [
+            {
+              "key": "Set-Cookie",
+              "value": "__FIREBASE_DEFAULTS__=eyJjb25maWciOnsicHJvamVjdElkIjoiY29hc3RhbC1jZWxsLTQ4NDYxMy1uNiIsImFwcElkIjoiMTo0NzUyMDQ1NTEyNzU6d2ViOmI2YjIxOTdlMzAyNGU1MDY2ZDY3MmUiLCJzdG9yYWdlQnVja2V0IjoiY29hc3RhbC1jZWxsLTQ4NDYxMy1uNi5maXJlYmFzZXN0b3JhZ2UuYXBwIiwiYXBpS2V5IjoiQUl6YVN5QUhsWHc0dWRYSkZnZm1PdTJaN3hEQzJpbV9VcWVtcFZVIiwiYXV0aERvbWFpbiI6ImNvYXN0YWwtY2VsbC00ODQ2MTMtbjYuZmlyZWJhc2VhcHAuY29tIiwibWVzc2FnaW5nU2VuZGVySWQiOiI0NzUyMDQ1NTEyNzUiLCJtZWFzdXJlbWVudElkIjoiRy02NDcxUTQ5OUVXIiwicHJvamVjdE51bWJlciI6IjQ3NTIwNDU1MTI3NSIsInZlcnNpb24iOiIyIn0sIl9hdXRoVG9rZW5TeW5jVVJMIjoiL19fc2Vzc2lvbiJ9; SameSite=Strict; Expires=2028-01-09T02:47:16.543Z; Path=/;"
+            }
+          ]
+        }
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "public": ".firebase\\coastal-cell-484613-n6\\hosting",
+      "webFramework": "next_ssr"
+    }
+  ],
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    },
+    {
+      "source": ".firebase\\coastal-cell-484613-n6\\functions",
+      "codebase": "firebase-frameworks-coastal-cell-484613-n6"
+    }
+  ]
+}
+[info] 
+[info] === Deploying to 'coastal-cell-484613-n6'...
+[info] 
+[info] i  deploying storage, firestore, functions, hosting 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2026-02-13T16:07:18.972Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:18.973Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:18.973Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/coastal-cell-484613-n6/defaultBucket [none]
+[debug] [2026-02-13T16:07:19.956Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/coastal-cell-484613-n6/defaultBucket 200
+[debug] [2026-02-13T16:07:19.956Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/coastal-cell-484613-n6/defaultBucket {"name":"projects/coastal-cell-484613-n6/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/coastal-cell-484613-n6/buckets/coastal-cell-484613-n6.firebasestorage.app"},"storageClass":"REGIONAL"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2026-02-13T16:07:19.958Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:19.958Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:19.959Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test [none]
+[debug] [2026-02-13T16:07:19.959Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test [omitted]
+[debug] [2026-02-13T16:07:20.546Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test 200
+[debug] [2026-02-13T16:07:20.546Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test {}
+[info] +  firebase.storage: rules file storage.rules compiled successfully 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-02-13T16:07:20.548Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:20.548Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:20.548Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default) [none]
+[debug] [2026-02-13T16:07:21.983Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default) 200
+[debug] [2026-02-13T16:07:21.983Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default) {"name":"projects/coastal-cell-484613-n6/databases/(default)","uid":"ceacf3a7-35b4-4f9d-ad6a-f393edd8d0d4","createTime":"2026-02-12T18:56:22.264714Z","updateTime":"2026-02-12T18:56:22.264714Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2026-02-13T15:07:20.885314Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","etag":"IOb6u+bs1pIDMOvZwqXS1JID"}
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2026-02-13T16:07:21.985Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:21.985Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:21.985Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test [none]
+[debug] [2026-02-13T16:07:21.985Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test [omitted]
+[debug] [2026-02-13T16:07:23.238Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test 200
+[debug] [2026-02-13T16:07:23.238Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6:test {}
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2026-02-13T16:07:23.240Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:23.240Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:23.241Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:07:24.475Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:07:24.475Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 {"projectNumber":"475204551275","projectId":"coastal-cell-484613-n6","lifecycleState":"ACTIVE","name":"Voting","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-01-17T13:38:20.255713Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: preparing codebase firebase-frameworks-coastal-cell-484613-n6 for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2026-02-13T16:07:24.479Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:24.479Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:24.479Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/adminSdkConfig [none]
+[debug] [2026-02-13T16:07:25.413Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/adminSdkConfig 200
+[debug] [2026-02-13T16:07:25.413Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/adminSdkConfig {"projectId":"coastal-cell-484613-n6","storageBucket":"coastal-cell-484613-n6.firebasestorage.app"}
+[debug] [2026-02-13T16:07:25.414Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:25.414Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:25.414Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/configs [none]
+[debug] [2026-02-13T16:07:26.766Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/configs 200
+[debug] [2026-02-13T16:07:26.766Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/configs {}
+[debug] [2026-02-13T16:07:26.768Z] Validating nodejs source
+[debug] [2026-02-13T16:07:28.083Z] > [functions] package.json contents: {
+  "name": "functions",
+  "private": true,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "firebase deploy --only functions",
+    "serve": "firebase emulators:start --only functions"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^7.0.5",
+    "my-v0-project": "file:.."
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
+[debug] [2026-02-13T16:07:28.084Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2026-02-13T16:07:28.085Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-02-13T16:07:28.107Z] Found firebase-functions binary at 'C:\Project\voting-system\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8982
+
+[debug] [2026-02-13T16:07:28.953Z] Got response from /__/functions.yaml {"endpoints":{"castVote":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"castVote"},"getTokenStatus":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"getTokenStatus"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[debug] [2026-02-13T16:07:33.001Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] !  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2026-02-13T16:07:34.169Z] > [functions] package.json contents: {
+  "name": "my-v0-project",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-accordion": "1.2.2",
+    "@radix-ui/react-alert-dialog": "1.1.4",
+    "@radix-ui/react-aspect-ratio": "1.1.1",
+    "@radix-ui/react-avatar": "1.1.2",
+    "@radix-ui/react-checkbox": "1.1.3",
+    "@radix-ui/react-collapsible": "1.1.2",
+    "@radix-ui/react-context-menu": "2.2.4",
+    "@radix-ui/react-dialog": "1.1.4",
+    "@radix-ui/react-dropdown-menu": "2.1.4",
+    "@radix-ui/react-hover-card": "1.1.4",
+    "@radix-ui/react-label": "2.1.1",
+    "@radix-ui/react-menubar": "1.1.4",
+    "@radix-ui/react-navigation-menu": "1.2.3",
+    "@radix-ui/react-popover": "1.1.4",
+    "@radix-ui/react-progress": "1.1.1",
+    "@radix-ui/react-radio-group": "1.2.2",
+    "@radix-ui/react-scroll-area": "1.2.2",
+    "@radix-ui/react-select": "2.1.4",
+    "@radix-ui/react-separator": "1.1.1",
+    "@radix-ui/react-slider": "1.2.2",
+    "@radix-ui/react-slot": "1.1.1",
+    "@radix-ui/react-switch": "1.1.2",
+    "@radix-ui/react-tabs": "1.1.2",
+    "@radix-ui/react-toast": "1.2.4",
+    "@radix-ui/react-toggle": "1.1.1",
+    "@radix-ui/react-toggle-group": "1.1.1",
+    "@radix-ui/react-tooltip": "1.1.6",
+    "@vercel/analytics": "1.3.1",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "1.0.4",
+    "date-fns": "4.1.0",
+    "embla-carousel-react": "8.5.1",
+    "firebase": "^10.12.5",
+    "firebase-admin": "^12.7.0",
+    "input-otp": "1.4.1",
+    "lucide-react": "^0.454.0",
+    "next": "15.0.8",
+    "next-themes": "^0.4.6",
+    "postcss": "^8.5",
+    "react": "^19.0.0",
+    "react-day-picker": "9.8.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.60.0",
+    "react-resizable-panels": "^2.1.7",
+    "recharts": "2.15.4",
+    "sonner": "^1.7.4",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.9",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.2",
+    "zod": "3.25.76",
+    "firebase-frameworks": "^0.11.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "main": "server.js",
+  "engines": {
+    "node": "22"
+  }
+}
+[debug] [2026-02-13T16:07:34.170Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase firebase-frameworks-coastal-cell-484613-n6 to determine what to deploy 
+[debug] [2026-02-13T16:07:34.171Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-02-13T16:07:34.183Z] Found firebase-functions binary at 'C:\Project\voting-system\.firebase\coastal-cell-484613-n6\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8205
+
+[debug] [2026-02-13T16:07:34.729Z] Got response from /__/functions.yaml {"endpoints":{"ssrcoastalcell484613n6":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["us-central1"],"secretEnvironmentVariables":[{"key":"ADMIN_PASSWORD"},{"key":"ADMIN_PROJECT_ID"},{"key":"ADMIN_CLIENT_EMAIL"},{"key":"ADMIN_PRIVATE_KEY"},{"key":"ADMIN_STORAGE_BUCKET"}],"labels":{},"httpsTrigger":{},"entryPoint":"ssrcoastalcell484613n6"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2026-02-13T16:07:38.769Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:07:38.769Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:07:38.769Z] [iam] checking project coastal-cell-484613-n6 for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2026-02-13T16:07:38.769Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:38.770Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:38.770Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions [none]
+[debug] [2026-02-13T16:07:38.770Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions  x-goog-user-project=coastal-cell-484613-n6
+[debug] [2026-02-13T16:07:38.770Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-02-13T16:07:39.963Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions 200
+[debug] [2026-02-13T16:07:39.963Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-02-13T16:07:39.964Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:39.964Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:39.966Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/coastal-cell-484613-n6/instances pageSize=100&pageToken=
+[debug] [2026-02-13T16:07:41.439Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/coastal-cell-484613-n6/instances 200
+[debug] [2026-02-13T16:07:41.439Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/coastal-cell-484613-n6/instances {}
+[info] i  functions: Loaded environment variables from .env. 
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Project\voting-system\functions (33.34 KB) for uploading 
+[info] i  functions: preparing .firebase\coastal-cell-484613-n6\functions directory for uploading... 
+[info] i  functions: packaged C:\Project\voting-system\.firebase\coastal-cell-484613-n6\functions (112.11 MB) for uploading 
+[debug] [2026-02-13T16:07:47.687Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:47.688Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:47.688Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/coastal-cell-484613-n6/locations/-/functions [none]
+[debug] [2026-02-13T16:07:48.630Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/coastal-cell-484613-n6/locations/-/functions 200
+[debug] [2026-02-13T16:07:48.630Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/coastal-cell-484613-n6/locations/-/functions {}
+[debug] [2026-02-13T16:07:48.630Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:48.631Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:48.631Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-02-13T16:07:50.293Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/-/functions 200
+[debug] [2026-02-13T16:07:50.293Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/-/functions {"functions":[{"name":"projects/coastal-cell-484613-n6/locations/us-central1/functions/getTokenStatus","buildConfig":{"build":"projects/475204551275/locations/us-central1/builds/ff539af5-f2e9-43fd-b99e-4d473a009933","runtime":"nodejs22","entryPoint":"getTokenStatus","source":{"storageSource":{"bucket":"gcf-v2-sources-475204551275-us-central1","object":"getTokenStatus/function-source.zip","generation":"1770979849570799"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-475204551275-us-central1","object":"getTokenStatus/function-source.zip","generation":"1770979849570799"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/coastal-cell-484613-n6/serviceAccounts/475204551275-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/coastal-cell-484613-n6/locations/us-central1/services/gettokenstatus","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"coastal-cell-484613-n6\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\"}","GCLOUD_PROJECT":"coastal-cell-484613-n6","EVENTARC_CLOUD_EVENT_SOURCE":"projects/coastal-cell-484613-n6/locations/us-central1/services/getTokenStatus","FUNCTION_TARGET":"getTokenStatus","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://gettokenstatus-yifxokulba-uc.a.run.app","serviceAccountEmail":"475204551275-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"gettokenstatus-00007-sil","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2026-02-13T10:50:56.121023505Z","labels":{"firebase-functions-hash":"b7fef098f27578dfdd2f3b6f01e7276c04766d21","deployment-tool":"cli-firebase","deployment-callable":"true"},"environment":"GEN_2","url":"https://us-central1-coastal-cell-484613-n6.cloudfunctions.net/getTokenStatus","createTime":"2026-02-11T13:57:45.283256836Z","satisfiesPzi":true},{"name":"projects/coastal-cell-484613-n6/locations/us-central1/functions/castVote","buildConfig":{"build":"projects/475204551275/locations/us-central1/builds/ff539af5-f2e9-43fd-b99e-4d473a009933","runtime":"nodejs22","entryPoint":"castVote","source":{"storageSource":{"bucket":"gcf-v2-sources-475204551275-us-central1","object":"castVote/function-source.zip","generation":"1770979791029690"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-475204551275-us-central1","object":"castVote/function-source.zip","generation":"1770979791029690"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/coastal-cell-484613-n6/serviceAccounts/475204551275-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/coastal-cell-484613-n6/locations/us-central1/services/castvote","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"coastal-cell-484613-n6\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\"}","GCLOUD_PROJECT":"coastal-cell-484613-n6","EVENTARC_CLOUD_EVENT_SOURCE":"projects/coastal-cell-484613-n6/locations/us-central1/services/castVote","FUNCTION_TARGET":"castVote","LOG_EXECUTION_ID":"true"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://castvote-yifxokulba-uc.a.run.app","serviceAccountEmail":"475204551275-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"castvote-00007-jug","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2026-02-13T10:50:55.000337856Z","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"b7fef098f27578dfdd2f3b6f01e7276c04766d21"},"environment":"GEN_2","url":"https://us-central1-coastal-cell-484613-n6.cloudfunctions.net/castVote","createTime":"2026-02-11T13:55:59.828036365Z","satisfiesPzi":true},{"name":"projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6","buildConfig":{"build":"projects/475204551275/locations/us-central1/builds/bc68b75c-bbfc-4a92-9e17-9a2e42e83339","runtime":"nodejs22","entryPoint":"ssrcoastalcell484613n6","source":{"storageSource":{"bucket":"gcf-v2-sources-475204551275-us-central1","object":"ssrcoastalcell484613n6/function-source.zip","generation":"1770979790294477"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-475204551275-us-central1","object":"ssrcoastalcell484613n6/function-source.zip","generation":"1770979790294477"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/coastal-cell-484613-n6/serviceAccounts/475204551275-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6","timeoutSeconds":60,"environmentVariables":{"NEXT_PUBLIC_FIREBASE_API_KEY":"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU","NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN":"coastal-cell-484613-n6.firebaseapp.com","NEXT_PUBLIC_FIREBASE_PROJECT_ID":"coastal-cell-484613-n6","NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET":"coastal-cell-484613-n6.firebasestorage.app","NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID":"475204551275","NEXT_PUBLIC_FIREBASE_APP_ID":"1:475204551275:web:b6b2197e3024e5066d672e","NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID":"G-6471Q499EW","NEXT_PUBLIC_FIREBASE_FUNCTIONS_REGION":"us-central1","ADMIN_PASSWORD":"admin123","ADMIN_PROJECT_ID":"coastal-cell-484613-n6","ADMIN_CLIENT_EMAIL":"firebase-adminsdk-fbsvc@coastal-cell-484613-n6.iam.gserviceaccount.com","ADMIN_PRIVATE_KEY":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSbAIE4i0J8oiU\nC9gg9q5TN8BDu7XIT4LT4iXyzqN0OMxNU0XgyGQfJryc/V9qdL1Dpfk7VmSTNUip\nnbsgirHa1BOH5QN02FYwc9Lu4Qr+8QHqT9msrr0LDy1XOwTQFz2Oz3kHUV0YDp7s\n6+kmzB00hW3IVLuAOsoSV9fVvougGh5/ozTkdCKDTPJfV8OyzuId/VlOzLLtja21\nPsemvlArOj0NU+ZsDWObMS7qUE0F3kbH6gBiZ1JprdbQQ9wcsQGgmEXbwzUFnBm/\npYJAPZEkWP2qEcT48O5y7XXIBQPBr+KlSMc8rrpatPLF9ro2c/Hm/PGwhHRNc9O9\n4NUge+lvAgMBAAECggEAHBJKpqohxgz0CYQW/jbKhNGQNbkKBEIPOwMVevH0PmIB\nZ2NvlBBHwxwg13S50PLn+OlgeXkKC9V07yPavfmixoW6YUu9DU57GRWqkzG0jNRM\nJB0o9e+NyrbonpWCC9y92pp1E/PXzojMzOCgBwv97W7LeYlMRkwRfyb25U35RI9Z\nimQjsAA8TaN6hLDrFcQ13HZNeHYHZkB3FP4J5wDQFVVZpHm4jOQduGnfdNA8r0bv\nJ4NEwQmpgJeyxndMaGZJgc68OCWOWPuTBc3sLNprCn7qv10kDdUVb+oixYxC5oXC\n+4vnEUOToDWbdb2Cla1Nmc+V3VjIFsn7UKcasP9MyQKBgQDqRk7vraLKLPTkzmjl\n8OnD40eH/ltFD+2lBggovwYeFzzykvxnp5HtGcRoUCU9H674pzMN5dpq5hhoU4/w\ncn/jSsJ9qbr+lcV1jSQu/BrIkOjGrYMc+zfK2k8B+zght6wSi9gctP6ad5YEMXVq\nJaZSK9w5FVqd+Q7c5imqRnnbjQKBgQDl7280yJuitq7z/85IlQdMpgxI/ab8xqTT\nf12JpW/IQPsf97XlHUzNEpwgU7pnuc59shSMo8Ywy7mkENS/bkNza/5ON08lHcRt\nwO1uAYFVY4HdJUKwsC8pP1Ni2xaZKoa2JdRCub0oWwSW0OlsyM47D6BG2mP5xY/M\ndIArHLWb6wKBgQCIDJqMr+5osKDrOz9JwZVPz+5beIgyXCSrAAy+9Ogtk1sul9OC\nspqY8azQ0zI9A+hNuHN6r7AfAk7MTzK49RV1vpWh+m6AqCOKt5N6wacgMJ8tudf5\nfZ6R7COTx/t6ATspbhLr4OQ2ehohh0NjiEfFUnlKoS8FrHxIJlWt782WhQKBgEkp\nj3P3JPZ4NGD1EzkrGkB8UUpkU175Afc9/pBOsKvCaWV5l0oIsahK9Jygp55bk+WQ\n5VL+xZA/MpmOtXMX7aRrR2ax2KARwa++hI3NMs7ts6OfOIIp/Uedm7XHyn//9Q8+\nKDT3DsYpd+NZI/z2RBCs3y3MTaVrBF9k7mdJYkvzAoGAUOpPCfYNuP3jsqdVgXHV\nPRD7zw/2Gb0ugeVrnGdc6WXcHmx+AIo1QyLWXT/QI/iDaT5KPcG1fFsKeDsiSIIM\nKSGC1q4hS+QCaPDEdLrjYm4bCrGRXxQdrT+dgxY/MEd3OfQb/Jt5EClJnoGhWStq\nlHKGhANRO9K/8XXhTB8eoV8=\n-----END PRIVATE KEY-----\n","ADMIN_STORAGE_BUCKET":"coastal-cell-484613-n6.firebasestorage.app","VERCEL_URL":"coastal-cell-484613-n6.web.app","__FIREBASE_FRAMEWORKS_ENTRY__":"next.js","__FIREBASE_DEFAULTS__":"{\"config\":{\"projectId\":\"coastal-cell-484613-n6\",\"appId\":\"1:475204551275:web:b6b2197e3024e5066d672e\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\",\"apiKey\":\"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU\",\"authDomain\":\"coastal-cell-484613-n6.firebaseapp.com\",\"messagingSenderId\":\"475204551275\",\"measurementId\":\"G-6471Q499EW\",\"projectNumber\":\"475204551275\",\"version\":\"2\"},\"_authTokenSyncURL\":\"/__session\"}","FIREBASE_CONFIG":"{\"projectId\":\"coastal-cell-484613-n6\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\"}","GCLOUD_PROJECT":"coastal-cell-484613-n6","EVENTARC_CLOUD_EVENT_SOURCE":"projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6","FUNCTION_TARGET":"ssrcoastalcell484613n6","LOG_EXECUTION_ID":"true"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://ssrcoastalcell484613n6-yifxokulba-uc.a.run.app","serviceAccountEmail":"475204551275-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"ssrcoastalcell484613n6-00003-vaw","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2026-02-13T10:53:32.883621601Z","labels":{"firebase-functions-codebase":"firebase-frameworks-coastal-cell-484613-n6","firebase-functions-hash":"68e52fab7451f53551e2a4fc653627544ba7a82e","deployment-tool":"cli-firebase"},"environment":"GEN_2","url":"https://us-central1-coastal-cell-484613-n6.cloudfunctions.net/ssrcoastalcell484613n6","createTime":"2026-02-13T09:26:43.856632786Z","satisfiesPzi":true}]}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2026-02-13T16:07:50.299Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:50.299Z] Checked if tokens are valid: true, expires at: 1771001822258
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2026-02-13T16:07:50.299Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:50.300Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:50.300Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-02-13T16:07:50.300Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/pubsub.googleapis.com:generateServiceIdentity  x-goog-user-project=475204551275
+[debug] [2026-02-13T16:07:50.300Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/pubsub.googleapis.com:generateServiceIdentity {}
+[debug] [2026-02-13T16:07:50.301Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-02-13T16:07:50.301Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/eventarc.googleapis.com:generateServiceIdentity  x-goog-user-project=475204551275
+[debug] [2026-02-13T16:07:50.301Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/eventarc.googleapis.com:generateServiceIdentity {}
+[debug] [2026-02-13T16:07:51.905Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2026-02-13T16:07:51.905Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-475204551275@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"107552037680348040498"}}
+[debug] [2026-02-13T16:07:52.003Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2026-02-13T16:07:52.003Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/475204551275/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-475204551275@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"114106662479297672174"}}
+[info] i  functions: ensuring required API secretmanager.googleapis.com is enabled... 
+[debug] [2026-02-13T16:07:52.004Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:52.004Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:52.004Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/475204551275/services/secretmanager.googleapis.com [none]
+[debug] [2026-02-13T16:07:52.004Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/475204551275/services/secretmanager.googleapis.com  x-goog-user-project=475204551275
+[debug] [2026-02-13T16:07:53.322Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/475204551275/services/secretmanager.googleapis.com 200
+[debug] [2026-02-13T16:07:53.322Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/475204551275/services/secretmanager.googleapis.com [omitted]
+[info] +  functions: required API secretmanager.googleapis.com is enabled 
+[debug] [2026-02-13T16:07:53.331Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:53.332Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD/versions/latest [none]
+[debug] [2026-02-13T16:07:53.333Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID/versions/latest [none]
+[debug] [2026-02-13T16:07:53.334Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL/versions/latest [none]
+[debug] [2026-02-13T16:07:53.334Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY/versions/latest [none]
+[debug] [2026-02-13T16:07:53.335Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET/versions/latest [none]
+[debug] [2026-02-13T16:07:53.791Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET/versions/latest 200
+[debug] [2026-02-13T16:07:53.791Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET/versions/latest {"name":"projects/475204551275/secrets/ADMIN_STORAGE_BUCKET/versions/1","createTime":"2026-02-13T16:06:03.748260Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"164ab6c835fba4\"","clientSpecifiedPayloadChecksum":true}
+[debug] [2026-02-13T16:07:53.791Z] Resolved secret version of ADMIN_STORAGE_BUCKET to 1.
+[debug] [2026-02-13T16:07:53.810Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY/versions/latest 200
+[debug] [2026-02-13T16:07:53.810Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY/versions/latest {"name":"projects/475204551275/secrets/ADMIN_PRIVATE_KEY/versions/1","createTime":"2026-02-13T16:05:42.402757Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"164ab6c6f046c5\"","clientSpecifiedPayloadChecksum":true}
+[debug] [2026-02-13T16:07:53.810Z] Resolved secret version of ADMIN_PRIVATE_KEY to 1.
+[debug] [2026-02-13T16:07:53.851Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID/versions/latest 200
+[debug] [2026-02-13T16:07:53.851Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID/versions/latest {"name":"projects/475204551275/secrets/ADMIN_PROJECT_ID/versions/1","createTime":"2026-02-13T16:04:39.143634Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"164ab6c32b04d2\"","clientSpecifiedPayloadChecksum":true}
+[debug] [2026-02-13T16:07:53.851Z] Resolved secret version of ADMIN_PROJECT_ID to 1.
+[debug] [2026-02-13T16:07:54.005Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL/versions/latest 200
+[debug] [2026-02-13T16:07:54.005Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL/versions/latest {"name":"projects/475204551275/secrets/ADMIN_CLIENT_EMAIL/versions/1","createTime":"2026-02-13T16:05:08.773143Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"164ab6c4ef2117\"","clientSpecifiedPayloadChecksum":true}
+[debug] [2026-02-13T16:07:54.005Z] Resolved secret version of ADMIN_CLIENT_EMAIL to 1.
+[debug] [2026-02-13T16:07:54.195Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD/versions/latest 200
+[debug] [2026-02-13T16:07:54.196Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD/versions/latest {"name":"projects/475204551275/secrets/ADMIN_PASSWORD/versions/1","createTime":"2026-02-13T16:04:10.746265Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"164ab6c179b599\"","clientSpecifiedPayloadChecksum":true}
+[debug] [2026-02-13T16:07:54.196Z] Resolved secret version of ADMIN_PASSWORD to 1.
+[debug] [2026-02-13T16:07:54.197Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:54.197Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:54.197Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:07:55.429Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:07:55.429Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6 {"projectNumber":"475204551275","projectId":"coastal-cell-484613-n6","lifecycleState":"ACTIVE","name":"Voting","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-01-17T13:38:20.255713Z"}
+[debug] [2026-02-13T16:07:55.429Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:55.429Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:55.430Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/475204551275 [none]
+[debug] [2026-02-13T16:07:55.982Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/475204551275 403
+[debug] [2026-02-13T16:07:55.982Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/475204551275 {"error":{"code":403,"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"475204551275","serviceTitle":"Compute Engine API","service":"compute.googleapis.com","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275","consumer":"projects/475204551275"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275"}]}]}}
+[debug] [2026-02-13T16:07:55.983Z] unable to look up default compute service account. Falling back to 475204551275-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"475204551275","serviceTitle":"Compute Engine API","service":"compute.googleapis.com","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275","consumer":"projects/475204551275"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/475204551275 had HTTP Error: 403, Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2026-02-13T16:07:55.983Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:55.983Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:55.983Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/475204551275 [none]
+[debug] [2026-02-13T16:07:56.299Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/475204551275 403
+[debug] [2026-02-13T16:07:56.299Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/475204551275 {"error":{"code":403,"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"serviceTitle":"Compute Engine API","consumer":"projects/475204551275","service":"compute.googleapis.com","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275","containerInfo":"475204551275"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275"}]}]}}
+[debug] [2026-02-13T16:07:56.299Z] unable to look up default compute service account. Falling back to 475204551275-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"serviceTitle":"Compute Engine API","consumer":"projects/475204551275","service":"compute.googleapis.com","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275","containerInfo":"475204551275"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/475204551275 had HTTP Error: 403, Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2026-02-13T16:07:56.299Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.299Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.299Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/475204551275 [none]
+[debug] [2026-02-13T16:07:56.622Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/475204551275 403
+[debug] [2026-02-13T16:07:56.622Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/475204551275 {"error":{"code":403,"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"475204551275","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275","consumer":"projects/475204551275"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275"}]}]}}
+[debug] [2026-02-13T16:07:56.622Z] unable to look up default compute service account. Falling back to 475204551275-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"475204551275","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275","consumer":"projects/475204551275"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/475204551275 had HTTP Error: 403, Compute Engine API has not been used in project 475204551275 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=475204551275 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[info] i  functions: ensuring 475204551275-compute@developer.gserviceaccount.com access to secret ADMIN_PASSWORD. 
+[debug] [2026-02-13T16:07:56.623Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.623Z] Checked if tokens are valid: true, expires at: 1771001822258
+[info] i  functions: ensuring 475204551275-compute@developer.gserviceaccount.com access to secret ADMIN_PROJECT_ID. 
+[debug] [2026-02-13T16:07:56.623Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.623Z] Checked if tokens are valid: true, expires at: 1771001822258
+[info] i  functions: ensuring 475204551275-compute@developer.gserviceaccount.com access to secret ADMIN_CLIENT_EMAIL. 
+[debug] [2026-02-13T16:07:56.624Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.624Z] Checked if tokens are valid: true, expires at: 1771001822258
+[info] i  functions: ensuring 475204551275-compute@developer.gserviceaccount.com access to secret ADMIN_PRIVATE_KEY. 
+[debug] [2026-02-13T16:07:56.624Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.624Z] Checked if tokens are valid: true, expires at: 1771001822258
+[info] i  functions: ensuring 475204551275-compute@developer.gserviceaccount.com access to secret ADMIN_STORAGE_BUCKET. 
+[debug] [2026-02-13T16:07:56.624Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.624Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:56.624Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:getIamPolicy [none]
+[debug] [2026-02-13T16:07:56.625Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:getIamPolicy [none]
+[debug] [2026-02-13T16:07:56.625Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:getIamPolicy [none]
+[debug] [2026-02-13T16:07:56.625Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:getIamPolicy [none]
+[debug] [2026-02-13T16:07:56.625Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:getIamPolicy [none]
+[debug] [2026-02-13T16:07:57.117Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:getIamPolicy 200
+[debug] [2026-02-13T16:07:57.117Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:getIamPolicy {"etag":"BwZKtr0Ybhw="}
+[debug] [2026-02-13T16:07:57.118Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.118Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.118Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:setIamPolicy [none]
+[debug] [2026-02-13T16:07:57.118Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:setIamPolicy {"policy":{"bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-02-13T16:07:57.208Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:getIamPolicy 200
+[debug] [2026-02-13T16:07:57.208Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:getIamPolicy {"etag":"BwZKtruDxAk="}
+[debug] [2026-02-13T16:07:57.208Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.208Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.208Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:setIamPolicy [none]
+[debug] [2026-02-13T16:07:57.208Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:setIamPolicy {"policy":{"bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-02-13T16:07:57.216Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:getIamPolicy 200
+[debug] [2026-02-13T16:07:57.216Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:getIamPolicy {"etag":"ACAB"}
+[debug] [2026-02-13T16:07:57.216Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.216Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.216Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:setIamPolicy [none]
+[debug] [2026-02-13T16:07:57.216Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:setIamPolicy {"policy":{"bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-02-13T16:07:57.419Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:getIamPolicy 200
+[debug] [2026-02-13T16:07:57.419Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:getIamPolicy {"etag":"BwZKtr2+g+o="}
+[debug] [2026-02-13T16:07:57.419Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.419Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.419Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:setIamPolicy [none]
+[debug] [2026-02-13T16:07:57.419Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:setIamPolicy {"policy":{"bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-02-13T16:07:57.610Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:getIamPolicy 200
+[debug] [2026-02-13T16:07:57.611Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:getIamPolicy {"etag":"BwZKtrxckh0="}
+[debug] [2026-02-13T16:07:57.611Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.611Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:57.611Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:setIamPolicy [none]
+[debug] [2026-02-13T16:07:57.611Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:setIamPolicy {"policy":{"bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-02-13T16:07:57.783Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:setIamPolicy 200
+[debug] [2026-02-13T16:07:57.783Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID:setIamPolicy {"version":1,"etag":"BwZKts7xH6U=","bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]}
+[info] +  secretmanager: Granted roles/secretmanager.secretAccessor on projects/coastal-cell-484613-n6/secrets/ADMIN_PROJECT_ID to 475204551275-compute@developer.gserviceaccount.com 
+[info] +  functions: ensured 475204551275-compute@developer.gserviceaccount.com access to ADMIN_PROJECT_ID. 
+[debug] [2026-02-13T16:07:57.886Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:setIamPolicy 200
+[debug] [2026-02-13T16:07:57.886Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET:setIamPolicy {"version":1,"etag":"BwZKts7yavM=","bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]}
+[info] +  secretmanager: Granted roles/secretmanager.secretAccessor on projects/coastal-cell-484613-n6/secrets/ADMIN_STORAGE_BUCKET to 475204551275-compute@developer.gserviceaccount.com 
+[info] +  functions: ensured 475204551275-compute@developer.gserviceaccount.com access to ADMIN_STORAGE_BUCKET. 
+[debug] [2026-02-13T16:07:57.989Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:setIamPolicy 200
+[debug] [2026-02-13T16:07:57.989Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL:setIamPolicy {"version":1,"etag":"BwZKts70Kg0=","bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]}
+[info] +  secretmanager: Granted roles/secretmanager.secretAccessor on projects/coastal-cell-484613-n6/secrets/ADMIN_CLIENT_EMAIL to 475204551275-compute@developer.gserviceaccount.com 
+[info] +  functions: ensured 475204551275-compute@developer.gserviceaccount.com access to ADMIN_CLIENT_EMAIL. 
+[debug] [2026-02-13T16:07:58.086Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:setIamPolicy 200
+[debug] [2026-02-13T16:07:58.086Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD:setIamPolicy {"version":1,"etag":"BwZKts71og0=","bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]}
+[info] +  secretmanager: Granted roles/secretmanager.secretAccessor on projects/coastal-cell-484613-n6/secrets/ADMIN_PASSWORD to 475204551275-compute@developer.gserviceaccount.com 
+[info] +  functions: ensured 475204551275-compute@developer.gserviceaccount.com access to ADMIN_PASSWORD. 
+[debug] [2026-02-13T16:07:58.276Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:setIamPolicy 200
+[debug] [2026-02-13T16:07:58.277Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY:setIamPolicy {"version":1,"etag":"BwZKts74qL0=","bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:475204551275-compute@developer.gserviceaccount.com"]}]}
+[info] +  secretmanager: Granted roles/secretmanager.secretAccessor on projects/coastal-cell-484613-n6/secrets/ADMIN_PRIVATE_KEY to 475204551275-compute@developer.gserviceaccount.com 
+[info] +  functions: ensured 475204551275-compute@developer.gserviceaccount.com access to ADMIN_PRIVATE_KEY. 
+[debug] [2026-02-13T16:07:58.281Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:58.281Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:07:58.281Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/coastal-cell-484613-n6/versions [none]
+[debug] [2026-02-13T16:07:58.281Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/coastal-cell-484613-n6/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase","firebase-web-framework":"next_ssr"}}
+[debug] [2026-02-13T16:08:00.207Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/coastal-cell-484613-n6/versions 200
+[debug] [2026-02-13T16:08:00.207Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/coastal-cell-484613-n6/versions {"name":"projects/475204551275/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase","firebase-web-framework":"next_ssr"}}
+[debug] [2026-02-13T16:08:00.208Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:00.208Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:00.208Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases pageSize=10&pageToken=
+[debug] [2026-02-13T16:08:02.072Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases 200
+[debug] [2026-02-13T16:08:02.072Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases {"releases":[{"name":"projects/coastal-cell-484613-n6/releases/cloud.firestore","rulesetName":"projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a","createTime":"2026-02-12T18:56:30.561097Z","updateTime":"2026-02-13T10:49:48.772177Z"},{"name":"projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app","rulesetName":"projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305","createTime":"2026-02-10T14:51:03.348872Z","updateTime":"2026-02-13T10:49:47.450309Z"}]}
+[debug] [2026-02-13T16:08:02.085Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:02.085Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:02.085Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305 [none]
+[debug] [2026-02-13T16:08:03.374Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305 200
+[debug] [2026-02-13T16:08:03.374Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305 [omitted]
+[info] i  storage: latest version of storage.rules already up to date, skipping upload... 
+[debug] [2026-02-13T16:08:03.376Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:03.376Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:03.376Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases pageSize=10&pageToken=
+[debug] [2026-02-13T16:08:04.684Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases 200
+[debug] [2026-02-13T16:08:04.684Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases {"releases":[{"name":"projects/coastal-cell-484613-n6/releases/cloud.firestore","rulesetName":"projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a","createTime":"2026-02-12T18:56:30.561097Z","updateTime":"2026-02-13T10:49:48.772177Z"},{"name":"projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app","rulesetName":"projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305","createTime":"2026-02-10T14:51:03.348872Z","updateTime":"2026-02-13T10:49:47.450309Z"}]}
+[debug] [2026-02-13T16:08:04.685Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:04.685Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:04.685Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a [none]
+[debug] [2026-02-13T16:08:04.983Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a 200
+[debug] [2026-02-13T16:08:04.983Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a [omitted]
+[info] i  firestore: latest version of firestore.rules already up to date, skipping upload... 
+[info] i  firestore: deploying indexes... 
+[debug] [2026-02-13T16:08:04.984Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:04.984Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:04.985Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/-/indexes [none]
+[debug] [2026-02-13T16:08:06.419Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/-/indexes 200
+[debug] [2026-02-13T16:08:06.419Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/-/indexes {}
+[debug] [2026-02-13T16:08:06.419Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:06.419Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:06.419Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* [none]
+[debug] [2026-02-13T16:08:06.726Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* 200
+[debug] [2026-02-13T16:08:06.726Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* {"fields":[{"name":"projects/coastal-cell-484613-n6/databases/(default)/collectionGroups/__default__/fields/*","indexConfig":{"indexes":[{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","order":"ASCENDING"}],"state":"READY"},{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","order":"DESCENDING"}],"state":"READY"},{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","arrayConfig":"CONTAINS"}],"state":"READY"}]}}]}
+[debug] [2026-02-13T16:08:06.726Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:06.726Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:06.727Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default) [none]
+[debug] [2026-02-13T16:08:07.008Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default) 200
+[debug] [2026-02-13T16:08:07.009Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/coastal-cell-484613-n6/databases/(default) {"name":"projects/coastal-cell-484613-n6/databases/(default)","uid":"ceacf3a7-35b4-4f9d-ad6a-f393edd8d0d4","createTime":"2026-02-12T18:56:22.264714Z","updateTime":"2026-02-12T18:56:22.264714Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2026-02-13T15:08:05.906391Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","etag":"INzs9/vs1pIDMOvZwqXS1JID"}
+[info] +  firestore: deployed indexes in firestore.indexes.json successfully for (default) database 
+[debug] [2026-02-13T16:08:07.009Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:07.009Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:07.009Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/coastal-cell-484613-n6/billingInfo [none]
+[debug] [2026-02-13T16:08:08.487Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/coastal-cell-484613-n6/billingInfo 200
+[debug] [2026-02-13T16:08:08.487Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/coastal-cell-484613-n6/billingInfo {"name":"projects/coastal-cell-484613-n6/billingInfo","projectId":"coastal-cell-484613-n6","billingAccountName":"billingAccounts/01CDD9-9CA8FC-249A2C","billingEnabled":true}
+[debug] [2026-02-13T16:08:08.489Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:08.489Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:08:08.489Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2026-02-13T16:08:09.001Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2026-02-13T16:08:09.001Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com/2a033950-7391-49b1-bfcc-866ae19c1825.zip?GoogleAccessId=service-475204551275@gcf-admin-robot.iam.gserviceaccount.com&Expires=1771000687&Signature=ktCip%2Bf4hhpvEdQXqs3Y3HCUS0OH8PC%2FG%2BxwyEsTed1zbYaKgIf4P2P8vA25NPyRHK7gmPOGVuUQXyd9BpHhoNIRwccDNtOcr4mR4vBZHx4x4LfGJggNPi%2FQIrGgReln%2FLdIwLqTWtdDdhv6eJKjAE%2BaSilp4%2BjwPiv3j7f6xxu7qJb%2BoUGN0c4wMu63ik26TDp4ybFt0eddmXNrJ82y1ALV7U5dzM2WLGOwLZMpoSq7SCma4JMgXHbEwvS3%2BiE46OiMUqRbiHtMmXZvKK%2F5xi3iXIw3zkdYOc05Me91ydEcGRfx9OuZK%2BOH4OI78g7YEzrzTHT7PgzKocQcQY36Yw%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com","object":"2a033950-7391-49b1-bfcc-866ae19c1825.zip"}}
+[debug] [2026-02-13T16:08:09.004Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com/2a033950-7391-49b1-bfcc-866ae19c1825.zip GoogleAccessId=service-475204551275%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1771000687&Signature=ktCip%2Bf4hhpvEdQXqs3Y3HCUS0OH8PC%2FG%2BxwyEsTed1zbYaKgIf4P2P8vA25NPyRHK7gmPOGVuUQXyd9BpHhoNIRwccDNtOcr4mR4vBZHx4x4LfGJggNPi%2FQIrGgReln%2FLdIwLqTWtdDdhv6eJKjAE%2BaSilp4%2BjwPiv3j7f6xxu7qJb%2BoUGN0c4wMu63ik26TDp4ybFt0eddmXNrJ82y1ALV7U5dzM2WLGOwLZMpoSq7SCma4JMgXHbEwvS3%2BiE46OiMUqRbiHtMmXZvKK%2F5xi3iXIw3zkdYOc05Me91ydEcGRfx9OuZK%2BOH4OI78g7YEzrzTHT7PgzKocQcQY36Yw%3D%3D
+[debug] [2026-02-13T16:08:09.004Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com/2a033950-7391-49b1-bfcc-866ae19c1825.zip [stream]
+[debug] [2026-02-13T16:09:31.536Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com/2a033950-7391-49b1-bfcc-866ae19c1825.zip 200
+[debug] [2026-02-13T16:09:31.536Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com/2a033950-7391-49b1-bfcc-866ae19c1825.zip [omitted]
+[info] +  functions: .firebase\coastal-cell-484613-n6\functions source uploaded successfully 
+[info] i  hosting[coastal-cell-484613-n6]: beginning deploy... 
+[info] i  hosting[coastal-cell-484613-n6]: found 36 files in .firebase\coastal-cell-484613-n6\hosting 
+[debug] [2026-02-13T16:09:31.558Z] [hosting] uploading with 200 concurrency
+[debug] [2026-02-13T16:09:31.600Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:31.600Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:31.601Z] [hosting] hash cache [LmZpcmViYXNlXGNvYXN0YWwtY2VsbC00ODQ2MTMtbjZcaG9zdGluZw] stored for 36 files
+[debug] [2026-02-13T16:09:31.602Z] [hosting][hash queue][FINAL] {"max":30,"min":7,"avg":15.777777777777779,"active":0,"complete":36,"success":36,"errored":0,"retried":0,"total":36,"elapsed":40}
+[debug] [2026-02-13T16:09:31.602Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/475204551275/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3:populateFiles [none]
+[debug] [2026-02-13T16:09:31.602Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/475204551275/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3:populateFiles {"files":{"/placeholder.svg":"e5d7fc1002e286d37e275880d06005479739e66ca5b5663a6e9cf2da3a709a31","/placeholder.jpg":"b3cfce52a0ca4b992d118cf1306d382e938a53e92bf4fb5228c24f8355ac6a3c","/placeholder-user.jpg":"6ae3ea5721206c5fe80b68e7599e10b5d74eb70f4ad9c61efb46a86727448529","/placeholder-logo.svg":"7155c0a70e8a7b2cbbb64d5bdc94e1f8631490a526b337ff0e9d36ab77545b6e","/placeholder-logo.png":"ca28bea61957daebc4b23fca88978227a5ce9cf7bd273d2968b31f4f8293a112","/icon.svg":"b30d566a63888827acb917da259a1e7134926f7a64b5c3115067c9078dbad5df","/icon-light-32x32.png":"f372eb2e1577bc3cbab853bce6d018b8546b5222f2dc1f06fa413d33a5706539","/icon-dark-32x32.png":"9a8651165d87fec052e520239ff4cf54170df933bcbc11a1d8c78eb7cee02ff8","/floral-corner.png":"18c4f626b2d2b67d74dc0310d7a9ad629a5064175b7bf15aa57fa3568b516905","/apple-icon.png":"9c9327d7c2775fa2f69d52b773aff262738915c2a9172305ec5e2bf08c149827","/_next/static/iVdgGwMr4TdPIqIx21Gt9/_ssgManifest.js":"dc28a4dc92fe352ed5d2201bd3972ce47691bc8e89e0400a68d1541d0567c6d5","/index.html":"9aca0578ba117de3dec56d811220ec247e8874f1c29194df23fdd06510d83164","/404.html":"498e8e902518f775b2aa61f41324af0918397e5e44f98ead9fdfcca2a47ac743","/admin.html":"7c6e55e03ded53bd9d334e49131b9a2905b964803fef9620b84dec0c5e99b5a0","/_next/static/chunks/main-app-f05b5aa586025382.js":"faf2497727a6f70e69ce11d8843353d68813b4b7c61fc68c9b06426a19eac2fb","/_next/static/iVdgGwMr4TdPIqIx21Gt9/_buildManifest.js":"9fee686fd9384572701077ae3aebc375f15b925708962786d1c8b5f6f066e73f","/_next/static/chunks/webpack-538344e1ec16ef6b.js":"67a8ebc53f53259e602ad4b7755f50b9d4e7924cf18e1a53db3e0829a4786886","/_next/static/chunks/pages/_error-9b7125ad1a1e68fa.js":"836002856f6f882f0e1d8fb2db0b21f82b3df6c0f0ce52068c98416b21e94937","/_next/static/chunks/pages/_app-d23763e3e6c904ff.js":"d17a9018214066ad2b089fa93ce132de0110da3ca3fadc12ddbe2aed1074ad94","/_next/static/chunks/app/api/admin/upload/route-7d3fa7f903982f9d.js":"2117897e8de2138f22ddc4698886898776ade16ade667ad4133c49abb548a3d4","/_next/static/chunks/app/api/admin/token-alias/route-0687ef4009fc0b2f.js":"2117897e8de2138f22ddc4698886898776ade16ade667ad4133c49abb548a3d4","/_next/static/chunks/app/api/admin/token-seed/route-2418147e762a2ffb.js":"2117897e8de2138f22ddc4698886898776ade16ade667ad4133c49abb548a3d4","/_next/static/chunks/app/api/admin/login/route-295c51047fb16091.js":"2117897e8de2138f22ddc4698886898776ade16ade667ad4133c49abb548a3d4","/_next/static/chunks/app/_not-found/page-d2b3c87bbc87458a.js":"b6fa030246685e815c5936e1a2e71d061b83ff16c686d5d7d8ca7f86d1756145","/_next/static/chunks/app/layout-afff971025e9c27d.js":"e394923f1f538d2a788bb02793c9f89fc0f2d172f843514851f07b2a0afec61b","/_next/static/chunks/app/page-c0d957e80d02ee72.js":"a10571351b10aa666e1053b9170311b0368d33f2408be102bd021cf06419a8f3","/_next/static/chunks/app/admin/page-bdabb88205a29567.js":"8bd0d10d63facc680066f83baebe6497b1b35c1b829439c34c749b534c06ac3f","/_next/static/css/91d2137e25edbdb1.css":"69605e6547d765a1577ae4ab5567de01a47f72a7f1f63ee5fe7a02a2fbdb7d96","/_next/static/chunks/244-1d2409680468c803.js":"b685332390d13a7b6217c019fc71a3a341981aafadf0eb7e197301895b8840b0","/_next/static/chunks/main-6cec1a07ab160471.js":"de851c8437204492eb04f5843bdcbb324e24d28524581a7015bb56c7503863df","/_next/static/chunks/polyfills-42372ed130431b0a.js":"18e28d3214eda45048d80d3925ea7627b809e69ad2e95f7f98459e9146a61c3d","/_next/static/chunks/framework-6b27c2b7aa38af2d.js":"dc56c8d39d71bccf7f17bcea3c0b7c197cbb4ec7344215c9d9da3b4bc22aed8e","/_next/static/chunks/517-6d5ac529a9363098.js":"40d3cec9036b67d626aff9c1c733cfe84afab6c61cf6156ca5e3b747b960e7fe","/_next/static/chunks/4bd1b696-90517f6ffeb19ce2.js":"23a3adea051ff9665f446e18eb287c51feede757542297c01c96c1383e48aa6d","/_next/static/chunks/561-9ee0484ec69fbb50.js":"6c58840406a3b07bc1a24a013aef880ecb96e72549b4edfe35c4b06b6af2937e","/_next/static/chunks/bc9e92e6-0b91a1e5456620b5.js":"14fd282cc051470697dbe8a7aefef3cba93554b5c870d540c22211260b1a51e3"}}
+[debug] [2026-02-13T16:09:33.330Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/475204551275/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3:populateFiles 200
+[debug] [2026-02-13T16:09:33.331Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/475204551275/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3:populateFiles {"uploadRequiredHashes":["498e8e902518f775b2aa61f41324af0918397e5e44f98ead9fdfcca2a47ac743","9aca0578ba117de3dec56d811220ec247e8874f1c29194df23fdd06510d83164","7c6e55e03ded53bd9d334e49131b9a2905b964803fef9620b84dec0c5e99b5a0"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files"}
+[debug] [2026-02-13T16:09:33.331Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:33.331Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:33.331Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:33.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:33.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:33.332Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:33.332Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/498e8e902518f775b2aa61f41324af0918397e5e44f98ead9fdfcca2a47ac743 [none]
+[debug] [2026-02-13T16:09:33.332Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/498e8e902518f775b2aa61f41324af0918397e5e44f98ead9fdfcca2a47ac743 [stream]
+[debug] [2026-02-13T16:09:33.333Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/9aca0578ba117de3dec56d811220ec247e8874f1c29194df23fdd06510d83164 [none]
+[debug] [2026-02-13T16:09:33.333Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/9aca0578ba117de3dec56d811220ec247e8874f1c29194df23fdd06510d83164 [stream]
+[debug] [2026-02-13T16:09:33.334Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/7c6e55e03ded53bd9d334e49131b9a2905b964803fef9620b84dec0c5e99b5a0 [none]
+[debug] [2026-02-13T16:09:33.334Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/7c6e55e03ded53bd9d334e49131b9a2905b964803fef9620b84dec0c5e99b5a0 [stream]
+[debug] [2026-02-13T16:09:33.334Z] [hosting][populate queue][FINAL] {"max":1732,"min":1732,"avg":1732,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1734}
+[debug] [2026-02-13T16:09:33.334Z] [hosting] uploads queued: 3
+[debug] [2026-02-13T16:09:34.663Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/498e8e902518f775b2aa61f41324af0918397e5e44f98ead9fdfcca2a47ac743 200
+[debug] [2026-02-13T16:09:34.663Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/498e8e902518f775b2aa61f41324af0918397e5e44f98ead9fdfcca2a47ac743 [stream]
+[debug] [2026-02-13T16:09:35.185Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/9aca0578ba117de3dec56d811220ec247e8874f1c29194df23fdd06510d83164 200
+[debug] [2026-02-13T16:09:35.185Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/9aca0578ba117de3dec56d811220ec247e8874f1c29194df23fdd06510d83164 [stream]
+[debug] [2026-02-13T16:09:35.820Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/7c6e55e03ded53bd9d334e49131b9a2905b964803fef9620b84dec0c5e99b5a0 200
+[debug] [2026-02-13T16:09:35.820Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/coastal-cell-484613-n6/versions/3f838071bfef70f3/files/7c6e55e03ded53bd9d334e49131b9a2905b964803fef9620b84dec0c5e99b5a0 [stream]
+[debug] [2026-02-13T16:09:35.821Z] [hosting][upload queue][FINAL] {"max":2488,"min":1332,"avg":1891.3333333333333,"active":0,"complete":3,"success":3,"errored":0,"retried":0,"total":3,"elapsed":2490}
+[info] +  hosting[coastal-cell-484613-n6]: file upload complete 
+[debug] [2026-02-13T16:09:35.821Z] [hosting] deploy completed after 4281ms
+[debug] [2026-02-13T16:09:35.822Z] [rules] releasing firebase.storage/coastal-cell-484613-n6.firebasestorage.app with ruleset projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305
+[debug] [2026-02-13T16:09:35.822Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:35.822Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:35.822Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app [none]
+[debug] [2026-02-13T16:09:35.822Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app {"release":{"name":"projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app","rulesetName":"projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305"}}
+[debug] [2026-02-13T16:09:37.242Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app 200
+[debug] [2026-02-13T16:09:37.242Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app {"name":"projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app","rulesetName":"projects/coastal-cell-484613-n6/rulesets/5e152b5f-a678-484b-b23d-68d690944305","createTime":"2026-02-10T14:51:03.348872Z","updateTime":"2026-02-13T16:09:36.139205Z"}
+[debug] [2026-02-13T16:09:37.242Z] [rules] updated release projects/coastal-cell-484613-n6/releases/firebase.storage/coastal-cell-484613-n6.firebasestorage.app
+[info] +  storage: released rules storage.rules to firebase.storage 
+[debug] [2026-02-13T16:09:37.243Z] [rules] releasing cloud.firestore/(default) with ruleset projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a
+[debug] [2026-02-13T16:09:37.243Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:37.243Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:37.243Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/cloud.firestore/(default) [none]
+[debug] [2026-02-13T16:09:37.243Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/cloud.firestore/(default) {"release":{"name":"projects/coastal-cell-484613-n6/releases/cloud.firestore/(default)","rulesetName":"projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a"}}
+[debug] [2026-02-13T16:09:38.542Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/cloud.firestore/(default) 200
+[debug] [2026-02-13T16:09:38.542Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/coastal-cell-484613-n6/releases/cloud.firestore/(default) {"name":"projects/coastal-cell-484613-n6/releases/cloud.firestore","rulesetName":"projects/coastal-cell-484613-n6/rulesets/7867c894-9810-44d4-a688-593012c9e40a","createTime":"2026-02-12T18:56:30.561097Z","updateTime":"2026-02-13T16:09:37.437982Z"}
+[debug] [2026-02-13T16:09:38.542Z] [rules] updated release projects/coastal-cell-484613-n6/releases/cloud.firestore
+[info] +  firestore: released rules firestore.rules to cloud.firestore 
+[info] i  functions: Skipping the deploy of unchanged functions. 
+[info] +  functions[castVote(us-central1)] Skipped (No changes detected) 
+[info] +  functions[getTokenStatus(us-central1)] Skipped (No changes detected) 
+[info] i  functions: updating Node.js 22 (2nd Gen) function firebase-frameworks-coastal-cell-484613-n6:ssrcoastalcell484613n6(us-central1)... 
+[debug] [2026-02-13T16:09:38.548Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:38.548Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:38.549Z] >>> [apiv2][query] PATCH https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6 updateMask=name%2CbuildConfig.runtime%2CbuildConfig.entryPoint%2CbuildConfig.source.storageSource.bucket%2CbuildConfig.source.storageSource.object%2CbuildConfig.environmentVariables%2CbuildConfig.sourceToken%2CserviceConfig.environmentVariables%2CserviceConfig.secretEnvironmentVariables%2CserviceConfig.ingressSettings%2CserviceConfig.timeoutSeconds%2CserviceConfig.serviceAccountEmail%2CserviceConfig.availableMemory%2CserviceConfig.minInstanceCount%2CserviceConfig.maxInstanceCount%2CserviceConfig.maxInstanceRequestConcurrency%2CserviceConfig.availableCpu%2CserviceConfig.vpcConnector%2CserviceConfig.vpcConnectorEgressSettings%2Clabels
+[debug] [2026-02-13T16:09:38.549Z] >>> [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6 {"name":"projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6","buildConfig":{"runtime":"nodejs22","entryPoint":"ssrcoastalcell484613n6","source":{"storageSource":{"bucket":"gcf-v2-uploads-475204551275.us-central1.cloudfunctions.appspot.com","object":"2a033950-7391-49b1-bfcc-866ae19c1825.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"NEXT_PUBLIC_FIREBASE_API_KEY":"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU","NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN":"coastal-cell-484613-n6.firebaseapp.com","NEXT_PUBLIC_FIREBASE_PROJECT_ID":"coastal-cell-484613-n6","NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET":"coastal-cell-484613-n6.firebasestorage.app","NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID":"475204551275","NEXT_PUBLIC_FIREBASE_APP_ID":"1:475204551275:web:b6b2197e3024e5066d672e","NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID":"G-6471Q499EW","NEXT_PUBLIC_FIREBASE_FUNCTIONS_REGION":"us-central1","ADMIN_PASSWORD":"admin123","ADMIN_PROJECT_ID":"coastal-cell-484613-n6","ADMIN_CLIENT_EMAIL":"firebase-adminsdk-fbsvc@coastal-cell-484613-n6.iam.gserviceaccount.com","ADMIN_PRIVATE_KEY":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSbAIE4i0J8oiU\nC9gg9q5TN8BDu7XIT4LT4iXyzqN0OMxNU0XgyGQfJryc/V9qdL1Dpfk7VmSTNUip\nnbsgirHa1BOH5QN02FYwc9Lu4Qr+8QHqT9msrr0LDy1XOwTQFz2Oz3kHUV0YDp7s\n6+kmzB00hW3IVLuAOsoSV9fVvougGh5/ozTkdCKDTPJfV8OyzuId/VlOzLLtja21\nPsemvlArOj0NU+ZsDWObMS7qUE0F3kbH6gBiZ1JprdbQQ9wcsQGgmEXbwzUFnBm/\npYJAPZEkWP2qEcT48O5y7XXIBQPBr+KlSMc8rrpatPLF9ro2c/Hm/PGwhHRNc9O9\n4NUge+lvAgMBAAECggEAHBJKpqohxgz0CYQW/jbKhNGQNbkKBEIPOwMVevH0PmIB\nZ2NvlBBHwxwg13S50PLn+OlgeXkKC9V07yPavfmixoW6YUu9DU57GRWqkzG0jNRM\nJB0o9e+NyrbonpWCC9y92pp1E/PXzojMzOCgBwv97W7LeYlMRkwRfyb25U35RI9Z\nimQjsAA8TaN6hLDrFcQ13HZNeHYHZkB3FP4J5wDQFVVZpHm4jOQduGnfdNA8r0bv\nJ4NEwQmpgJeyxndMaGZJgc68OCWOWPuTBc3sLNprCn7qv10kDdUVb+oixYxC5oXC\n+4vnEUOToDWbdb2Cla1Nmc+V3VjIFsn7UKcasP9MyQKBgQDqRk7vraLKLPTkzmjl\n8OnD40eH/ltFD+2lBggovwYeFzzykvxnp5HtGcRoUCU9H674pzMN5dpq5hhoU4/w\ncn/jSsJ9qbr+lcV1jSQu/BrIkOjGrYMc+zfK2k8B+zght6wSi9gctP6ad5YEMXVq\nJaZSK9w5FVqd+Q7c5imqRnnbjQKBgQDl7280yJuitq7z/85IlQdMpgxI/ab8xqTT\nf12JpW/IQPsf97XlHUzNEpwgU7pnuc59shSMo8Ywy7mkENS/bkNza/5ON08lHcRt\nwO1uAYFVY4HdJUKwsC8pP1Ni2xaZKoa2JdRCub0oWwSW0OlsyM47D6BG2mP5xY/M\ndIArHLWb6wKBgQCIDJqMr+5osKDrOz9JwZVPz+5beIgyXCSrAAy+9Ogtk1sul9OC\nspqY8azQ0zI9A+hNuHN6r7AfAk7MTzK49RV1vpWh+m6AqCOKt5N6wacgMJ8tudf5\nfZ6R7COTx/t6ATspbhLr4OQ2ehohh0NjiEfFUnlKoS8FrHxIJlWt782WhQKBgEkp\nj3P3JPZ4NGD1EzkrGkB8UUpkU175Afc9/pBOsKvCaWV5l0oIsahK9Jygp55bk+WQ\n5VL+xZA/MpmOtXMX7aRrR2ax2KARwa++hI3NMs7ts6OfOIIp/Uedm7XHyn//9Q8+\nKDT3DsYpd+NZI/z2RBCs3y3MTaVrBF9k7mdJYkvzAoGAUOpPCfYNuP3jsqdVgXHV\nPRD7zw/2Gb0ugeVrnGdc6WXcHmx+AIo1QyLWXT/QI/iDaT5KPcG1fFsKeDsiSIIM\nKSGC1q4hS+QCaPDEdLrjYm4bCrGRXxQdrT+dgxY/MEd3OfQb/Jt5EClJnoGhWStq\nlHKGhANRO9K/8XXhTB8eoV8=\n-----END PRIVATE KEY-----\n","ADMIN_STORAGE_BUCKET":"coastal-cell-484613-n6.firebasestorage.app","VERCEL_URL":"coastal-cell-484613-n6.web.app","__FIREBASE_FRAMEWORKS_ENTRY__":"next.js","__FIREBASE_DEFAULTS__":"{\"config\":{\"projectId\":\"coastal-cell-484613-n6\",\"appId\":\"1:475204551275:web:b6b2197e3024e5066d672e\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\",\"apiKey\":\"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU\",\"authDomain\":\"coastal-cell-484613-n6.firebaseapp.com\",\"messagingSenderId\":\"475204551275\",\"measurementId\":\"G-6471Q499EW\",\"projectNumber\":\"475204551275\",\"version\":\"2\"},\"_authTokenSyncURL\":\"/__session\"}","FIREBASE_CONFIG":"{\"projectId\":\"coastal-cell-484613-n6\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\"}","GCLOUD_PROJECT":"coastal-cell-484613-n6","EVENTARC_CLOUD_EVENT_SOURCE":"projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6","FUNCTION_TARGET":"ssrcoastalcell484613n6","LOG_EXECUTION_ID":"true"},"secretEnvironmentVariables":[{"key":"ADMIN_PASSWORD","secret":"ADMIN_PASSWORD","projectId":"coastal-cell-484613-n6","version":"1"},{"key":"ADMIN_PROJECT_ID","secret":"ADMIN_PROJECT_ID","projectId":"coastal-cell-484613-n6","version":"1"},{"key":"ADMIN_CLIENT_EMAIL","secret":"ADMIN_CLIENT_EMAIL","projectId":"coastal-cell-484613-n6","version":"1"},{"key":"ADMIN_PRIVATE_KEY","secret":"ADMIN_PRIVATE_KEY","projectId":"coastal-cell-484613-n6","version":"1"},{"key":"ADMIN_STORAGE_BUCKET","secret":"ADMIN_STORAGE_BUCKET","projectId":"coastal-cell-484613-n6","version":"1"}],"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null},"labels":{"deployment-tool":"cli-firebase","firebase-functions-codebase":"firebase-frameworks-coastal-cell-484613-n6","firebase-functions-hash":"fa9b75d4d7bd9363a9493742ba30dbe1e3746c65"}}
+[debug] [2026-02-13T16:09:40.436Z] <<< [apiv2][status] PATCH https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6 400
+[debug] [2026-02-13T16:09:40.436Z] <<< [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6 {"error":{"code":400,"message":"Could not update Cloud Run service projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6. spec.template.spec.containers[0].env: Secret environment variable overlaps non secret environment variable: ADMIN_PASSWORD","status":"INVALID_ARGUMENT"}}
+[warn] !  functions: Request to https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6?updateMask=name%2CbuildConfig.runtime%2CbuildConfig.entryPoint%2CbuildConfig.source.storageSource.bucket%2CbuildConfig.source.storageSource.object%2CbuildConfig.environmentVariables%2CbuildConfig.sourceToken%2CserviceConfig.environmentVariables%2CserviceConfig.secretEnvironmentVariables%2CserviceConfig.ingressSettings%2CserviceConfig.timeoutSeconds%2CserviceConfig.serviceAccountEmail%2CserviceConfig.availableMemory%2CserviceConfig.minInstanceCount%2CserviceConfig.maxInstanceCount%2CserviceConfig.maxInstanceRequestConcurrency%2CserviceConfig.availableCpu%2CserviceConfig.vpcConnector%2CserviceConfig.vpcConnectorEgressSettings%2Clabels had HTTP Error: 400, Could not update Cloud Run service projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6. spec.template.spec.containers[0].env: Secret environment variable overlaps non secret environment variable: ADMIN_PASSWORD 
+[warn] !  functions:  failed to update function projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6 
+[error] Failed to update function projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6
+[debug] [2026-02-13T16:09:40.443Z] Total Function Deployment time: 1893
+[debug] [2026-02-13T16:09:40.443Z] 1 Functions Deployed
+[debug] [2026-02-13T16:09:40.443Z] 1 Functions Errored
+[debug] [2026-02-13T16:09:40.443Z] 0 Function Deployments Aborted
+[debug] [2026-02-13T16:09:40.443Z] Average Function Deployment time: 1891
+[info] 
+[info] Functions deploy had errors with the following functions:
+	firebase-frameworks-coastal-cell-484613-n6:ssrcoastalcell484613n6(us-central1)
+[debug] [2026-02-13T16:09:40.655Z] Not printing URL for HTTPS function. Typically this means it didn't match a filter or we failed deployment
+[debug] [2026-02-13T16:09:40.655Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:40.655Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:09:40.655Z] >>> [apiv2][query] GET https://artifactregistry.googleapis.com/v1/projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts [none]
+[debug] [2026-02-13T16:09:42.218Z] <<< [apiv2][status] GET https://artifactregistry.googleapis.com/v1/projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts 200
+[debug] [2026-02-13T16:09:42.218Z] <<< [apiv2][body] GET https://artifactregistry.googleapis.com/v1/projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts {"name":"projects/coastal-cell-484613-n6/locations/us-central1/repositories/gcf-artifacts","format":"DOCKER","description":"This repository is created and used by Cloud Functions for storing function docker images.","labels":{"goog-managed-by":"cloudfunctions"},"createTime":"2026-02-11T13:56:14.413325Z","updateTime":"2026-02-13T10:52:28.462229Z","mode":"STANDARD_REPOSITORY","cleanupPolicies":{"firebase-functions-cleanup":{"id":"firebase-functions-cleanup","action":"DELETE","condition":{"tagState":"ANY","olderThan":"604800s"}}},"sizeBytes":"1641412996","vulnerabilityScanningConfig":{"lastEnableTime":"2026-02-11T13:55:59.991726815Z","enablementState":"SCANNING_DISABLED","enablementStateReason":"API containerscanning.googleapis.com is not enabled."},"satisfiesPzi":true,"registryUri":"us-central1-docker.pkg.dev/coastal-cell-484613-n6/gcf-artifacts"}
+[debug] [2026-02-13T16:09:42.218Z] Functions deploy failed.
+[debug] [2026-02-13T16:09:42.219Z] {
+  "endpoint": {
+    "id": "ssrcoastalcell484613n6",
+    "project": "coastal-cell-484613-n6",
+    "region": "us-central1",
+    "entryPoint": "ssrcoastalcell484613n6",
+    "platform": "gcfv2",
+    "runtime": "nodejs22",
+    "httpsTrigger": {},
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "secretEnvironmentVariables": [
+      {
+        "key": "ADMIN_PASSWORD",
+        "secret": "ADMIN_PASSWORD",
+        "projectId": "coastal-cell-484613-n6",
+        "version": "1"
+      },
+      {
+        "key": "ADMIN_PROJECT_ID",
+        "secret": "ADMIN_PROJECT_ID",
+        "projectId": "coastal-cell-484613-n6",
+        "version": "1"
+      },
+      {
+        "key": "ADMIN_CLIENT_EMAIL",
+        "secret": "ADMIN_CLIENT_EMAIL",
+        "projectId": "coastal-cell-484613-n6",
+        "version": "1"
+      },
+      {
+        "key": "ADMIN_PRIVATE_KEY",
+        "secret": "ADMIN_PRIVATE_KEY",
+        "projectId": "coastal-cell-484613-n6",
+        "version": "1"
+      },
+      {
+        "key": "ADMIN_STORAGE_BUCKET",
+        "secret": "ADMIN_STORAGE_BUCKET",
+        "projectId": "coastal-cell-484613-n6",
+        "version": "1"
+      }
+    ],
+    "serviceAccount": null,
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "concurrency": 80,
+    "vpc": null,
+    "environmentVariables": {
+      "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU",
+      "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "coastal-cell-484613-n6.firebaseapp.com",
+      "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "coastal-cell-484613-n6",
+      "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "coastal-cell-484613-n6.firebasestorage.app",
+      "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "475204551275",
+      "NEXT_PUBLIC_FIREBASE_APP_ID": "1:475204551275:web:b6b2197e3024e5066d672e",
+      "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-6471Q499EW",
+      "NEXT_PUBLIC_FIREBASE_FUNCTIONS_REGION": "us-central1",
+      "ADMIN_PASSWORD": "admin123",
+      "ADMIN_PROJECT_ID": "coastal-cell-484613-n6",
+      "ADMIN_CLIENT_EMAIL": "firebase-adminsdk-fbsvc@coastal-cell-484613-n6.iam.gserviceaccount.com",
+      "ADMIN_PRIVATE_KEY": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSbAIE4i0J8oiU\nC9gg9q5TN8BDu7XIT4LT4iXyzqN0OMxNU0XgyGQfJryc/V9qdL1Dpfk7VmSTNUip\nnbsgirHa1BOH5QN02FYwc9Lu4Qr+8QHqT9msrr0LDy1XOwTQFz2Oz3kHUV0YDp7s\n6+kmzB00hW3IVLuAOsoSV9fVvougGh5/ozTkdCKDTPJfV8OyzuId/VlOzLLtja21\nPsemvlArOj0NU+ZsDWObMS7qUE0F3kbH6gBiZ1JprdbQQ9wcsQGgmEXbwzUFnBm/\npYJAPZEkWP2qEcT48O5y7XXIBQPBr+KlSMc8rrpatPLF9ro2c/Hm/PGwhHRNc9O9\n4NUge+lvAgMBAAECggEAHBJKpqohxgz0CYQW/jbKhNGQNbkKBEIPOwMVevH0PmIB\nZ2NvlBBHwxwg13S50PLn+OlgeXkKC9V07yPavfmixoW6YUu9DU57GRWqkzG0jNRM\nJB0o9e+NyrbonpWCC9y92pp1E/PXzojMzOCgBwv97W7LeYlMRkwRfyb25U35RI9Z\nimQjsAA8TaN6hLDrFcQ13HZNeHYHZkB3FP4J5wDQFVVZpHm4jOQduGnfdNA8r0bv\nJ4NEwQmpgJeyxndMaGZJgc68OCWOWPuTBc3sLNprCn7qv10kDdUVb+oixYxC5oXC\n+4vnEUOToDWbdb2Cla1Nmc+V3VjIFsn7UKcasP9MyQKBgQDqRk7vraLKLPTkzmjl\n8OnD40eH/ltFD+2lBggovwYeFzzykvxnp5HtGcRoUCU9H674pzMN5dpq5hhoU4/w\ncn/jSsJ9qbr+lcV1jSQu/BrIkOjGrYMc+zfK2k8B+zght6wSi9gctP6ad5YEMXVq\nJaZSK9w5FVqd+Q7c5imqRnnbjQKBgQDl7280yJuitq7z/85IlQdMpgxI/ab8xqTT\nf12JpW/IQPsf97XlHUzNEpwgU7pnuc59shSMo8Ywy7mkENS/bkNza/5ON08lHcRt\nwO1uAYFVY4HdJUKwsC8pP1Ni2xaZKoa2JdRCub0oWwSW0OlsyM47D6BG2mP5xY/M\ndIArHLWb6wKBgQCIDJqMr+5osKDrOz9JwZVPz+5beIgyXCSrAAy+9Ogtk1sul9OC\nspqY8azQ0zI9A+hNuHN6r7AfAk7MTzK49RV1vpWh+m6AqCOKt5N6wacgMJ8tudf5\nfZ6R7COTx/t6ATspbhLr4OQ2ehohh0NjiEfFUnlKoS8FrHxIJlWt782WhQKBgEkp\nj3P3JPZ4NGD1EzkrGkB8UUpkU175Afc9/pBOsKvCaWV5l0oIsahK9Jygp55bk+WQ\n5VL+xZA/MpmOtXMX7aRrR2ax2KARwa++hI3NMs7ts6OfOIIp/Uedm7XHyn//9Q8+\nKDT3DsYpd+NZI/z2RBCs3y3MTaVrBF9k7mdJYkvzAoGAUOpPCfYNuP3jsqdVgXHV\nPRD7zw/2Gb0ugeVrnGdc6WXcHmx+AIo1QyLWXT/QI/iDaT5KPcG1fFsKeDsiSIIM\nKSGC1q4hS+QCaPDEdLrjYm4bCrGRXxQdrT+dgxY/MEd3OfQb/Jt5EClJnoGhWStq\nlHKGhANRO9K/8XXhTB8eoV8=\n-----END PRIVATE KEY-----\n",
+      "ADMIN_STORAGE_BUCKET": "coastal-cell-484613-n6.firebasestorage.app",
+      "VERCEL_URL": "coastal-cell-484613-n6.web.app",
+      "__FIREBASE_FRAMEWORKS_ENTRY__": "next.js",
+      "__FIREBASE_DEFAULTS__": "{\"config\":{\"projectId\":\"coastal-cell-484613-n6\",\"appId\":\"1:475204551275:web:b6b2197e3024e5066d672e\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\",\"apiKey\":\"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU\",\"authDomain\":\"coastal-cell-484613-n6.firebaseapp.com\",\"messagingSenderId\":\"475204551275\",\"measurementId\":\"G-6471Q499EW\",\"projectNumber\":\"475204551275\",\"version\":\"2\"},\"_authTokenSyncURL\":\"/__session\"}",
+      "FIREBASE_CONFIG": "{\"projectId\":\"coastal-cell-484613-n6\",\"storageBucket\":\"coastal-cell-484613-n6.firebasestorage.app\"}",
+      "GCLOUD_PROJECT": "coastal-cell-484613-n6",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6"
+    },
+    "codebase": "firebase-frameworks-coastal-cell-484613-n6",
+    "runServiceId": "ssrcoastalcell484613n6",
+    "cpu": 1,
+    "securityLevel": "SECURE_ALWAYS",
+    "targetedByOnly": false,
+    "hash": "fa9b75d4d7bd9363a9493742ba30dbe1e3746c65"
+  },
+  "op": "update",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "context": {
+      "function": "projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6"
+    },
+    "exit": 1,
+    "message": "Failed to update function projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6",
+    "original": {
+      "name": "FirebaseError",
+      "children": [],
+      "context": {
+        "body": {
+          "error": {
+            "code": 400,
+            "message": "Could not update Cloud Run service projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6. spec.template.spec.containers[0].env: Secret environment variable overlaps non secret environment variable: ADMIN_PASSWORD",
+            "status": "INVALID_ARGUMENT"
+          }
+        },
+        "response": {
+          "statusCode": 400
+        }
+      },
+      "exit": 1,
+      "message": "Request to https://cloudfunctions.googleapis.com/v2/projects/coastal-cell-484613-n6/locations/us-central1/functions/ssrcoastalcell484613n6?updateMask=name%2CbuildConfig.runtime%2CbuildConfig.entryPoint%2CbuildConfig.source.storageSource.bucket%2CbuildConfig.source.storageSource.object%2CbuildConfig.environmentVariables%2CbuildConfig.sourceToken%2CserviceConfig.environmentVariables%2CserviceConfig.secretEnvironmentVariables%2CserviceConfig.ingressSettings%2CserviceConfig.timeoutSeconds%2CserviceConfig.serviceAccountEmail%2CserviceConfig.availableMemory%2CserviceConfig.minInstanceCount%2CserviceConfig.maxInstanceCount%2CserviceConfig.maxInstanceRequestConcurrency%2CserviceConfig.availableCpu%2CserviceConfig.vpcConnector%2CserviceConfig.vpcConnectorEgressSettings%2Clabels had HTTP Error: 400, Could not update Cloud Run service projects/coastal-cell-484613-n6/locations/us-central1/services/ssrcoastalcell484613n6. spec.template.spec.containers[0].env: Secret environment variable overlaps non secret environment variable: ADMIN_PASSWORD",
+      "status": 400
+    },
+    "status": 400,
+    "code": 400
+  }
+}
+[debug] [2026-02-13T16:09:42.299Z] Error: Failed to update function ssrcoastalcell484613n6 in region us-central1
+    at C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:440:19
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Fabricator.updateV2Function (C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:424:32)
+    at async Fabricator.updateEndpoint (C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:160:13)
+    at async handle (C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:91:17)
+[error] 
+[error] Error: There was an error deploying functions
+[debug] [2026-02-13T16:13:16.591Z] ----------------------------------------------------------------------
+[debug] [2026-02-13T16:13:16.593Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Khun Thi Han\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-02-13T16:13:16.594Z] CLI Version:   15.6.0
+[debug] [2026-02-13T16:13:16.594Z] Platform:      win32
+[debug] [2026-02-13T16:13:16.594Z] Node Version:  v22.21.1
+[debug] [2026-02-13T16:13:16.594Z] Time:          Fri Feb 13 2026 22:43:16 GMT+0630 (Myanmar Time)
+[debug] [2026-02-13T16:13:16.594Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-02-13T16:13:16.596Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-02-13T16:13:18.826Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-13T16:13:18.826Z] > authorizing via signed-in user (li8993han@gmail.com)
+[debug] [2026-02-13T16:13:18.826Z] [iam] checking project coastal-cell-484613-n6 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2026-02-13T16:13:18.827Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:18.827Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:18.827Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions [none]
+[debug] [2026-02-13T16:13:18.827Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions  x-goog-user-project=coastal-cell-484613-n6
+[debug] [2026-02-13T16:13:18.828Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-02-13T16:13:20.123Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions 200
+[debug] [2026-02-13T16:13:20.123Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/coastal-cell-484613-n6:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-02-13T16:13:20.123Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:20.124Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:20.124Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-02-13T16:13:20.124Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-02-13T16:13:21.688Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2026-02-13T16:13:21.688Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/coastal-cell-484613-n6/serviceAccounts/coastal-cell-484613-n6@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-02-13T16:13:21.689Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:21.689Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:21.689Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:13:22.289Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:13:22.290Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6 {"projectId":"coastal-cell-484613-n6","projectNumber":"475204551275","displayName":"Voting","name":"projects/coastal-cell-484613-n6","resources":{"hostingSite":"coastal-cell-484613-n6"},"state":"ACTIVE","etag":"1_dd4a8cd4-d1d2-417d-b2b1-c7d0232382a3"}
+[debug] [2026-02-13T16:13:25.240Z] defaultcredentials: writing to file C:\Users\Khun Thi Han\AppData\Roaming\firebase\li8993han_gmail_com_application_default_credentials.json
+[debug] [2026-02-13T16:13:25.242Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:25.242Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:25.242Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites pageToken=&pageSize=10
+[debug] [2026-02-13T16:13:27.033Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites 200
+[debug] [2026-02-13T16:13:27.034Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites {"sites":[{"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-02-13T16:13:27.034Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:27.034Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:27.034Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites 
+[debug] [2026-02-13T16:13:27.649Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites 200
+[debug] [2026-02-13T16:13:27.649Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites {"sites":[{"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-02-13T16:13:27.650Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:27.650Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:27.650Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/webApps/-/config [none]
+[debug] [2026-02-13T16:13:28.856Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/webApps/-/config 200
+[debug] [2026-02-13T16:13:28.857Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/webApps/-/config {"projectId":"coastal-cell-484613-n6","appId":"1:475204551275:web:b6b2197e3024e5066d672e","storageBucket":"coastal-cell-484613-n6.firebasestorage.app","apiKey":"AIzaSyAHlXw4udXJFgfmOu2Z7xDC2im_UqempVU","authDomain":"coastal-cell-484613-n6.firebaseapp.com","messagingSenderId":"475204551275","measurementId":"G-6471Q499EW","projectNumber":"475204551275","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-02-13T16:13:35.043Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:35.043Z] Checked if tokens are valid: true, expires at: 1771001822258
+[debug] [2026-02-13T16:13:35.043Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 [none]
+[debug] [2026-02-13T16:13:36.724Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 200
+[debug] [2026-02-13T16:13:36.724Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6 {"name":"projects/coastal-cell-484613-n6/sites/coastal-cell-484613-n6","defaultUrl":"https://coastal-cell-484613-n6.web.app","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 15.0.8
+
+[info]    - Environments: .env
+
+
+[info]    Creating an optimized production build ...
+
+[debug] [2026-02-13T16:13:40.875Z] *** [apiv2] error from fetch(https://firebase-public.firebaseio.com/cli.json, {"headers":{},"method":"GET"}): FetchError: request to https://firebase-public.firebaseio.com/cli.json failed, reason: 
+[warn] !  Unable to fetch the CLI MOTD and remote config. This is not a fatal error, but may indicate an issue with your network connection. 
+[debug] [2026-02-13T16:13:40.875Z] Failed to fetch MOTD FirebaseError: Failed to make request to https://firebase-public.firebaseio.com/cli.json
+[info]  ✓ Compiled successfully
+
+[info]    Skipping validation of types
+
+[info]    Linting ...
+
+[info]    Collecting page data ...
+
+[info] Error: Missing Firebase Admin credentials in environment variables.
+    at <unknown> (C:\Project\voting-system\.next\server\app\api\admin\token-seed\route.js:1:2921)
+
+[info] Error: Missing Firebase Admin credentials in environment variables.
+    at <unknown> (C:\Project\voting-system\.next\server\app\api\admin\upload\route.js:1:2940)
+Error: Missing Firebase Admin credentials in environment variables.
+    at <unknown> (C:\Project\voting-system\.next\server\app\api\admin\token-alias\route.js:1:3186)
+
+[info] 
+
+[info] > Build error occurred
+
+[info] Error: Failed to collect page data for /api/admin/token-alias
+    at <unknown> (C:\Project\voting-system\node_modules\next\dist\build\utils.js:1234:15) {
+  type: 'Error'
+}
+
+[debug] [2026-02-13T16:13:47.101Z] Error: ENOENT: no such file or directory, open 'C:\Project\voting-system\.next\export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
