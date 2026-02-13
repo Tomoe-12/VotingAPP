@@ -200,16 +200,16 @@ function VotingPageContent() {
         />
       </div>
 
-      <div className="container mx-auto px-4 py-20 md:py-32 max-w-7xl relative z-10">
+      <div className="container mx-auto px-4 pb-20 pt-10 md:py-32 max-w-7xl relative z-10">
         {/* Header */}
-        <div className="text-center mb-24 md:mb-32 min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center">
+        <div className="text-center md:mb-14 min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-foreground mb-6 text-balance leading-tight">
             {t("title")}
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed max-w-3xl mx-auto">
             {t("subtitle")}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8">
+          {/* <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8">
             <Badge
               variant="outline"
               className="text-base md:text-lg px-6 py-3 bg-card"
@@ -217,10 +217,10 @@ function VotingPageContent() {
               <Users className="w-5 h-5 mr-2 inline" />
               {totalVotesKing + totalVotesQueen} {t("votesCount")}
             </Badge>
-          </div>
+          </div> */}
 
           {/* Language Switcher */}
-          <div className="flex justify-center">
+          <div className="flex justify-center ">
             <div className="relative inline-flex items-center bg-card/80 backdrop-blur-sm border border-border rounded-full p-1 shadow-lg">
               <button
                 onClick={() => setLanguage("en")}
@@ -261,7 +261,7 @@ function VotingPageContent() {
         )}
 
         {!voterToken && (
-          <div className="mb-8 p-5 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-3">
+          <div className="mb-8 p-5  bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-3">
             <div className="w-5 h-5 rounded-full bg-destructive/20 flex items-center justify-center shrink-0">
               <div className="w-2 h-2 rounded-full bg-destructive" />
             </div>
@@ -569,7 +569,7 @@ function VotingPageContent() {
         {/* About Us Section */}
         <div
           id="about-section"
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 mt-16 "
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 mt-16 "
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - University Image */}
@@ -614,10 +614,6 @@ function VotingPageContent() {
                   <p>{t("aboutDescription3")}</p>
                 </div>
               </div>
-
-              <Button size="lg" className="mt-4">
-                Learn More
-              </Button>
             </div>
           </div>
         </div>
@@ -627,20 +623,30 @@ function VotingPageContent() {
       <footer className="relative z-10 bg-card/50 backdrop-blur-sm border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-primary" />
-              <span className="font-serif font-semibold text-foreground">
-                University King & Queen Voting
-              </span>
+            <div className="flex md:flex-row flex-col items-center gap-2">
+              {/* <Crown className="w-5 h-5 text-primary" /> */}
+              <img
+                src="../University_logo.jpg"
+                alt="University Logo"
+                className=" md:w-10 md:h-10 w-15 h-15"
+              />
+              <div className=" flex flex-col md:flex-row md:justify-center md:items-center ">
+                <span className="font-serif font-semibold text-foreground">
+                  University Of Computer Studies Taunggyi, 
+                </span>
+                <span className="mx-auto md:m-0 font-serif font-semibold text-foreground">
+                  {" "} Paoh Family
+                </span>
+              </div>
             </div>
 
             <div className="text-center md:text-right">
               <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} University Student Council.
+                &copy; {new Date().getFullYear()} Paoh Family Community.
                 All rights reserved.
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Made with passion by the Student Community
+                Made with passion by the Poah Family Student
               </p>
             </div>
           </div>

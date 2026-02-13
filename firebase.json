@@ -34,14 +34,7 @@
       "functions/**"
     ],
     "frameworksBackend": {
-      "region": "us-central1",
-      "secrets": [
-        "ADMIN_PASSWORD",
-        "ADMIN_PROJECT_ID",
-        "ADMIN_CLIENT_EMAIL",
-        "ADMIN_PRIVATE_KEY",
-        "ADMIN_STORAGE_BUCKET"
-      ]
+      "region": "us-central1"
     }
   }
 }

@@ -1,8 +1,6 @@
 'use client'
 
-import React from "react"
-
-import { useState } from 'react'
+import React, { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -16,45 +14,57 @@ export function CandidateImageCarousel({ images, name, numberBadge }: CandidateI
   const validImages = images.filter(Boolean) as string[]
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const goToPrevious = () => {
+  // Auto-scrolling logic
+  useEffect(() => {
+    if (validImages.length <= 1) return;
+    const interval = setInterval(() => {
+      goToNext();
+    }, 2500); // ၃.၅ စက္ကန့်ခြားတစ်ခါ scroll ဖြစ်မယ်
+    return () => clearInterval(interval);
+  }, [currentIndex, validImages.length]);
+
+  const goToPrevious = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1))
   }
 
-  const goToNext = () => {
+  const goToNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1))
   }
 
-  if (validImages.length === 0) {
-    return (
-      <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent to-card/60" />
-        {numberBadge}
-        <div className="text-muted-foreground text-sm">No image available</div>
-      </div>
-    )
-  }
+  if (validImages.length === 0) return null;
 
   return (
     <div className="aspect-4/5 bg-muted relative overflow-hidden group/carousel">
-      {/* Current Image */}
-      <img
-        src={validImages[currentIndex] || "/placeholder.svg"}
-        alt={`${name} - Image ${currentIndex + 1}`}
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-linear-to-b from-transparent to-card/60" />
+      {/* Scrolling Container */}
+      <div 
+        className="flex h-full w-full transition-transform duration-500 ease-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {validImages.map((src, index) => (
+          <div key={index} className="w-full h-full shrink-0">
+            <img
+              src={src || "/placeholder.svg"}
+              alt={`${name} - ${index}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Overlay Gradient */}
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/40 pointer-events-none" />
       
-      {/* Number Badge */}
       {numberBadge}
 
-      {/* Navigation Arrows - only show if more than 1 image */}
       {validImages.length > 1 && (
         <>
           <Button
             variant="ghost"
             size="icon"
             onClick={goToPrevious}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm hover:bg-background/90 opacity-0 group-hover/carousel:opacity-100 transition-opacity"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity z-20"
           >
             <ChevronLeft className="w-5 h-5" />
           </Button>
@@ -62,7 +72,7 @@ export function CandidateImageCarousel({ images, name, numberBadge }: CandidateI
             variant="ghost"
             size="icon"
             onClick={goToNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm hover:bg-background/90 opacity-0 group-hover/carousel:opacity-100 transition-opacity"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity z-20"
           >
             <ChevronRight className="w-5 h-5" />
           </Button>
@@ -72,13 +82,15 @@ export function CandidateImageCarousel({ images, name, numberBadge }: CandidateI
             {validImages.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentIndex(index);
+                }}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   index === currentIndex
                     ? 'bg-white w-6'
-                    : 'bg-white/50 hover:bg-white/70'
+                    : 'bg-white/40 w-1.5'
                 }`}
-                aria-label={`Go to image ${index + 1}`}
               />
             ))}
           </div>

@@ -72,6 +72,7 @@ export async function POST(request: Request) {
     const [signedUrl] = await file.getSignedUrl({
       action: "read",
       expires: "01-01-2500",
+      version: "v2",
     });
 
     return NextResponse.json({ ok: true, url: signedUrl, path });
