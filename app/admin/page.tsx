@@ -781,7 +781,7 @@ export default function AdminPage() {
       </div>
 
       {/* Add Candidate Form */}
-      <Card className="mb-12 border-border">
+      <Card className="max-w-7xl mx-auto mb-12 border-border">
         <CardHeader>
           <CardTitle className="font-serif">Add Candidate</CardTitle>
           <CardDescription>Add a new candidate to the election</CardDescription>

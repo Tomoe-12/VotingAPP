@@ -1,7 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
-import { HttpsError, onCall } from "firebase-functions/v2/https";
+import { CallableRequest, HttpsError, onCall } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions/v2";
-import { adminDb } from "../../lib/firebase-admin";
+import { adminDb } from "./firebase-admin";
 
 type TokenAlias = {
   canonical?: string;
@@ -30,7 +30,7 @@ const resolveCanonicalToken = async (rawToken: string) => {
 export const castVote = onCall(
   { secrets: ["ALLOWED_ORIGINS", "ADMIN_PRIVATE_KEY", "ADMIN_CLIENT_EMAIL", "ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET"], 
   cors: ["https://paohwelcome.site"], },// မင်းရဲ့ domain ကို ဒီမှာ အသေထည့်ပါ},
-  async (request) => {
+  async (request: CallableRequest) => {
     // Debug logic: လာတဲ့ origin နဲ့ ငါတို့ သတ်မှတ်ထားတဲ့ origin ကို log ထုတ်ကြည့်မယ်
     // index.ts ထဲက logic ကို အခုလို ပြင်ကြည့်ပါ
     const allowedOrigins = (process.env.ALLOWED_ORIGINS || "").split(",");
@@ -140,7 +140,7 @@ export const getTokenStatus = onCall(
     secrets: ["ALLOWED_ORIGINS", "ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET", "ADMIN_CLIENT_EMAIL", "ADMIN_PRIVATE_KEY"],
     cors: true,
   },
-  async (request) => {
+  async (request: CallableRequest) => {
     const allowedOrigins = (process.env.ALLOWED_ORIGINS || "").split(",");
     const requestOrigin = request.rawRequest.headers.origin || "";
 
