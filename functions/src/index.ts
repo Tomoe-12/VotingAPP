@@ -28,7 +28,7 @@ const resolveCanonicalToken = async (rawToken: string) => {
 };
 
 export const castVote = onCall(
-  { secrets: ["ALLOWED_ORIGINS", "ADMIN_PRIVATE_KEY", "ADMIN_CLIENT_EMAIL", "ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET"], 
+  { secrets: ["ALLOWED_ORIGINS", "ADMIN_PRIVATE_KEY", "ADMIN_CLIENT_EMAIL", "BUILD_ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET"], 
   cors: ["https://paohwelcome.site"], },// မင်းရဲ့ domain ကို ဒီမှာ အသေထည့်ပါ},
   async (request: CallableRequest) => {
     // Debug logic: လာတဲ့ origin နဲ့ ငါတို့ သတ်မှတ်ထားတဲ့ origin ကို log ထုတ်ကြည့်မယ်
@@ -137,7 +137,7 @@ export const castVote = onCall(
 
 export const getTokenStatus = onCall(
   {
-    secrets: ["ALLOWED_ORIGINS", "ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET", "ADMIN_CLIENT_EMAIL", "ADMIN_PRIVATE_KEY"],
+    secrets: ["ALLOWED_ORIGINS", "BUILD_ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET", "ADMIN_CLIENT_EMAIL", "ADMIN_PRIVATE_KEY"],
     cors: true,
   },
   async (request: CallableRequest) => {

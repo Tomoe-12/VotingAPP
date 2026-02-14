@@ -2,7 +2,7 @@ import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getStorage } from "firebase-admin/storage";
 
-const projectId = process.env.ADMIN_PROJECT_ID;
+const projectId = process.env.BUILD_ADMIN_PROJECT_ID;
 const clientEmail = process.env.ADMIN_CLIENT_EMAIL;
 const privateKey = process.env.ADMIN_PRIVATE_KEY?.replace(/\\n/g, "\n");
 const storageBucket =
