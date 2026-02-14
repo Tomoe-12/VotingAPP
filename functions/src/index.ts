@@ -1,16 +1,14 @@
-import { initializeApp } from "firebase-admin/app";
-import { FieldValue, getFirestore } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions/v2";
-
-initializeApp();
+import { adminDb } from "../../lib/firebase-admin";
 
 type TokenAlias = {
   canonical?: string;
 };
 
 const resolveCanonicalToken = async (rawToken: string) => {
-  const db = getFirestore();
+  const db = adminDb;
   const aliasSnap = await db.collection("tokenAliases").doc(rawToken).get();
   if (aliasSnap.exists) {
     const aliasData = aliasSnap.data() as TokenAlias | undefined;
@@ -30,7 +28,7 @@ const resolveCanonicalToken = async (rawToken: string) => {
 };
 
 export const castVote = onCall(
-  { secrets: ["ALLOWED_ORIGINS", "ADMIN_PRIVATE_KEY", "ADMIN_CLIENT_EMAIL"], 
+  { secrets: ["ALLOWED_ORIGINS", "ADMIN_PRIVATE_KEY", "ADMIN_CLIENT_EMAIL", "ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET"], 
   cors: ["https://paohwelcome.site"], },// မင်းရဲ့ domain ကို ဒီမှာ အသေထည့်ပါ},
   async (request) => {
     // Debug logic: လာတဲ့ origin နဲ့ ငါတို့ သတ်မှတ်ထားတဲ့ origin ကို log ထုတ်ကြည့်မယ်
@@ -57,7 +55,7 @@ export const castVote = onCall(
         );
       }
 
-      const db = getFirestore();
+      const db = adminDb;
       const canonicalToken = await resolveCanonicalToken(token);
       const tokenRef = db.collection("voterTokens").doc(canonicalToken);
       const candidateRef = db.collection("candidates").doc(candidateId);
@@ -139,15 +137,16 @@ export const castVote = onCall(
 
 export const getTokenStatus = onCall(
   {
-    secrets: ["ALLOWED_ORIGINS"],
+    secrets: ["ALLOWED_ORIGINS", "ADMIN_PROJECT_ID", "ADMIN_STORAGE_BUCKET", "ADMIN_CLIENT_EMAIL", "ADMIN_PRIVATE_KEY"],
     cors: true,
   },
   async (request) => {
-    const allowedOrigin = process.env.ALLOWED_ORIGINS;
-    const requestOrigin = request.rawRequest.headers.origin;
+    const allowedOrigins = (process.env.ALLOWED_ORIGINS || "").split(",");
+    const requestOrigin = request.rawRequest.headers.origin || "";
 
-    if (requestOrigin !== allowedOrigin) {
-      throw new HttpsError("permission-denied", "Unauthorized domain.");
+    if (!allowedOrigins.includes(requestOrigin)) {
+      logger.error("Domain mismatch in getTokenStatus", { requestOrigin, allowedOrigins });
+      throw new HttpsError("permission-denied", "This domain is not allowed.");
     }
     try {
       const { token } = request.data as { token?: string };
@@ -156,7 +155,7 @@ export const getTokenStatus = onCall(
         throw new HttpsError("invalid-argument", "token is required.");
       }
 
-      const db = getFirestore();
+      const db = adminDb;
       const canonicalToken = await resolveCanonicalToken(token);
       const tokenSnap = await db
         .collection("voterTokens")

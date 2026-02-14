@@ -1,5 +1,4 @@
-import { httpsCallable } from "firebase/functions";
-import { functions } from "@/lib/firebase-client";
+
 import type { CandidateCategory } from "@/lib/voting-data";
 
 export interface CastVoteRequest {
@@ -22,32 +21,39 @@ export interface TokenStatusResponse {
   lastQueenCandidateId?: string | null;
 }
 
-export async function castVote(payload: CastVoteRequest) {
+// Firebase Functions အစား API Route (/api/vote) ကို လှမ်းခေါ်ခြင်း
+export async function castVote(payload: CastVoteRequest): Promise<CastVoteResponse> {
   try {
-    const callable = httpsCallable(functions, "castVote");
-    const result = await callable(payload);
-    return result.data as CastVoteResponse;
+    const response = await fetch("/api/vote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    return await response.json();
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unable to cast your vote.";
-    const code = typeof (error as { code?: string })?.code === "string" ? (error as { code?: string }).code : undefined;
-    return {
-      ok: false,
-      reason: code ? `${message} (${code})` : message,
-    };
+    console.error("Cast vote error:", error);
+    return { ok: false, reason: "Unable to cast your vote (Connection failed)." };
   }
 }
 
-export async function getTokenStatus(token: string) {
+// Firebase Functions အစား API Route (/api/token-status) ကို လှမ်းခေါ်ခြင်း
+export async function getTokenStatus(token: string): Promise<TokenStatusResponse> {
   try {
-    const callable = httpsCallable(functions, "getTokenStatus");
-    const result = await callable({ token });
-    return result.data as TokenStatusResponse;
+    const response = await fetch("/api/token-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        return { ok: false, reason: errorData.reason || "Invalid token" };
+    }
+
+    return await response.json();
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unable to load token status.";
-    const code = typeof (error as { code?: string })?.code === "string" ? (error as { code?: string }).code : undefined;
-    return {
-      ok: false,
-      reason: code ? `${message} (${code})` : message,
-    };
+    console.error("Get token status error:", error);
+    return { ok: false, reason: "Unable to load token status (Connection failed)." };
   }
 }
