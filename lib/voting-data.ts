@@ -69,12 +69,35 @@ export async function removeCandidate(id: string) {
   return deleteDoc(doc(db, "candidates", id));
 }
 
-export async function resetCandidateVotes() {
-  const snapshot = await getDocs(collection(db, "candidates"));
+// export async function resetCandidateVotes() {
+//   const snapshot = await getDocs(collection(db, "candidates"));
+//   const batch = writeBatch(db);
+//   snapshot.docs.forEach((docSnap) => {
+//     batch.update(docSnap.ref, { votes: 0 });
+//   });
+//   await batch.commit();
+// }
+
+export async function resetAllVotingData() {
   const batch = writeBatch(db);
-  snapshot.docs.forEach((docSnap) => {
+  
+  // ၁။ Candidate Votes များကို Reset လုပ်ခြင်း
+  const candidateSnap = await getDocs(collection(db, "candidates"));
+  candidateSnap.docs.forEach((docSnap) => {
     batch.update(docSnap.ref, { votes: 0 });
   });
+
+  // ၂။ Voter Tokens များကို Reset လုပ်ခြင်း (usedKing, usedQueen ကို false ပြန်လုပ်ခြင်း)
+  const tokenSnap = await getDocs(collection(db, "voterTokens"));
+  tokenSnap.docs.forEach((docSnap) => {
+    batch.update(docSnap.ref, {
+      usedKing: false,
+      usedQueen: false,
+      lastKingCandidateId: null,
+      lastQueenCandidateId: null,
+    });
+  });
+
   await batch.commit();
 }
 
