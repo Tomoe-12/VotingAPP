@@ -49,6 +49,7 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState("");
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
   const [newName, setNewName] = useState("");
+  const [newCandidateNumber, setNewCandidateNumber] = useState("");
   const [newImageUrls, setNewImageUrls] = useState<string[]>([]);
   const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
   const [newAge, setNewAge] = useState("");
@@ -316,6 +317,7 @@ export default function AdminPage() {
 
       await addCandidate({
         name: newName.trim(),
+        candidateNumber: newCandidateNumber.trim(),
         category: newCategory,
         images: allImages.length > 0 ? allImages : ["/placeholder.jpg"],
         age: newAge ? parseInt(newAge) : undefined,
@@ -327,6 +329,7 @@ export default function AdminPage() {
       });
 
       setNewName("");
+      setNewCandidateNumber("");
       setNewImageUrls([]);
       setNewImageFiles([]);
       setNewAge("");
@@ -359,8 +362,26 @@ export default function AdminPage() {
     await clearVotes();
   };
 
-  const kingCandidates = candidates.filter((c) => c.category === "king");
-  const queenCandidates = candidates.filter((c) => c.category === "queen");
+  const kingCandidates = candidates
+    .filter((c) => c.category === "king")
+    .sort((a, b) => {
+      const numA = parseInt(a.candidateNumber, 10);
+      const numB = parseInt(b.candidateNumber, 10);
+      if (isNaN(numA) || isNaN(numB)) {
+        return a.candidateNumber.localeCompare(b.candidateNumber);
+      }
+      return numA - numB;
+    });
+  const queenCandidates = candidates
+    .filter((c) => c.category === "queen")
+    .sort((a, b) => {
+      const numA = parseInt(a.candidateNumber, 10);
+      const numB = parseInt(b.candidateNumber, 10);
+      if (isNaN(numA) || isNaN(numB)) {
+        return a.candidateNumber.localeCompare(b.candidateNumber);
+      }
+      return numA - numB;
+    });
 
   // Show password screen if not authenticated
   if (!isAuthenticated) {
@@ -730,6 +751,21 @@ export default function AdminPage() {
               </div>
               <div>
                 <Label
+                  htmlFor="candidateNumber"
+                  className="text-sm font-medium mb-2 block"
+                >
+                  Candidate Number *
+                </Label>
+                <Input
+                  id="candidateNumber"
+                  placeholder="e.g., 1"
+                  value={newCandidateNumber}
+                  onChange={(e) => setNewCandidateNumber(e.target.value)}
+                  className="border-border"
+                />
+              </div>
+              <div>
+                <Label
                   htmlFor="category"
                   className="text-sm font-medium mb-2 block"
                 >
@@ -885,7 +921,7 @@ export default function AdminPage() {
                 <div className="flex items-center gap-4">
                   {/* Candidate Number */}
                   <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-medium text-sm text-primary shrink-0">
-                    {index + 1}
+                    {candidate.candidateNumber}
                   </div>
 
                   {/* Candidate Image */}
@@ -956,7 +992,7 @@ export default function AdminPage() {
                 <div className="flex items-center gap-4">
                   {/* Candidate Number */}
                   <div className="w-7 h-7 rounded-full bg-secondary/10 border border-secondary/30 flex items-center justify-center font-medium text-sm text-secondary shrink-0">
-                    {index + 1}
+                    {candidate.candidateNumber}
                   </div>
 
                   {/* Candidate Image */}

@@ -147,8 +147,26 @@ function VotingPageContent() {
     }
   };
 
-  const kingCandidates = candidates.filter((c) => c.category === "king");
-  const queenCandidates = candidates.filter((c) => c.category === "queen");
+  const kingCandidates = candidates
+    .filter((c) => c.category === "king")
+    .sort((a, b) => {
+      const numA = parseInt(a.candidateNumber, 10);
+      const numB = parseInt(b.candidateNumber, 10);
+      if (isNaN(numA) || isNaN(numB)) {
+        return a.candidateNumber.localeCompare(b.candidateNumber);
+      }
+      return numA - numB;
+    });
+  const queenCandidates = candidates
+    .filter((c) => c.category === "queen")
+    .sort((a, b) => {
+      const numA = parseInt(a.candidateNumber, 10);
+      const numB = parseInt(b.candidateNumber, 10);
+      if (isNaN(numA) || isNaN(numB)) {
+        return a.candidateNumber.localeCompare(b.candidateNumber);
+      }
+      return numA - numB;
+    });
 
   const totalVotesKing = kingCandidates.reduce((sum, c) => sum + c.votes, 0);
   const totalVotesQueen = queenCandidates.reduce((sum, c) => sum + c.votes, 0);
@@ -337,7 +355,7 @@ function VotingPageContent() {
                     name={candidate.name}
                     numberBadge={
                       <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-primary/20 flex items-center justify-center font-semibold text-sm text-primary shadow-sm z-10">
-                        {index + 1}
+                        {candidate.candidateNumber}
                       </div>
                     }
                   />
@@ -480,7 +498,7 @@ function VotingPageContent() {
                     name={candidate.name}
                     numberBadge={
                       <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-secondary/20 flex items-center justify-center font-semibold text-sm text-secondary shadow-sm z-10">
-                        {index + 1}
+                        {candidate.candidateNumber}
                       </div>
                     }
                   />

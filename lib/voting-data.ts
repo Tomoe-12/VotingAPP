@@ -16,6 +16,7 @@ export type CandidateCategory = "king" | "queen";
 export interface CandidateRecord {
   id: string;
   name: string;
+  candidateNumber: string;
   category: CandidateCategory;
   images: string[];
   votes: number;
