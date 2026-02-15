@@ -480,138 +480,12 @@ export default function AdminPage() {
                 //     handleFullReset();
                 //   }
                 // }}
-                 onClick={() => setShowResetDialog(true)}
+                onClick={() => setShowResetDialog(true)}
               >
                 <RotateCcw className="mr-2 h-4 w-4" />
                 Reset All Voting Data
               </Button>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Voter Link Generator */}
-        <Card className="mb-8 border-border">
-          <CardHeader>
-            <CardTitle className="font-serif flex items-center gap-2">
-              Voter Link Generator
-            </CardTitle>
-            <CardDescription>
-              Generate an opaque link that maps to a canonical voter ID (e.g.
-              PAOH0001)
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleGenerateAlias} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="canonical-token">Canonical voter ID</Label>
-                <Input
-                  id="canonical-token"
-                  placeholder="PAOH0001"
-                  value={aliasCanonical}
-                  onChange={(e) => setAliasCanonical(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Button
-                  type="submit"
-                  disabled={isGeneratingAlias || !aliasCanonical.trim()}
-                  className="w-full sm:w-auto"
-                >
-                  {isGeneratingAlias ? "Generating..." : "Generate Link"}
-                </Button>
-                {aliasToken && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full sm:w-auto"
-                    onClick={() => {
-                      navigator.clipboard.writeText(aliasUrl || aliasToken);
-                    }}
-                  >
-                    Copy Link
-                  </Button>
-                )}
-              </div>
-              {aliasToken && (
-                <div className="text-sm">
-                  <p className="text-muted-foreground">
-                    Alias token:{" "}
-                    <span className="font-medium text-foreground">
-                      {aliasToken}
-                    </span>
-                  </p>
-                  {aliasUrl && (
-                    <p className="text-muted-foreground">
-                      Link:{" "}
-                      <span className="font-medium text-foreground break-all">
-                        {aliasUrl}
-                      </span>
-                    </p>
-                  )}
-                </div>
-              )}
-              {aliasError && (
-                <p className="text-sm text-destructive">{aliasError}</p>
-              )}
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* Voter Token Seeder */}
-        <Card className="mb-8 border-border">
-          <CardHeader>
-            <CardTitle className="font-serif flex items-center gap-2">
-              Voter Token Seeder
-            </CardTitle>
-            <CardDescription>
-              Create canonical voter tokens like PAOH0001 in Firestore
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSeedTokens} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="space-y-2">
-                  <Label htmlFor="token-prefix">Prefix</Label>
-                  <Input
-                    id="token-prefix"
-                    placeholder="PAOH"
-                    value={tokenPrefix}
-                    onChange={(e) => setTokenPrefix(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="token-start">Start</Label>
-                  <Input
-                    id="token-start"
-                    placeholder="1"
-                    value={tokenStart}
-                    onChange={(e) => setTokenStart(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="token-end">End</Label>
-                  <Input
-                    id="token-end"
-                    placeholder="1000"
-                    value={tokenEnd}
-                    onChange={(e) => setTokenEnd(e.target.value)}
-                  />
-                </div>
-              </div>
-              <Button
-                type="submit"
-                className="w-full sm:w-auto"
-                disabled={isSeedingTokens}
-              >
-                {isSeedingTokens ? "Creating..." : "Create Voter Tokens"}
-              </Button>
-              {seedResult && (
-                <p className="text-sm text-foreground">{seedResult}</p>
-              )}
-              {seedError && (
-                <p className="text-sm text-destructive">{seedError}</p>
-              )}
-            </form>
           </CardContent>
         </Card>
 
@@ -1018,7 +892,7 @@ export default function AdminPage() {
       </div>
 
       {/* Queen Candidates */}
-      <div>
+      <div className="mb-12">
         <div className="flex items-center gap-3 mb-6">
           <h2 className="text-2xl font-serif font-bold text-foreground">
             Queen Candidates
@@ -1087,6 +961,132 @@ export default function AdminPage() {
           )}
         </div>
       </div>
+
+      {/* Voter Link Generator */}
+      <Card className="mb-8 border-border">
+        <CardHeader>
+          <CardTitle className="font-serif flex items-center gap-2">
+            Voter Link Generator
+          </CardTitle>
+          <CardDescription>
+            Generate an opaque link that maps to a canonical voter ID (e.g.
+            PAOH0001)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleGenerateAlias} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="canonical-token">Canonical voter ID</Label>
+              <Input
+                id="canonical-token"
+                placeholder="PAOH0001"
+                value={aliasCanonical}
+                onChange={(e) => setAliasCanonical(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button
+                type="submit"
+                disabled={isGeneratingAlias || !aliasCanonical.trim()}
+                className="w-full sm:w-auto"
+              >
+                {isGeneratingAlias ? "Generating..." : "Generate Link"}
+              </Button>
+              {aliasToken && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                  onClick={() => {
+                    navigator.clipboard.writeText(aliasUrl || aliasToken);
+                  }}
+                >
+                  Copy Link
+                </Button>
+              )}
+            </div>
+            {aliasToken && (
+              <div className="text-sm">
+                <p className="text-muted-foreground">
+                  Alias token:{" "}
+                  <span className="font-medium text-foreground">
+                    {aliasToken}
+                  </span>
+                </p>
+                {aliasUrl && (
+                  <p className="text-muted-foreground">
+                    Link:{" "}
+                    <span className="font-medium text-foreground break-all">
+                      {aliasUrl}
+                    </span>
+                  </p>
+                )}
+              </div>
+            )}
+            {aliasError && (
+              <p className="text-sm text-destructive">{aliasError}</p>
+            )}
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Voter Token Seeder */}
+      <Card className="mb-8 border-border">
+        <CardHeader>
+          <CardTitle className="font-serif flex items-center gap-2">
+            Voter Token Seeder
+          </CardTitle>
+          <CardDescription>
+            Create canonical voter tokens like PAOH0001 in Firestore
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSeedTokens} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="token-prefix">Prefix</Label>
+                <Input
+                  id="token-prefix"
+                  placeholder="PAOH"
+                  value={tokenPrefix}
+                  onChange={(e) => setTokenPrefix(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="token-start">Start</Label>
+                <Input
+                  id="token-start"
+                  placeholder="1"
+                  value={tokenStart}
+                  onChange={(e) => setTokenStart(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="token-end">End</Label>
+                <Input
+                  id="token-end"
+                  placeholder="1000"
+                  value={tokenEnd}
+                  onChange={(e) => setTokenEnd(e.target.value)}
+                />
+              </div>
+            </div>
+            <Button
+              type="submit"
+              className="w-full sm:w-auto"
+              disabled={isSeedingTokens}
+            >
+              {isSeedingTokens ? "Creating..." : "Create Voter Tokens"}
+            </Button>
+            {seedResult && (
+              <p className="text-sm text-foreground">{seedResult}</p>
+            )}
+            {seedError && (
+              <p className="text-sm text-destructive">{seedError}</p>
+            )}
+          </form>
+        </CardContent>
+      </Card>
 
       {/* Confirmation Dialogs */}
       <ConfirmationDialog
