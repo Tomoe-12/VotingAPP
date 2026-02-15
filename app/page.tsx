@@ -577,9 +577,9 @@ function VotingPageContent() {
               <Card className="overflow-hidden border-border">
                 <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
                   <img
-                    src="/images/university-1.jpg"
+                    src="../abtUs.jpg"
                     alt="University Event"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover  "
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       e.currentTarget.nextElementSibling?.classList.remove(

@@ -201,6 +201,56 @@ export default function AdminPage() {
     }
   };
 
+  const handleBulkGenerateAlias = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adminToken) {
+      setAliasError("Admin session not found. Please re-authenticate.");
+      return;
+    }
+
+    const start = Number.parseInt(tokenStart, 10);
+    const end = Number.parseInt(tokenEnd, 10);
+    if (!tokenPrefix.trim() || Number.isNaN(start) || Number.isNaN(end)) {
+      setAliasError("Please enter a valid prefix and numeric range.");
+      return;
+    }
+
+    setIsGeneratingAlias(true);
+    setAliasError("");
+    setAliasUrl("");
+
+    try {
+      const response = await fetch("/api/admin/bulk-token-alias", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          password: adminToken,
+          prefix: tokenPrefix.trim(),
+          start,
+          end,
+        }),
+      });
+
+      const payload = (await response.json()) as {
+        ok?: boolean;
+        links?: string[];
+        reason?: string;
+      };
+
+      if (!response.ok || !payload.ok || !payload.links) {
+        setAliasError(payload.reason || "Unable to generate alias tokens.");
+        return;
+      }
+
+      setAliasUrl(payload.links.join("\n"));
+    } catch (error) {
+      console.error("Failed to generate alias tokens", error);
+      setAliasError("Unable to generate alias tokens. Please try again.");
+    } finally {
+      setIsGeneratingAlias(false);
+    }
+  };
+
   const handleSeedTokens = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!adminToken) {
@@ -378,7 +428,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 p-4 md:p-8">
+    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/30 p-4 md:p-8">
       {/* Decorative elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -821,7 +871,7 @@ export default function AdminPage() {
       </Card>
 
       {/* King Candidates */}
-      <div className="mb-12">
+      <div className="max-w-7xl mx-auto  mb-12">
         <div className="flex items-center gap-3 mb-6">
           <h2 className="text-2xl font-serif font-bold text-foreground">
             King Candidates
@@ -892,7 +942,7 @@ export default function AdminPage() {
       </div>
 
       {/* Queen Candidates */}
-      <div className="mb-12">
+      <div className="max-w-7xl mx-auto  mb-12">
         <div className="flex items-center gap-3 mb-6">
           <h2 className="text-2xl font-serif font-bold text-foreground">
             Queen Candidates
@@ -963,7 +1013,7 @@ export default function AdminPage() {
       </div>
 
       {/* Voter Link Generator */}
-      <Card className="mb-8 border-border">
+      <Card className="max-w-7xl mx-auto  mb-8 border-border">
         <CardHeader>
           <CardTitle className="font-serif flex items-center gap-2">
             Voter Link Generator
@@ -1030,8 +1080,87 @@ export default function AdminPage() {
         </CardContent>
       </Card>
 
+      {/* Bulk Voter Link Generator */}
+      <Card className="max-w-7xl mx-auto  mb-8 border-border">
+        <CardHeader>
+          <CardTitle className="font-serif flex items-center gap-2">
+            Bulk Voter Link Generator
+          </CardTitle>
+          <CardDescription>
+            Generate multiple opaque links from a range of canonical voter IDs
+            (e.g., PAOH0001 to PAOH0100)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleBulkGenerateAlias} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="bulk-token-prefix">Prefix</Label>
+                <Input
+                  id="bulk-token-prefix"
+                  placeholder="PAOH"
+                  value={tokenPrefix}
+                  onChange={(e) => setTokenPrefix(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="bulk-token-start">Start</Label>
+                <Input
+                  id="bulk-token-start"
+                  placeholder="1"
+                  value={tokenStart}
+                  onChange={(e) => setTokenStart(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="bulk-token-end">End</Label>
+                <Input
+                  id="bulk-token-end"
+                  placeholder="1000"
+                  value={tokenEnd}
+                  onChange={(e) => setTokenEnd(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button
+                type="submit"
+                className="w-full sm:w-auto"
+                disabled={isGeneratingAlias}
+              >
+                {isGeneratingAlias ? "Generating..." : "Generate Links"}
+              </Button>
+              {aliasUrl && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                  onClick={() => {
+                    navigator.clipboard.writeText(aliasUrl);
+                  }}
+                >
+                  Copy Links
+                </Button>
+              )}
+            </div>
+            {aliasUrl && (
+              <div className="text-sm">
+                <Label htmlFor="bulk-token-prefix">Generated Links</Label>
+                <textarea
+                  className="w-full h-40 p-2 border rounded-md"
+                  readOnly
+                  value={aliasUrl}
+                />
+              </div>
+            )}
+            {aliasError && (
+              <p className="text-sm text-destructive">{aliasError}</p>
+            )}
+          </form>
+        </CardContent>
+      </Card>
       {/* Voter Token Seeder */}
-      <Card className="mb-8 border-border">
+      <Card className="max-w-7xl  mx-auto mb-8 border-border">
         <CardHeader>
           <CardTitle className="font-serif flex items-center gap-2">
             Voter Token Seeder
