@@ -220,7 +220,8 @@ function VotingPageContent() {
 
       <div className="container mx-auto px-4 pb-20 pt-10 md:py-32 max-w-7xl relative z-10">
         {/* Header */}
-        <div className="text-center md:mb-14 min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center">
+        {/* <div className="text-center md:mb-14 min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center"> */}
+        <div className="text-center md:mb-14 min-h-[45vh] md:min-h-[70vh] flex flex-col justify-center">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-foreground mb-6 text-balance leading-tight">
             {t("title")}
           </h1>
@@ -238,7 +239,7 @@ function VotingPageContent() {
           </div> */}
 
           {/* Language Switcher */}
-          <div className="flex justify-center ">
+          {/* <div className="flex justify-center ">
             <div className="relative inline-flex items-center bg-card/80 backdrop-blur-sm border border-border rounded-full p-1 shadow-lg">
               <button
                 onClick={() => setLanguage("en")}
@@ -268,7 +269,7 @@ function VotingPageContent() {
                 }`}
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         {(hasVotedKing || hasVotedQueen) && (
@@ -595,7 +596,7 @@ function VotingPageContent() {
               <Card className="overflow-hidden border-border">
                 <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
                   <img
-                    src="../abtUs.jpg"
+                    src="../abtUs.webp"
                     alt="University Event"
                     className="w-full h-full object-cover  "
                     onError={(e) => {

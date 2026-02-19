@@ -3,15 +3,22 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
-    unoptimized: true,
-  },
   async headers() {
     return [
       {
         source: "/api/:path*",
         headers: [
           { key: "Cache-Control", value: "no-store" },
+        ],
+      },
+      {
+        // Cache all static assets in the public folder for 1 year, immutable
+        source: '/:all*(svg|jpg|jpeg|png|gif|ico|css|js|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
         ],
       },
       {
@@ -25,6 +32,17 @@ const nextConfig = {
         ],
       },
     ]
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        pathname: '/**', // Adjust if you want to restrict to a specific bucket
+      },
+    ],
+    minimumCacheTTL: 31536000, // 1 year
   },
 }
 
