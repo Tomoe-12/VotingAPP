@@ -1,3 +1,5 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -44,6 +46,6 @@ const nextConfig = {
     ],
     minimumCacheTTL: 31536000, // 1 year
   },
-}
+};
 
-export default nextConfig
+export default withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })(nextConfig);

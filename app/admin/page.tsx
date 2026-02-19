@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Trophy } from "lucide-react"; // Import Trophy component
+import Trophy from "lucide-react/dist/esm/icons/trophy";
 
 import { useState, useEffect } from "react";
 import {
@@ -22,7 +22,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Crown, Trash2, Plus, ArrowLeft, RotateCcw } from "lucide-react";
+import Crown from "lucide-react/dist/esm/icons/crown";
+import Trash2 from "lucide-react/dist/esm/icons/trash-2";
+import Plus from "lucide-react/dist/esm/icons/plus";
+import ArrowLeft from "lucide-react/dist/esm/icons/arrow-left";
+import RotateCcw from "lucide-react/dist/esm/icons/rotate-ccw";
 import Link from "next/link";
 import { MultiImageUpload } from "@/components/multi-image-upload";
 import { ConfirmationDialog } from "@/components/confirmation-dialog";

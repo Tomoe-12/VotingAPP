@@ -1,29 +1,30 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, lazy } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Crown,
-  CheckCircle2,
-  Users,
-  GraduationCap,
-  Calendar,
-  Ruler,
-  MapPin,
-  Heart,
-} from "lucide-react";
-import { CandidateImageCarousel } from "@/components/candidate-image-carousel";
 import { useLanguage } from "@/lib/language-context";
-import { FloatingNav } from "@/components/floating-nav";
+
+// Dynamic imports for heavy or non-critical components
+const Card = lazy(() => import("@/components/ui/card").then(m => ({ default: m.Card })));
+const CardContent = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardContent })));
+const CardDescription = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardDescription })));
+const CardHeader = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardHeader })));
+const CardTitle = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardTitle })));
+const Button = lazy(() => import("@/components/ui/button").then(m => ({ default: m.Button })));
+const Badge = lazy(() => import("@/components/ui/badge").then(m => ({ default: m.Badge })));
+const CandidateImageCarousel = lazy(() => import("@/components/candidate-image-carousel").then(m => ({ default: m.CandidateImageCarousel })));
+const FloatingNav = lazy(() => import("@/components/floating-nav").then(m => ({ default: m.FloatingNav })));
+
+// Dynamic imports for icons (direct ESM subpath for tree-shaking)
+const Crown = lazy(() => import("lucide-react/dist/esm/icons/crown"));
+const CheckCircle2 = lazy(() => import("lucide-react/dist/esm/icons/check-circle-2"));
+const Users = lazy(() => import("lucide-react/dist/esm/icons/users"));
+const GraduationCap = lazy(() => import("lucide-react/dist/esm/icons/graduation-cap"));
+const Calendar = lazy(() => import("lucide-react/dist/esm/icons/calendar"));
+const Ruler = lazy(() => import("lucide-react/dist/esm/icons/ruler"));
+const MapPin = lazy(() => import("lucide-react/dist/esm/icons/map-pin"));
+const Heart = lazy(() => import("lucide-react/dist/esm/icons/heart"));
 import {
   subscribeCandidates,
   subscribeVotingStatus,
@@ -186,35 +187,49 @@ function VotingPageContent() {
       suppressHydrationWarning
     >
       {/* Floating Navigation */}
-      <FloatingNav />
+      <Suspense fallback={null}>
+        <FloatingNav />
+      </Suspense>
 
       {/* Decorative Floral Elements */}
       <div className="fixed top-0 left-0 w-64 h-64 opacity-[0.5] pointer-events-none">
-        <img
+        <Image
           src="/floral-corner.png"
           alt=""
+          width={256}
+          height={256}
           className="w-full h-full object-contain"
+          priority={false}
         />
       </div>
       <div className="fixed top-0 right-0 w-64 h-64 opacity-[0.5] pointer-events-none transform scale-x-[-1]">
-        <img
+        <Image
           src="/floral-corner.png"
           alt=""
+          width={256}
+          height={256}
           className="w-full h-full object-contain"
+          priority={false}
         />
       </div>
       <div className="fixed bottom-0 left-0 w-80 h-80 opacity-[0.2] pointer-events-none transform scale-y-[-1]">
-        <img
+        <Image
           src="/floral-corner.png"
           alt=""
+          width={320}
+          height={320}
           className="w-full h-full object-contain"
+          priority={false}
         />
       </div>
       <div className="fixed bottom-0 right-0 w-80 h-80 opacity-[0.2] pointer-events-none transform scale-[-1]">
-        <img
+        <Image
           src="/floral-corner.png"
           alt=""
+          width={320}
+          height={320}
           className="w-full h-full object-contain"
+          priority={false}
         />
       </div>
 
@@ -342,7 +357,8 @@ function VotingPageContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {kingCandidates.map((candidate, index) => (
-              <Card
+              <Suspense key={index} fallback={<div className="h-96 bg-muted animate-pulse rounded-lg" />}>
+                <Card
                 key={candidate.id}
                 className={`group overflow-hidden transition-all duration-300 hover:shadow-lg border ${
                   votedKingId === candidate.id
@@ -351,15 +367,17 @@ function VotingPageContent() {
                 }`}
               >
                 <CardHeader className="p-0">
-                  <CandidateImageCarousel
-                    images={candidate.images ?? []}
-                    name={candidate.name}
-                    numberBadge={
-                      <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-primary/20 flex items-center justify-center font-semibold text-sm text-primary shadow-sm z-10">
-                        {candidate.candidateNumber}
-                      </div>
-                    }
-                  />
+                  <Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-b-none" />}>
+                    <CandidateImageCarousel
+                      images={candidate.images ?? []}
+                      name={candidate.name}
+                      numberBadge={
+                        <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-primary/20 flex items-center justify-center font-semibold text-sm text-primary shadow-sm z-10">
+                          {candidate.candidateNumber}
+                        </div>
+                      }
+                    />
+                  </Suspense>
                 </CardHeader>
                 <CardContent className="p-6">
                   <CardTitle className="text-xl font-serif mb-3">
@@ -408,7 +426,8 @@ function VotingPageContent() {
                     {candidate.votes}{" "}
                     {candidate.votes === 1 ? t("vote") : t("votes")}
                   </CardDescription>
-                  <Button
+                  <Suspense fallback={<div className="h-10 bg-muted animate-pulse rounded" />}>
+                    <Button
                     onClick={() => handleVote(candidate.id, "king")}
                     disabled={
                       !voterToken ||
@@ -435,9 +454,11 @@ function VotingPageContent() {
                     ) : (
                       t("castVote")
                     )}
-                  </Button>
+                    </Button>
+                  </Suspense>
                 </CardContent>
-              </Card>
+                </Card>
+              </Suspense>
             ))}
           </div>
         </div>
@@ -485,7 +506,8 @@ function VotingPageContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {queenCandidates.map((candidate, index) => (
-              <Card
+              <Suspense key={index} fallback={<div className="h-96 bg-muted animate-pulse rounded-lg" />}>
+                <Card
                 key={candidate.id}
                 className={`group overflow-hidden transition-all duration-300 hover:shadow-lg border ${
                   votedQueenId === candidate.id
@@ -494,15 +516,17 @@ function VotingPageContent() {
                 }`}
               >
                 <CardHeader className="p-0">
-                  <CandidateImageCarousel
-                    images={candidate.images ?? []}
-                    name={candidate.name}
-                    numberBadge={
-                      <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-secondary/20 flex items-center justify-center font-semibold text-sm text-secondary shadow-sm z-10">
-                        {candidate.candidateNumber}
-                      </div>
-                    }
-                  />
+                  <Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-b-none" />}>
+                    <CandidateImageCarousel
+                      images={candidate.images ?? []}
+                      name={candidate.name}
+                      numberBadge={
+                        <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-secondary/20 flex items-center justify-center font-semibold text-sm text-secondary shadow-sm z-10">
+                          {candidate.candidateNumber}
+                        </div>
+                      }
+                    />
+                  </Suspense>
                 </CardHeader>
                 <CardContent className="p-6">
                   <CardTitle className="text-xl font-serif mb-3">
@@ -551,7 +575,8 @@ function VotingPageContent() {
                     {candidate.votes}{" "}
                     {candidate.votes === 1 ? t("vote") : t("votes")}
                   </CardDescription>
-                  <Button
+                  <Suspense fallback={<div className="h-10 bg-muted animate-pulse rounded" />}>
+                    <Button
                     onClick={() => handleVote(candidate.id, "queen")}
                     disabled={
                       !voterToken ||
@@ -578,9 +603,11 @@ function VotingPageContent() {
                     ) : (
                       t("castVote")
                     )}
-                  </Button>
+                    </Button>
+                  </Suspense>
                 </CardContent>
-              </Card>
+                </Card>
+              </Suspense>
             ))}
           </div>
         </div>
@@ -593,29 +620,33 @@ function VotingPageContent() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - University Image */}
             <div>
-              <Card className="overflow-hidden border-border">
-                <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
-                  <img
-                    src="../abtUs.webp"
-                    alt="University Event"
-                    className="w-full h-full object-cover  "
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      e.currentTarget.nextElementSibling?.classList.remove(
-                        "hidden",
-                      );
-                    }}
-                  />
-                  <div className="hidden absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <Crown className="w-16 h-16 text-muted-foreground/40 mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">
-                        Add your university image
-                      </p>
+              <Suspense fallback={<div className="aspect-4/5 bg-muted animate-pulse rounded-lg" />}>
+                <Card className="overflow-hidden border-border">
+                  <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
+                    <Image
+                      src="/abtUs.webp"
+                      alt="University Event"
+                      width={400}
+                      height={500}
+                      className="w-full h-full object-cover"
+                      onError={e => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.nextElementSibling?.classList.remove("hidden");
+                      }}
+                    />
+                    <div className="hidden absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        <Suspense fallback={null}>
+                          <Crown className="w-16 h-16 text-muted-foreground/40 mx-auto mb-2" />
+                        </Suspense>
+                        <p className="text-sm text-muted-foreground">
+                          Add your university image
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </Suspense>
             </div>
 
             {/* Right Side - Content */}
@@ -644,10 +675,13 @@ function VotingPageContent() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex md:flex-row flex-col items-center gap-2">
               {/* <Crown className="w-5 h-5 text-primary" /> */}
-              <img
-                src="../University_logo.jpg"
+              <Image
+                src="/University_logo.jpg"
                 alt="University Logo"
-                className=" md:w-10 md:h-10 w-15 h-15"
+                width={40}
+                height={40}
+                className="md:w-10 md:h-10 w-15 h-15"
+                loading="lazy"
               />
               <div className=" flex flex-col md:flex-row md:justify-center md:items-center ">
                 <span className="font-serif font-semibold text-foreground">
