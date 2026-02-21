@@ -6,21 +6,45 @@ import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 
 // Dynamic imports for heavy or non-critical components
-const Card = lazy(() => import("@/components/ui/card").then(m => ({ default: m.Card })));
-const CardContent = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardContent })));
-const CardDescription = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardDescription })));
-const CardHeader = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardHeader })));
-const CardTitle = lazy(() => import("@/components/ui/card").then(m => ({ default: m.CardTitle })));
-const Button = lazy(() => import("@/components/ui/button").then(m => ({ default: m.Button })));
-const Badge = lazy(() => import("@/components/ui/badge").then(m => ({ default: m.Badge })));
-const CandidateImageCarousel = lazy(() => import("@/components/candidate-image-carousel").then(m => ({ default: m.CandidateImageCarousel })));
-const FloatingNav = lazy(() => import("@/components/floating-nav").then(m => ({ default: m.FloatingNav })));
+const Card = lazy(() =>
+  import("@/components/ui/card").then((m) => ({ default: m.Card })),
+);
+const CardContent = lazy(() =>
+  import("@/components/ui/card").then((m) => ({ default: m.CardContent })),
+);
+const CardDescription = lazy(() =>
+  import("@/components/ui/card").then((m) => ({ default: m.CardDescription })),
+);
+const CardHeader = lazy(() =>
+  import("@/components/ui/card").then((m) => ({ default: m.CardHeader })),
+);
+const CardTitle = lazy(() =>
+  import("@/components/ui/card").then((m) => ({ default: m.CardTitle })),
+);
+const Button = lazy(() =>
+  import("@/components/ui/button").then((m) => ({ default: m.Button })),
+);
+const Badge = lazy(() =>
+  import("@/components/ui/badge").then((m) => ({ default: m.Badge })),
+);
+const CandidateImageCarousel = lazy(() =>
+  import("@/components/candidate-image-carousel").then((m) => ({
+    default: m.CandidateImageCarousel,
+  })),
+);
+const FloatingNav = lazy(() =>
+  import("@/components/floating-nav").then((m) => ({ default: m.FloatingNav })),
+);
 
 // Dynamic imports for icons (direct ESM subpath for tree-shaking)
 const Crown = lazy(() => import("lucide-react/dist/esm/icons/crown"));
-const CheckCircle2 = lazy(() => import("lucide-react/dist/esm/icons/check-circle-2"));
+const CheckCircle2 = lazy(
+  () => import("lucide-react/dist/esm/icons/check-circle-2"),
+);
 const Users = lazy(() => import("lucide-react/dist/esm/icons/users"));
-const GraduationCap = lazy(() => import("lucide-react/dist/esm/icons/graduation-cap"));
+const GraduationCap = lazy(
+  () => import("lucide-react/dist/esm/icons/graduation-cap"),
+);
 const Calendar = lazy(() => import("lucide-react/dist/esm/icons/calendar"));
 const Ruler = lazy(() => import("lucide-react/dist/esm/icons/ruler"));
 const MapPin = lazy(() => import("lucide-react/dist/esm/icons/map-pin"));
@@ -357,36 +381,50 @@ function VotingPageContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {kingCandidates.map((candidate, index) => (
-              <Suspense key={index} fallback={<div className="h-96 bg-muted animate-pulse rounded-lg" />}>
-                <Card
-                key={candidate.id}
-                className={`group overflow-hidden transition-all duration-300 hover:shadow-lg border ${
-                  votedKingId === candidate.id
-                    ? "ring-1 ring-primary shadow-md"
-                    : "border-border"
-                }`}
+              <Suspense
+                key={index}
+                fallback={
+                  <div className="h-96 bg-muted animate-pulse rounded-lg" />
+                }
               >
-                <CardHeader className="p-0">
-                  <Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-b-none" />}>
-                    <CandidateImageCarousel
-                      images={candidate.images ?? []}
-                      name={candidate.name}
-                      numberBadge={
-                        <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-primary/20 flex items-center justify-center font-semibold text-sm text-primary shadow-sm z-10">
-                          {candidate.candidateNumber}
-                        </div>
+                <Card
+                  key={candidate.id}
+                  className={`group overflow-hidden transition-all duration-300 hover:shadow-lg border ${
+                    votedKingId === candidate.id
+                      ? "ring-1 ring-primary shadow-md"
+                      : "border-border"
+                  }`}
+                >
+                  <CardHeader className="p-0">
+                    <Suspense
+                      fallback={
+                        <div className="h-48 bg-muted animate-pulse rounded-b-none" />
                       }
-                    />
-                  </Suspense>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <CardTitle className="text-xl font-serif mb-3">
-                    {candidate.name}
-                  </CardTitle>
+                    >
+                      <CandidateImageCarousel
+                        images={candidate.images ?? []}
+                        name={candidate.name}
+                        numberBadge={
+                          <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-primary/20 flex items-center justify-center font-semibold text-sm text-primary shadow-sm z-10">
+                            {candidate.candidateNumber}
+                          </div>
+                        }
+                      />
+                    </Suspense>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <CardTitle className="text-2xl font-serif mb-5 flex items-center gap-2">
+                      <span className="flex items-center justify-center rounded bg-secondary/10 text-secondary text-base font-bold border border-secondary/20 min-w-10 min-h-8 text-center">
+                        {candidate.candidateNumber}
+                      </span>
+                      <span className="font-semibold text-2xl text-foreground">
+                        {candidate.name}
+                      </span>
+                    </CardTitle>
 
-                  {/* Candidate Details with Icons */}
-                  <div className="space-y-2 mb-4 text-sm">
-                    {candidate.major && candidate.year && (
+                    {/* Candidate Details with Icons */}
+                    <div className="space-y-3 mb-4 text-sm">
+                      {/* {candidate.major && candidate.year && (
                       <div className="flex items-center gap-2 text-foreground/80">
                         <GraduationCap className="w-4 h-4 shrink-0 text-primary" />
                         <span className="font-medium">{candidate.major}</span>
@@ -395,68 +433,72 @@ function VotingPageContent() {
                           {candidate.year}
                         </span>
                       </div>
-                    )}
-                    {candidate.age && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Calendar className="w-4 h-4 shrink-0" />
-                        <span>{candidate.age} years old</span>
-                      </div>
-                    )}
-                    {candidate.height && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Ruler className="w-4 h-4 shrink-0" />
-                        <span>{candidate.height}</span>
-                      </div>
-                    )}
-                    {candidate.hometown && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="w-4 h-4 shrink-0" />
-                        <span>{candidate.hometown}</span>
-                      </div>
-                    )}
-                    {candidate.hobbies && (
-                      <div className="flex items-start gap-2 text-muted-foreground">
-                        <Heart className="w-4 h-4 shrink-0 mt-0.5" />
-                        <span>{candidate.hobbies}</span>
-                      </div>
-                    )}
-                  </div>
+                    )} */}
+                      {candidate.age && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Calendar className="w-4 h-4 shrink-0" />
+                          <span>{candidate.age} years old</span>
+                        </div>
+                      )}
+                      {candidate.height && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Ruler className="w-4 h-4 shrink-0" />
+                          <span>{candidate.height}</span>
+                        </div>
+                      )}
+                      {candidate.hometown && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <MapPin className="w-4 h-4 shrink-0" />
+                          <span>{candidate.hometown}</span>
+                        </div>
+                      )}
+                      {candidate.hobbies && (
+                        <div className="flex items-start gap-2 text-muted-foreground">
+                          <Heart className="w-4 h-4 shrink-0 mt-0.5" />
+                          <span>{candidate.hobbies}</span>
+                        </div>
+                      )}
+                    </div>
 
-                  <CardDescription className="mb-6 text-sm">
+                    {/* <CardDescription className="mb-6 text-sm">
                     {candidate.votes}{" "}
                     {candidate.votes === 1 ? t("vote") : t("votes")}
-                  </CardDescription>
-                  <Suspense fallback={<div className="h-10 bg-muted animate-pulse rounded" />}>
-                    <Button
-                    onClick={() => handleVote(candidate.id, "king")}
-                    disabled={
-                      !voterToken ||
-                      hasVotedKing ||
-                      votingStatus !== "active" ||
-                      isSubmitting
-                    }
-                    className="w-full"
-                    variant={
-                      votedKingId === candidate.id ? "default" : "outline"
-                    }
-                  >
-                    {votingStatus === "not-started" ? (
-                      "Voting Not Started"
-                    ) : votingStatus === "ended" ? (
-                      "Voting Ended"
-                    ) : votedKingId === candidate.id ? (
-                      <>
-                        <CheckCircle2 className="w-4 h-4 mr-2" />
-                        {t("yourVote")}
-                      </>
-                    ) : hasVotedKing ? (
-                      t("voted")
-                    ) : (
-                      t("castVote")
-                    )}
-                    </Button>
-                  </Suspense>
-                </CardContent>
+                  </CardDescription> */}
+                    <Suspense
+                      fallback={
+                        <div className="h-10 bg-muted animate-pulse rounded" />
+                      }
+                    >
+                      <Button
+                        onClick={() => handleVote(candidate.id, "king")}
+                        disabled={
+                          !voterToken ||
+                          hasVotedKing ||
+                          votingStatus !== "active" ||
+                          isSubmitting
+                        }
+                        className="w-full"
+                        variant={
+                          votedKingId === candidate.id ? "default" : "outline"
+                        }
+                      >
+                        {votingStatus === "not-started" ? (
+                          "Voting Not Started"
+                        ) : votingStatus === "ended" ? (
+                          "Voting Ended"
+                        ) : votedKingId === candidate.id ? (
+                          <>
+                            <CheckCircle2 className="w-4 h-4 mr-2" />
+                            {t("yourVote")}
+                          </>
+                        ) : hasVotedKing ? (
+                          t("voted")
+                        ) : (
+                          t("castVote")
+                        )}
+                      </Button>
+                    </Suspense>
+                  </CardContent>
                 </Card>
               </Suspense>
             ))}
@@ -506,106 +548,124 @@ function VotingPageContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {queenCandidates.map((candidate, index) => (
-              <Suspense key={index} fallback={<div className="h-96 bg-muted animate-pulse rounded-lg" />}>
-                <Card
-                key={candidate.id}
-                className={`group overflow-hidden transition-all duration-300 hover:shadow-lg border ${
-                  votedQueenId === candidate.id
-                    ? "ring-1 ring-secondary shadow-md"
-                    : "border-border"
-                }`}
+              <Suspense
+                key={index}
+                fallback={
+                  <div className="h-96 bg-muted animate-pulse rounded-lg" />
+                }
               >
-                <CardHeader className="p-0">
-                  <Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-b-none" />}>
-                    <CandidateImageCarousel
-                      images={candidate.images ?? []}
-                      name={candidate.name}
-                      numberBadge={
-                        <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-secondary/20 flex items-center justify-center font-semibold text-sm text-secondary shadow-sm z-10">
-                          {candidate.candidateNumber}
-                        </div>
+                <Card
+                  key={candidate.id}
+                  className={`group overflow-hidden transition-all duration-300 hover:shadow-lg border ${
+                    votedQueenId === candidate.id
+                      ? "ring-1 ring-secondary shadow-md"
+                      : "border-border"
+                  }`}
+                >
+                  <CardHeader className="p-0">
+                    <Suspense
+                      fallback={
+                        <div className="h-48 bg-muted animate-pulse rounded-b-none" />
                       }
-                    />
-                  </Suspense>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <CardTitle className="text-xl font-serif mb-3">
-                    {candidate.name}
-                  </CardTitle>
+                    >
+                      <CandidateImageCarousel
+                        images={candidate.images ?? []}
+                        name={candidate.name}
+                        numberBadge={
+                          <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-secondary/20 flex items-center justify-center font-semibold text-sm text-secondary shadow-sm z-10">
+                            {candidate.candidateNumber}
+                          </div>
+                        }
+                      />
+                    </Suspense>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <CardTitle className="text-2xl font-serif mb-5 flex items-center gap-2">
+                      <span className="flex items-center justify-center rounded bg-secondary/10 text-secondary text-base font-bold border border-secondary/20 min-w-10 min-h-8 text-center">
+                        {candidate.candidateNumber}
+                      </span>
+                      <span className="font-semibold text-2xl text-foreground">
+                        {candidate.name}
+                      </span>
+                    </CardTitle>
 
-                  {/* Candidate Details with Icons */}
-                  <div className="space-y-2 mb-4 text-sm">
-                    {candidate.major && candidate.year && (
-                      <div className="flex items-center gap-2 text-foreground/80">
-                        <GraduationCap className="w-4 h-4 shrink-0 text-secondary" />
-                        <span className="font-medium">{candidate.major}</span>
-                        <span className="text-muted-foreground">•</span>
-                        <span className="text-muted-foreground">
-                          {candidate.year}
-                        </span>
-                      </div>
-                    )}
-                    {candidate.age && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Calendar className="w-4 h-4 shrink-0" />
-                        <span>{candidate.age} years old</span>
-                      </div>
-                    )}
-                    {candidate.height && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Ruler className="w-4 h-4 shrink-0" />
-                        <span>{candidate.height}</span>
-                      </div>
-                    )}
-                    {candidate.hometown && (
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="w-4 h-4 shrink-0" />
-                        <span>{candidate.hometown}</span>
-                      </div>
-                    )}
-                    {candidate.hobbies && (
-                      <div className="flex items-start gap-2 text-muted-foreground">
-                        <Heart className="w-4 h-4 shrink-0 mt-0.5" />
-                        <span>{candidate.hobbies}</span>
-                      </div>
-                    )}
-                  </div>
+                    {/* Candidate Details with Icons */}
+                    <div className="space-y-3 mb-4 text-sm">
+                      {/* {candidate.major && candidate.year && (
+                        <div className="flex items-center gap-2 text-foreground/80">
+                          <GraduationCap className="w-4 h-4 shrink-0 text-secondary" />
+                          <span className="font-medium">{candidate.major}</span>
+                          <span className="text-muted-foreground">•</span>
+                          <span className="text-muted-foreground">
+                            {candidate.year}
+                          </span>
+                        </div>
+                      )} */}
+                      {candidate.age && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Calendar className="w-4 h-4 shrink-0" />
+                          <span>{candidate.age} years old</span>
+                        </div>
+                      )}
+                      {candidate.height && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Ruler className="w-4 h-4 shrink-0" />
+                          <span>{candidate.height}</span>
+                        </div>
+                      )}
+                      {candidate.hometown && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <MapPin className="w-4 h-4 shrink-0" />
+                          <span>{candidate.hometown}</span>
+                        </div>
+                      )}
+                      {candidate.hobbies && (
+                        <div className="flex items-start gap-2 text-muted-foreground">
+                          <Heart className="w-4 h-4 shrink-0 mt-0.5" />
+                          <span>{candidate.hobbies}</span>
+                        </div>
+                      )}
+                    </div>
 
-                  <CardDescription className="mb-6 text-sm">
+                    {/* <CardDescription className="mb-6 text-sm">
                     {candidate.votes}{" "}
                     {candidate.votes === 1 ? t("vote") : t("votes")}
-                  </CardDescription>
-                  <Suspense fallback={<div className="h-10 bg-muted animate-pulse rounded" />}>
-                    <Button
-                    onClick={() => handleVote(candidate.id, "queen")}
-                    disabled={
-                      !voterToken ||
-                      hasVotedQueen ||
-                      votingStatus !== "active" ||
-                      isSubmitting
-                    }
-                    className="w-full"
-                    variant={
-                      votedQueenId === candidate.id ? "default" : "outline"
-                    }
-                  >
-                    {votingStatus === "not-started" ? (
-                      "Voting Not Started"
-                    ) : votingStatus === "ended" ? (
-                      "Voting Ended"
-                    ) : votedQueenId === candidate.id ? (
-                      <>
-                        <CheckCircle2 className="w-4 h-4 mr-2" />
-                        {t("yourVote")}
-                      </>
-                    ) : hasVotedQueen ? (
-                      t("voted")
-                    ) : (
-                      t("castVote")
-                    )}
-                    </Button>
-                  </Suspense>
-                </CardContent>
+                  </CardDescription> */}
+                    <Suspense
+                      fallback={
+                        <div className="h-10 bg-muted animate-pulse rounded" />
+                      }
+                    >
+                      <Button
+                        onClick={() => handleVote(candidate.id, "queen")}
+                        disabled={
+                          !voterToken ||
+                          hasVotedQueen ||
+                          votingStatus !== "active" ||
+                          isSubmitting
+                        }
+                        className="w-full"
+                        variant={
+                          votedQueenId === candidate.id ? "default" : "outline"
+                        }
+                      >
+                        {votingStatus === "not-started" ? (
+                          "Voting Not Started"
+                        ) : votingStatus === "ended" ? (
+                          "Voting Ended"
+                        ) : votedQueenId === candidate.id ? (
+                          <>
+                            <CheckCircle2 className="w-4 h-4 mr-2" />
+                            {t("yourVote")}
+                          </>
+                        ) : hasVotedQueen ? (
+                          t("voted")
+                        ) : (
+                          t("castVote")
+                        )}
+                      </Button>
+                    </Suspense>
+                  </CardContent>
                 </Card>
               </Suspense>
             ))}
@@ -620,7 +680,11 @@ function VotingPageContent() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - University Image */}
             <div>
-              <Suspense fallback={<div className="aspect-4/5 bg-muted animate-pulse rounded-lg" />}>
+              <Suspense
+                fallback={
+                  <div className="aspect-4/5 bg-muted animate-pulse rounded-lg" />
+                }
+              >
                 <Card className="overflow-hidden border-border">
                   <div className="aspect-4/5 bg-muted flex items-center justify-center relative overflow-hidden">
                     <Image
@@ -629,9 +693,11 @@ function VotingPageContent() {
                       width={400}
                       height={500}
                       className="w-full h-full object-cover"
-                      onError={e => {
+                      onError={(e) => {
                         e.currentTarget.style.display = "none";
-                        e.currentTarget.nextElementSibling?.classList.remove("hidden");
+                        e.currentTarget.nextElementSibling?.classList.remove(
+                          "hidden",
+                        );
                       }}
                     />
                     <div className="hidden absolute inset-0 flex items-center justify-center">
@@ -685,18 +751,19 @@ function VotingPageContent() {
               />
               <div className=" flex flex-col md:flex-row md:justify-center md:items-center ">
                 <span className="font-serif font-semibold text-foreground">
-                  University Of Computer Studies Taunggyi, 
+                  University Of Computer Studies Taunggyi,
                 </span>
                 <span className="mx-auto md:m-0 font-serif font-semibold text-foreground">
-                  {" "} Paoh Family
+                  {" "}
+                  Paoh Family
                 </span>
               </div>
             </div>
 
             <div className="text-center md:text-right">
               <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} Paoh Family Community.
-                All rights reserved.
+                &copy; {new Date().getFullYear()} Paoh Family Community. All
+                rights reserved.
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 Made with passion by the Poah Family Student

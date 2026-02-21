@@ -609,8 +609,13 @@ export default function AdminPage() {
                               >
                                 #{index + 1}
                               </span>
-                              <span className="font-medium">
-                                {candidate.name}
+                              <span className="flex items-center gap-2">
+                                <span className="inline-block px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-bold border border-primary/20 min-w-[2.5rem] text-center">
+                                  {candidate.candidateNumber}
+                                </span>
+                                <span className="font-medium text-base text-foreground">
+                                  {candidate.name}
+                                </span>
                               </span>
                             </div>
                             <span className="text-sm font-semibold">
@@ -670,8 +675,13 @@ export default function AdminPage() {
                               >
                                 #{index + 1}
                               </span>
-                              <span className="font-medium">
-                                {candidate.name}
+                              <span className="flex items-center gap-2">
+                                <span className="inline-block px-2 py-0.5 rounded bg-secondary/10 text-secondary text-xs font-bold border border-secondary/20 min-w-[2.5rem] text-center">
+                                  {candidate.candidateNumber}
+                                </span>
+                                <span className="font-medium text-base text-foreground">
+                                  {candidate.name}
+                                </span>
                               </span>
                             </div>
                             <span className="text-sm font-semibold">
